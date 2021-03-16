@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "199732300051",
+    "project_id": "sweaterz-flutter",
+    "storage_bucket": "sweaterz-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199732300051:android:0b9ed8f4c0f4518226b2e6",
+        "android_client_info": {
+          "package_name": "groundplayers.com.sweaterz_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199732300051-pp8vq8iuamdktercj2ppcmtnnhr6s37f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwxMrt_kWzu_MMa8Zdg5V0zkMmDhRJo_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199732300051-pp8vq8iuamdktercj2ppcmtnnhr6s37f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
