@@ -6,8 +6,8 @@ const double kIphoneXWidth = 375.0;
 
 const kSweaterzColor = Color(0xFFef5454);
 const kDefaultColor = Colors.black;
-const kGreyColor1 = Color(0xFF767676);
-const kGreyColor2 = Color(0xFF999999);
+const kGreyColor1_999999 = Color(0xFF999999);
+const kGreyColor2_767676 = Color(0xFF767676);
 
 const TextStyle kBigTitleTextStyle = TextStyle(
   fontFamily: 'Roboto',
@@ -42,7 +42,7 @@ const TextStyle kBodyTextStyle1R = TextStyle(
 
 InputDecoration kTextFieldDecoration = InputDecoration(
   hintText: 'Enter a value',
-  hintStyle: kBodyTextStyle1M.copyWith(color: kGreyColor2),
+  hintStyle: kBodyTextStyle1M.copyWith(color: kGreyColor1_999999),
   contentPadding: EdgeInsets.fromLTRB(0, 10, 10, 10),
   //border: UnderlineInputBorder(),
   enabledBorder: UnderlineInputBorder(

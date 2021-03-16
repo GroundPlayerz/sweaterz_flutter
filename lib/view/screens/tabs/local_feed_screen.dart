@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/networking_api/login_api.dart';
 import 'package:sweaterz_flutter/view/constants.dart';
 
-class HomeFeedScreen extends StatefulWidget {
+class LocalFeedScreen extends StatefulWidget {
   @override
-  _HomeFeedScreenState createState() => _HomeFeedScreenState();
+  _LocalFeedScreenState createState() => _LocalFeedScreenState();
 }
 
-class _HomeFeedScreenState extends State<HomeFeedScreen> {
+class _LocalFeedScreenState extends State<LocalFeedScreen> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);

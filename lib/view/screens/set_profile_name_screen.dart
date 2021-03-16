@@ -38,7 +38,7 @@ class _SetProfileNameScreenState extends State<SetProfileNameScreen> {
                 Text(
                   'Please enter your profile name.\n'
                   'This profile name will be used in our app.',
-                  style: kBodyTextStyle1M.copyWith(color: kGreyColor1),
+                  style: kBodyTextStyle1M.copyWith(color: kGreyColor2_767676),
                 ),
                 SizedBox(height: 90 * convertHeightRatio),
                 TextField(

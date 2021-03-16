@@ -27,68 +27,22 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
-    double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
-    double convertWidthRatio = mediaQuery.size.width / kIphoneXWidth;
-
-    var _currentTab = TabItem.HOME;
-    void _selectTab(TabItem tabItem) {
-      setState(() {
-        _currentTab = tabItem;
-      });
-    }
-
-    //int _bottomNavigationBarSelectedIndex = 0;
+    // var mediaQuery = MediaQuery.of(context);
+    // double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
+    // double convertWidthRatio = mediaQuery.size.width / kIphoneXWidth;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: Text('Gibeom babo')),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white.withOpacity(0.98),
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Color(0xff969696),
-        selectedFontSize: 14.0,
-        unselectedFontSize: 14.0,
-        iconSize: 20.0,
-        items: [
-          BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(
-                  Icons.home,
-                ),
-              ),
-              activeIcon: Icon(Icons.add),
-              label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(
-                  Icons.home,
-                ),
-              ),
-              activeIcon: Icon(Icons.add),
-              label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Padding(
-                  padding: EdgeInsets.only(bottom: 4.0),
-                  child: Icon(Icons.home)),
-              activeIcon: Icon(Icons.add),
-              label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Padding(
-                  padding: EdgeInsets.only(bottom: 4.0),
-                  child: Icon(Icons.home)),
-              activeIcon: Icon(Icons.add),
-              label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Padding(
-                  padding: EdgeInsets.only(bottom: 4.0),
-                  child: Icon(Icons.home)),
-              activeIcon: Icon(Icons.add),
-              label: 'Home'),
-        ],
+      //backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        // leading: ,//로고
+        // actions: [
+        //
+        // ],
+        // actionsIconTheme: ,
+        //shadowColor: Colors.white.withOpacity(0.0),
       ),
       body: Center(
         child: SafeArea(

@@ -43,7 +43,7 @@ class RegistrationCompleteScreen extends StatelessWidget {
                 SizedBox(height: 8 * convertHeightRatio),
                 Text(
                   'Congratulation! You are the member of Sweaterz. Please upload your passionate stories on our app. We hope you enjoy Sweaterz!',
-                  style: kBodyTextStyle1M.copyWith(color: kGreyColor1),
+                  style: kBodyTextStyle1M.copyWith(color: kGreyColor2_767676),
                 ),
                 SizedBox(height: 90 * convertHeightRatio),
                 roundedColorButton(

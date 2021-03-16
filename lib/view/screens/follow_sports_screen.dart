@@ -39,7 +39,7 @@ class _FollowSportsScreenState extends State<FollowSportsScreen> {
                 SizedBox(height: 8 * convertHeightRatio),
                 Text(
                   'You can follow your sports which you are interested in. You can check and add more sports in app!',
-                  style: kBodyTextStyle1M.copyWith(color: kGreyColor1),
+                  style: kBodyTextStyle1M.copyWith(color: kGreyColor2_767676),
                 ),
                 SizedBox(height: 90 * convertHeightRatio),
                 //TODO: 스포츠 리스트 버튼 추가, 버튼 클릭하면 걔 저장

@@ -3,6 +3,9 @@ import 'package:sweaterz_flutter/networking_api/login_api.dart';
 import 'package:sweaterz_flutter/view/constants.dart';
 
 class FollowingFeedScreen extends StatefulWidget {
+  final Function onNext;
+  FollowingFeedScreen({this.onNext}); //추갇
+
   @override
   _FollowingFeedScreenState createState() => _FollowingFeedScreenState();
 }

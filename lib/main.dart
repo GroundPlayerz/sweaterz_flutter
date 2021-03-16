@@ -9,6 +9,7 @@ import 'package:sweaterz_flutter/view/screens/splash_screen.dart';
 import 'package:sweaterz_flutter/view/screens/login_screen.dart';
 import 'package:sweaterz_flutter/view/screens/registration_complete_screen.dart';
 import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
 
 void main() async {
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
           ),
           GetPage(
             name: '/home_feed_screen',
-            page: () => HomeFeedScreen(),
+            page: () => HomeRoot(),
           ),
           GetPage(
             name: '/registration_complete_screen',

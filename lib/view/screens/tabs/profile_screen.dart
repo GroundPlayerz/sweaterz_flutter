@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/networking_api/login_api.dart';
 import 'package:sweaterz_flutter/view/constants.dart';
 
-class HomeFeedScreen extends StatefulWidget {
+class ProfileScreen extends StatefulWidget {
   @override
-  _HomeFeedScreenState createState() => _HomeFeedScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _HomeFeedScreenState extends State<HomeFeedScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
