@@ -69,50 +69,37 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
                   .profilePhotoURL
                   .toString()),
               Text(Provider.of<MemberProvider>(context).profileName),
-              // FutureBuilder<List>(
-              //     future: Future.wait([
-              //       TagAPI().getAllSports(),
-              //       TagAPI().getFollowingSports(),
-              //     ]),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.hasData) {
-              //         List sportsList = snapshot.data[0];
-              //         List followingSportsList = snapshot.data[1];
-              //         List<Widget> sportsButtonList = [];
-              //         for (Map map in sportsList) {
-              //           bool _isActivated = false;
-              //           if (followingSportsList.contains(map['name'])) {
-              //             _isActivated = true;
-              //           }
-              //           sportsButtonList.add(StatefulSportsButton(
-              //             sportsName: map['name'],
-              //             isActivated: _isActivated,
-              //           ));
-              //         }
-              //         return Wrap(
-              //           spacing: 8.0,
-              //           runSpacing: 8.0,
-              //           children: sportsButtonList,
-              //         );
-              //       } else if (snapshot.hasError) {
-              //         return Text('error');
-              //       } else {
-              //         return Text('loading');
-              //       }
-              //     }),
-              // roundedColorButton(
-              //     textContent: 'upload_screen으로 넘어가기',
-              //     isButtonEnabled: true,
-              //     onPressed: () {
-              //       Get.toNamed('/upload_screen');
-              //     })
-              SizedBox(
-                width: 2000,
-                child: Image(
-                  image: AssetImage('images/logo_small@3x.png'),
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
+              FutureBuilder<List>(
+                  future: Future.wait([
+                    TagAPI().getAllSports(),
+                    TagAPI().getFollowingSports(),
+                  ]),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List sportsList = snapshot.data[0];
+                      List followingSportsList = snapshot.data[1];
+                      List<Widget> sportsButtonList = [];
+                      for (Map map in sportsList) {
+                        bool _isActivated = false;
+                        if (followingSportsList.contains(map['name'])) {
+                          _isActivated = true;
+                        }
+                        sportsButtonList.add(StatefulSportsButton(
+                          sportsName: map['name'],
+                          isActivated: _isActivated,
+                        ));
+                      }
+                      return Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        children: sportsButtonList,
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('error');
+                    } else {
+                      return Text('loading');
+                    }
+                  }),
             ],
           ),
         ),
