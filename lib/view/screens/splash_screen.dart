@@ -28,15 +28,15 @@ class _SplashScreenState extends State<SplashScreen> with ChangeNotifier {
 
   @override
   void initState() {
-    super.initState();
     Future.microtask(() {
       _init(context);
     });
+    super.initState();
   }
 
   void _init(context) async {
     String _nextScreenRoute;
-    print(await LoginAPI().isLoggedIn());
+    //print(await LoginAPI().isLoggedIn());
     if (await LoginAPI().isLoggedIn()) {
       if (await RegistrationAPI().isRegistered()) {
         await setLoggedInMemberProvider();
