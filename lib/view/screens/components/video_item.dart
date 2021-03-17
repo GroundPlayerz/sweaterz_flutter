@@ -42,9 +42,16 @@ class _VideoItemState extends State<VideoItem> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void deactivate() {
+    // TODO: implement deactivate
     _chewieController.dispose();
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    _chewieController.dispose();
+    super.dispose();
   }
 
   @override

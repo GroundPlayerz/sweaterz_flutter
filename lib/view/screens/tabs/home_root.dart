@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/profile_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
 import 'package:sweaterz_flutter/view/constants.dart';
@@ -84,9 +85,52 @@ class _HomeRootState extends State<HomeRoot> {
             ),
           ],
           onTap: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
+            setState(
+              () {
+                if (index == 2) {
+                  List<String> bottomSheetList = [
+                    'Video',
+                    'Image',
+                    'Only Text'
+                  ];
+
+                  showModalBottomSheet(
+                    isDismissible: true,
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        height: 180,
+                        child: ListView.builder(
+                            itemCount: 3,
+                            itemBuilder: (context, listViewIdx) {
+                              return ListTile(
+                                onTap: () {
+                                  String uploadType;
+                                  if (listViewIdx == 0) {
+                                    uploadType = 'video';
+                                  } else if (listViewIdx == 1) {
+                                    uploadType = 'image';
+                                  } else {
+                                    uploadType = 'text';
+                                  }
+                                  Navigator.pop(context);
+                                  Get.to(() =>
+                                          VideoUploadScreen() //UploadScreen(uploadType: uploadType),
+                                      );
+
+                                  // _selectedIndex = index;
+                                },
+                                title: Text(bottomSheetList[listViewIdx]),
+                              );
+                            }),
+                      );
+                    },
+                  );
+                } else {
+                  _selectedIndex = index;
+                }
+              },
+            );
           },
         ),
         body: Stack(
@@ -114,7 +158,7 @@ class _HomeRootState extends State<HomeRoot> {
         return [
           HomeFeedScreen(),
           FollowingFeedScreen(onNext: _next), //이렇게 하면 bottomnBar 없이 넘어감!!!!
-          UploadScreen(),
+          VideoUploadScreen(),
           LocalFeedScreen(),
           ProfileScreen(),
         ].elementAt(index);
@@ -124,8 +168,6 @@ class _HomeRootState extends State<HomeRoot> {
 
   Widget _buildOffstageNavigator(int index) {
     var routeBuilders = _routeBuilders(context, index);
-    // { '/' : (context){return HomePage()} }
-
     return Offstage(
       offstage: _selectedIndex !=
           index, //index와 _selectedIndex가 다르면 안보이게. (주의 : 애니메이션은 offstage여부와 관계없이 계속 실행.)
@@ -134,7 +176,6 @@ class _HomeRootState extends State<HomeRoot> {
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
             builder: (context) => routeBuilders[routeSettings.name](context),
-            // routeSetting.name returns '/' as we have not specified any initialRoute.
           );
         },
       ),

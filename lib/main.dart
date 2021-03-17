@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
           ),
           GetPage(
             name: '/upload_screen',
-            page: () => UploadScreen(),
+            page: () => VideoUploadScreen(),
           ),
         ],
       ),

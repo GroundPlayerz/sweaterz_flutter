@@ -11,30 +11,52 @@ import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.da
 import 'package:sweaterz_flutter/view/screens/components/video_item.dart';
 import 'package:video_player/video_player.dart';
 
-class UploadScreen extends StatefulWidget {
+class UploadScreen extends StatelessWidget {
+  final String uploadType;
+  UploadScreen({this.uploadType});
+
   @override
-  _UploadScreenState createState() => _UploadScreenState();
+  Widget build(BuildContext context) {
+    return Builder(builder: (context) {
+      if (uploadType == 'video') {
+        return VideoUploadScreen();
+      } else if (uploadType == 'image') {
+        return Text('Image upload'); //ImageUploadScreen();
+      } else {
+        return Text('Text Upload'); //TextUploadScreen();
+      }
+    });
+  }
 }
 
-class _UploadScreenState extends State<UploadScreen> {
-  List<File> _fileList = [];
+class VideoUploadScreen extends StatefulWidget {
+  @override
+  _VideoUploadScreenState createState() => _VideoUploadScreenState();
+}
+
+class _VideoUploadScreenState extends State<VideoUploadScreen> {
+  File _video;
   final picker = ImagePicker();
+  VideoPlayerController _videoPlayerController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    _videoPlayerController?.dispose();
+    super.deactivate();
+  }
 
   @override
   void dispose() {
+    _videoPlayerController?.dispose();
+
     super.dispose();
-  }
-
-  Future<void> getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _fileList.add(File(pickedFile.path));
-      } else {
-        print('No image selected.');
-      }
-    });
   }
 
   Future<void> getVideo() async {
@@ -42,7 +64,7 @@ class _UploadScreenState extends State<UploadScreen> {
 
     setState(() {
       if (pickedFile != null) {
-        _fileList.add(File(pickedFile.path));
+        _video = File(pickedFile.path);
       } else {
         print('No video selected.');
       }
@@ -59,42 +81,16 @@ class _UploadScreenState extends State<UploadScreen> {
           child: Column(
         children: [
           Builder(builder: (context) {
-            if (_fileList.length != null) {
-              return Text('Select Images or Videos');
-            } else {
-              return ListView.separated(
-                  itemBuilder: (BuildContext context, int index) {
-                    File file = _fileList[index];
-                    String fileType =
-                        lookupMimeType(file.toString()).split('/')[0];
-                    print(fileType);
-                    if (fileType == 'image') {
-                      return Image.file(file);
-                    } else {
-                      return VideoItem(
-                        videoPlayerController: VideoPlayerController.file(file),
-                        autoplay: false,
-                        looping: false,
-                      );
-                    }
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(),
-                  itemCount: _fileList.length);
-            }
+            return _video != null
+                ? VideoItem(
+                    videoPlayerController: _videoPlayerController.,
+                    autoplay: false,
+                    looping: false,
+                  )
+                : Text('No Video');
           }),
-          Column(
-            children: [
-              roundedColorButton(
-                  textContent: 'Image',
-                  isButtonEnabled: true,
-                  onPressed: getImage),
-              roundedColorButton(
-                  textContent: 'Video',
-                  isButtonEnabled: true,
-                  onPressed: getVideo),
-            ],
-          )
+          roundedColorButton(
+              textContent: 'Video', isButtonEnabled: true, onPressed: getVideo),
         ],
       )),
     );
