@@ -11,6 +11,9 @@ import 'package:sweaterz_flutter/networking_api/login_api.dart';
 import 'package:sweaterz_flutter/view/constants.dart';
 import 'package:sweaterz_flutter/view/model/member_provider.dart';
 import 'package:sweaterz_flutter/view/screens/login_screen.dart';
+import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -37,16 +40,13 @@ class _SplashScreenState extends State<SplashScreen> with ChangeNotifier {
     if (await LoginAPI().isLoggedIn()) {
       if (await RegistrationAPI().isRegistered()) {
         await setLoggedInMemberProvider();
-        _nextScreenRoute = '/home_feed_screen';
+        Get.to(() => HomeRoot());
       } else {
-        _nextScreenRoute = '/set_profile_name_screen';
+        Get.to(() => SetProfileNameScreen());
       }
     } else {
-      _nextScreenRoute = '/';
+      Get.to(() => LoginScreen());
     }
-    Future.microtask(() {
-      Get.toNamed(_nextScreenRoute);
-    });
   }
 
   Future<void> setLoggedInMemberProvider() async {

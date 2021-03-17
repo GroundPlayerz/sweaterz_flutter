@@ -90,12 +90,6 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
                       return Text('loading');
                     }
                   }),
-              roundedColorButton(
-                  textContent: 'upload_screen으로 넘어가기',
-                  isButtonEnabled: true,
-                  onPressed: () {
-                    Get.toNamed('/upload_screen');
-                  })
             ],
           ),
         ),

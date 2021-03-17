@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:sweaterz_flutter/networking_api/registration_api.dart';
 import 'package:sweaterz_flutter/networking_api/login_api.dart';
 import 'package:sweaterz_flutter/view/constants.dart';
+import 'package:sweaterz_flutter/view/screens/splash_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
 import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';
 
@@ -68,9 +69,9 @@ Widget _signInButton() {
     ),
     onPressed: () async {
       await LoginAPI().logIn();
-      if (LoginAPI().getCurrentUser() != null) {
+      if (await LoginAPI().getCurrentUser() != null) {
         if (await RegistrationAPI().isRegistered()) {
-          Get.offAll(() => HomeFeedScreen());
+          Get.offAll(() => SplashScreen());
           //Member 정보 세팅하기
         } else {
           Get.offAll(() => SetProfileNameScreen());
