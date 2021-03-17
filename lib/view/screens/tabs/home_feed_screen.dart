@@ -34,15 +34,25 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       //backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        // leading: ,//로고
-        // actions: [
-        //
-        // ],
-        // actionsIconTheme: ,
-        //shadowColor: Colors.white.withOpacity(0.0),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+
+          leadingWidth: 2000,
+          leading: SizedBox(
+            width: 2000,
+            child: Image(
+              image: AssetImage('images/logo_small@3x.png'),
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+          //로고
+          // actions: [],
+          // actionsIconTheme: ,
+          //shadowColor: Colors.white.withOpacity(0.0),
+        ),
       ),
       body: Center(
         child: SafeArea(
@@ -59,43 +69,50 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
                   .profilePhotoURL
                   .toString()),
               Text(Provider.of<MemberProvider>(context).profileName),
-              FutureBuilder<List>(
-                  future: Future.wait([
-                    TagAPI().getAllSports(),
-                    TagAPI().getFollowingSports(),
-                  ]),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      List sportsList = snapshot.data[0];
-                      List followingSportsList = snapshot.data[1];
-                      List<Widget> sportsButtonList = [];
-                      for (Map map in sportsList) {
-                        bool _isActivated = false;
-                        if (followingSportsList.contains(map['name'])) {
-                          _isActivated = true;
-                        }
-                        sportsButtonList.add(StatefulSportsButton(
-                          sportsName: map['name'],
-                          isActivated: _isActivated,
-                        ));
-                      }
-                      return Wrap(
-                        spacing: 8.0,
-                        runSpacing: 8.0,
-                        children: sportsButtonList,
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('error');
-                    } else {
-                      return Text('loading');
-                    }
-                  }),
-              roundedColorButton(
-                  textContent: 'upload_screen으로 넘어가기',
-                  isButtonEnabled: true,
-                  onPressed: () {
-                    Get.toNamed('/upload_screen');
-                  })
+              // FutureBuilder<List>(
+              //     future: Future.wait([
+              //       TagAPI().getAllSports(),
+              //       TagAPI().getFollowingSports(),
+              //     ]),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.hasData) {
+              //         List sportsList = snapshot.data[0];
+              //         List followingSportsList = snapshot.data[1];
+              //         List<Widget> sportsButtonList = [];
+              //         for (Map map in sportsList) {
+              //           bool _isActivated = false;
+              //           if (followingSportsList.contains(map['name'])) {
+              //             _isActivated = true;
+              //           }
+              //           sportsButtonList.add(StatefulSportsButton(
+              //             sportsName: map['name'],
+              //             isActivated: _isActivated,
+              //           ));
+              //         }
+              //         return Wrap(
+              //           spacing: 8.0,
+              //           runSpacing: 8.0,
+              //           children: sportsButtonList,
+              //         );
+              //       } else if (snapshot.hasError) {
+              //         return Text('error');
+              //       } else {
+              //         return Text('loading');
+              //       }
+              //     }),
+              // roundedColorButton(
+              //     textContent: 'upload_screen으로 넘어가기',
+              //     isButtonEnabled: true,
+              //     onPressed: () {
+              //       Get.toNamed('/upload_screen');
+              //     })
+              SizedBox(
+                width: 2000,
+                child: Image(
+                  image: AssetImage('images/logo_small@3x.png'),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
             ],
           ),
         ),
