@@ -76,9 +76,7 @@ class _SplashScreenState extends State<SplashScreen> with ChangeNotifier {
           Container(
             height: 34.0,
             //padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Image(
-              image: AssetImage('images/logo_big@3x.png'),
-            ),
+            child: Image(image: AssetImage('images/logo_big@3x.png')),
           ),
           SizedBox(
             height: 375.8 * convertHeightRatio,

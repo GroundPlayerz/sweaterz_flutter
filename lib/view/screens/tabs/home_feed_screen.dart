@@ -34,15 +34,25 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       //backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        // leading: ,//로고
-        // actions: [
-        //
-        // ],
-        // actionsIconTheme: ,
-        //shadowColor: Colors.white.withOpacity(0.0),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+
+          leadingWidth: 2000,
+          leading: SizedBox(
+            width: 2000,
+            child: Image(
+              image: AssetImage('images/logo_small@3x.png'),
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+          //로고
+          // actions: [],
+          // actionsIconTheme: ,
+          //shadowColor: Colors.white.withOpacity(0.0),
+        ),
       ),
       body: Center(
         child: SafeArea(
