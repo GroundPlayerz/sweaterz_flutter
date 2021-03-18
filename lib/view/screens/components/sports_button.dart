@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/networking_api/tag_api.dart';
 
-import '../../constants.dart';
+import '../../constants/constants.dart';
 
 class StatefulSportsButton extends StatefulWidget {
   final String sportsName;
@@ -27,6 +27,12 @@ class _StatefulSportsButtonState extends State<StatefulSportsButton> {
     setState(() {
       _isActivated = widget.isActivated;
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override

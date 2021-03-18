@@ -5,7 +5,7 @@ import 'package:sweaterz_flutter/networking_api/registration_api.dart';
 import 'package:sweaterz_flutter/view/screens/follow_sports_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
 
-import '../constants.dart';
+import '../constants/constants.dart';
 import 'components/rounded_color_button.dart';
 
 class RegistrationCompleteScreen extends StatelessWidget {

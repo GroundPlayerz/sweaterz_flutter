@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/networking_api/login_api.dart';
-import 'package:sweaterz_flutter/view/constants.dart';
+import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/networking_api/tag_api.dart';
 import 'package:sweaterz_flutter/view/model/enums.dart';
 import 'package:sweaterz_flutter/view/model/member_provider.dart';
@@ -12,7 +12,7 @@ import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.da
 import 'package:sweaterz_flutter/view/screens/components/sports_button.dart';
 import 'package:sweaterz_flutter/view/screens/login_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/tab_item.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/video_upload_screen.dart';
+import 'package:sweaterz_flutter/view/screens/video_upload_screen.dart';
 
 import '../splash_screen.dart';
 

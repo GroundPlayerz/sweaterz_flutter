@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constants.dart';
+import '../../constants/constants.dart';
 
 Widget roundedColorButton(
     {String textContent, bool isButtonEnabled, Function onPressed}) {

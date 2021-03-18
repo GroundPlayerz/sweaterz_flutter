@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/gallery_video_picker.dart';
+import 'package:sweaterz_flutter/view/screens/assets_picker_home.dart';
+import 'package:sweaterz_flutter/view/screens/gallery_video_picker.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/profile_screen.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/video_upload_screen.dart';
-import 'package:sweaterz_flutter/view/constants.dart';
+import 'package:sweaterz_flutter/view/screens/video_upload_screen.dart';
+import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'following_feed_screen.dart';
-import 'gallery_image_picker.dart';
+import '../gallery_image_picker.dart';
 import 'home_feed_screen.dart';
 import 'local_feed_screen.dart';
 
@@ -109,9 +110,9 @@ class _HomeRootState extends State<HomeRoot> {
                                 onTap: () {
                                   Navigator.pop(context);
                                   if (listViewIdx == 0) {
-                                    Get.to(() => GalleryVideoPicker());
+                                    Get.to(() => AssetsPickerHome());
                                   } else if (listViewIdx == 1) {
-                                    Get.to(() => GalleryImagePicker());
+                                    Get.to(() => AssetsPickerHome());
                                   } else {}
                                   // _selectedIndex = index;
                                 },

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/networking_api/login_api.dart';
-import 'package:sweaterz_flutter/view/constants.dart';
+import 'package:sweaterz_flutter/view/constants/constants.dart';
 
 class FollowingFeedScreen extends StatefulWidget {
   final Function onNext;

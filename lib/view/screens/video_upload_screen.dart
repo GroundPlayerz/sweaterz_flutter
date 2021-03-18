@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mime/mime.dart';
 import 'package:sweaterz_flutter/networking_api/login_api.dart';
-import 'package:sweaterz_flutter/view/constants.dart';
+import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:chewie/chewie.dart';
 import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.dart';
 import 'package:sweaterz_flutter/view/screens/components/video_item.dart';
