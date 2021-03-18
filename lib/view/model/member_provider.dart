@@ -10,6 +10,14 @@ class MemberProvider with ChangeNotifier {
   List<String> followingMembers;
   List<String> followerMembers;
 
+  void initialize() {
+    this.email = null;
+    this.profileName = null;
+    this.memberRole = null;
+    this.profilePhotoURL = null;
+    notifyListeners();
+  }
+
   void setEmail({String email}) {
     this.email = email;
     notifyListeners();

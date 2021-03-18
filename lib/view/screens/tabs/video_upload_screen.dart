@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:sweaterz_flutter/networking_api/login_api.dart';
 import 'package:sweaterz_flutter/view/constants.dart';
@@ -11,38 +10,22 @@ import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.da
 import 'package:sweaterz_flutter/view/screens/components/video_item.dart';
 import 'package:video_player/video_player.dart';
 
-class UploadScreen extends StatelessWidget {
-  final String uploadType;
-  UploadScreen({this.uploadType});
-
-  @override
-  Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      if (uploadType == 'video') {
-        return VideoUploadScreen();
-      } else if (uploadType == 'image') {
-        return Text('Image upload'); //ImageUploadScreen();
-      } else {
-        return Text('Text Upload'); //TextUploadScreen();
-      }
-    });
-  }
-}
-
 class VideoUploadScreen extends StatefulWidget {
+  final videoFile;
+  VideoUploadScreen({this.videoFile});
   @override
   _VideoUploadScreenState createState() => _VideoUploadScreenState();
 }
 
 class _VideoUploadScreenState extends State<VideoUploadScreen> {
-  File _video;
-  final picker = ImagePicker();
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
+  File _video;
 
   @override
   void initState() {
     // TODO: implement initState
+    getVideo();
     super.initState();
   }
 
@@ -54,14 +37,8 @@ class _VideoUploadScreenState extends State<VideoUploadScreen> {
   }
 
   Future<void> getVideo() async {
-    final pickedFile = await picker.getVideo(source: ImageSource.gallery);
-
     setState(() {
-      if (pickedFile != null) {
-        _video = File(pickedFile.path);
-      } else {
-        print('No video selected.');
-      }
+      _video = widget.videoFile;
     });
   }
 

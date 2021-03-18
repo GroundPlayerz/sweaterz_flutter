@@ -10,7 +10,8 @@ import 'package:sweaterz_flutter/view/screens/login_screen.dart';
 import 'package:sweaterz_flutter/view/screens/registration_complete_screen.dart';
 import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/gallery_video_picker.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/video_upload_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +45,10 @@ class MyApp extends StatelessWidget {
         getPages: [
           GetPage(
             name: '/',
+            page: () => SplashScreen(),
+          ),
+          GetPage(
+            name: '/login_screen',
             page: () => LoginScreen(),
           ),
           GetPage(
@@ -63,9 +68,17 @@ class MyApp extends StatelessWidget {
             page: () => FollowSportsScreen(),
           ),
           GetPage(
-            name: '/upload_screen',
+            name: '/gallery_picker',
+            page: () => GalleryVideoPicker(),
+          ),
+          GetPage(
+            name: '/video_upload_screen',
             page: () => VideoUploadScreen(),
           ),
+          // GetPage(
+          //   name: '/upload_screen',
+          //   page: () => VideoUploadScreen(),
+          // ),
         ],
       ),
     );

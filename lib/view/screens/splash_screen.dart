@@ -40,12 +40,12 @@ class _SplashScreenState extends State<SplashScreen> with ChangeNotifier {
     if (await LoginAPI().isLoggedIn()) {
       if (await RegistrationAPI().isRegistered()) {
         await setLoggedInMemberProvider();
-        Get.to(() => HomeRoot());
+        Get.offAll(() => HomeRoot());
       } else {
-        Get.to(() => SetProfileNameScreen());
+        Get.offAll(() => SetProfileNameScreen());
       }
     } else {
-      Get.to(() => LoginScreen());
+      Get.offAll(() => LoginScreen());
     }
   }
 

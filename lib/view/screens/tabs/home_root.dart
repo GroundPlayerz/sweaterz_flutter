@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/gallery_video_picker.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/profile_screen.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/video_upload_screen.dart';
 import 'package:sweaterz_flutter/view/constants.dart';
 import 'following_feed_screen.dart';
+import 'gallery_image_picker.dart';
 import 'home_feed_screen.dart';
 import 'local_feed_screen.dart';
 
@@ -105,19 +107,12 @@ class _HomeRootState extends State<HomeRoot> {
                             itemBuilder: (context, listViewIdx) {
                               return ListTile(
                                 onTap: () {
-                                  String uploadType;
-                                  if (listViewIdx == 0) {
-                                    uploadType = 'video';
-                                  } else if (listViewIdx == 1) {
-                                    uploadType = 'image';
-                                  } else {
-                                    uploadType = 'text';
-                                  }
                                   Navigator.pop(context);
-                                  Get.to(() =>
-                                          VideoUploadScreen() //UploadScreen(uploadType: uploadType),
-                                      );
-
+                                  if (listViewIdx == 0) {
+                                    Get.to(() => GalleryVideoPicker());
+                                  } else if (listViewIdx == 1) {
+                                    Get.to(() => GalleryImagePicker());
+                                  } else {}
                                   // _selectedIndex = index;
                                 },
                                 title: Text(bottomSheetList[listViewIdx]),
@@ -158,7 +153,7 @@ class _HomeRootState extends State<HomeRoot> {
         return [
           HomeFeedScreen(),
           FollowingFeedScreen(onNext: _next), //이렇게 하면 bottomnBar 없이 넘어감!!!!
-          VideoUploadScreen(),
+          GalleryVideoPicker(),
           LocalFeedScreen(),
           ProfileScreen(),
         ].elementAt(index);

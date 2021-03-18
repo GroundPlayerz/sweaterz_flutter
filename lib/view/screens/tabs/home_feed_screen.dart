@@ -10,8 +10,11 @@ import 'package:sweaterz_flutter/view/model/member_provider.dart';
 import 'package:sweaterz_flutter/view/model/member_profile.dart';
 import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.dart';
 import 'package:sweaterz_flutter/view/screens/components/sports_button.dart';
+import 'package:sweaterz_flutter/view/screens/login_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/tab_item.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/video_upload_screen.dart';
+
+import '../splash_screen.dart';
 
 class HomeFeedScreen extends StatefulWidget {
   @override
@@ -127,8 +130,10 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
     return OutlineButton(
       splashColor: Colors.grey,
       onPressed: () async {
+        Get.offAll(() => LoginScreen());
         LoginAPI signInController = LoginAPI();
         signInController.logOut();
+        Provider.of<MemberProvider>(context).initialize();
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
