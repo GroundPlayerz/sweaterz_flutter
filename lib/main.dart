@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/view/constants/screens.dart';
 import 'package:sweaterz_flutter/view/model/member_provider.dart';
-import 'package:sweaterz_flutter/view/screens/assets_picker_home.dart';
 import 'package:sweaterz_flutter/view/screens/follow_sports_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
 import 'package:sweaterz_flutter/view/screens/splash_screen.dart';
@@ -13,19 +12,20 @@ import 'package:sweaterz_flutter/view/screens/registration_complete_screen.dart'
 import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
 import 'package:sweaterz_flutter/view/screens/gallery_video_picker.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
 import 'package:sweaterz_flutter/view/screens/video_upload_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-const Color themeColor = Color(0xff00bc56);
+const Color themeColor = Color(0xFFef5454);
 
-bool get currentIsDark => false; //Screens.mediaQuery.platformBrightness.isDark;
+bool get currentIsDark => true; //Screens.mediaQuery.platformBrightness.isDark;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
     statusBarColor: Colors.transparent,
   ));
   AssetPicker.registerObserve();
@@ -80,16 +80,8 @@ class MyApp extends StatelessWidget {
             page: () => FollowSportsScreen(),
           ),
           GetPage(
-            name: '/gallery_picker',
-            page: () => GalleryVideoPicker(),
-          ),
-          GetPage(
             name: '/video_upload_screen',
-            page: () => VideoUploadScreen(),
-          ),
-          GetPage(
-            name: '/video_upload_screen',
-            page: () => AssetsPickerHome(),
+            page: () => UploadScreen(),
           ),
           // GetPage(
           //   name: '/upload_screen',

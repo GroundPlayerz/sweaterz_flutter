@@ -16,17 +16,10 @@ Widget roundedColorButton(
             borderRadius: BorderRadius.all(Radius.circular(5.0))),
       ), //styleFrom
       onPressed: isButtonEnabled ? onPressed : null,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 0),
-            child: Text(textContent,
-                style: kBodyTextStyle1R.copyWith(
-                    fontSize: 16.0, color: Colors.white)),
-          )
-        ],
+      child: Center(
+        child: Text(textContent,
+            style:
+                kBodyTextStyle1R.copyWith(fontSize: 16.0, color: Colors.white)),
       ),
     ),
   );

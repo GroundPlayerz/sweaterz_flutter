@@ -35,6 +35,7 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
               maxAssets: maxAssetsCount,
               selectedAssets: assets,
               requestType: RequestType.video,
+              themeColor: themeColor,
             );
           },
         ),
@@ -101,6 +102,7 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
               ),
             ),
             const SizedBox(width: 12.0),
+            // Todo 여기 아래 부분 바꿔서 우리가 원하는 버튼 형식으로 디자인하기!!!
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -143,9 +145,6 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
   Widget _assetWidgetBuilder(AssetEntity asset) {
     Widget widget;
     switch (asset.type) {
-      case AssetType.audio:
-        widget = _audioAssetWidget(asset);
-        break;
       case AssetType.video:
         widget = _videoAssetWidget(asset);
         break;
@@ -155,46 +154,6 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
         break;
     }
     return widget;
-  }
-
-  Widget _audioAssetWidget(AssetEntity asset) {
-    return ColoredBox(
-      color: context.themeData.dividerColor,
-      child: Stack(
-        children: <Widget>[
-          AnimatedPositioned(
-            duration: kThemeAnimationDuration,
-            top: 0.0,
-            left: 0.0,
-            right: 0.0,
-            bottom: isDisplayingDetail ? 20.0 : 0.0,
-            child: Center(
-              child: Icon(
-                Icons.audiotrack,
-                size: isDisplayingDetail ? 24.0 : 16.0,
-              ),
-            ),
-          ),
-          AnimatedPositioned(
-            duration: kThemeAnimationDuration,
-            left: 0.0,
-            right: 0.0,
-            bottom: isDisplayingDetail ? 0.0 : -20.0,
-            height: 20.0,
-            child: Text(
-              asset.title,
-              style: const TextStyle(
-                height: 1.0,
-                fontSize: 10.0,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   Widget _imageAssetWidget(AssetEntity asset) {
@@ -298,7 +257,7 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const Text('Selected Assets'),
+                    const Text('Selected Video'),
                     if (assets.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),

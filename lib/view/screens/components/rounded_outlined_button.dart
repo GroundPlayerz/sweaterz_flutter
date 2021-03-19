@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
 
 Widget roundedOutlinedButton(
-    {String textContent, bool isButtonEnabled, Function onPressed}) {
+    {String textContent, bool isButtonEnabled = true, Function onPressed}) {
   return Container(
     width: double.infinity,
-    height: 40.0,
+    height: double.infinity,
     child: OutlinedButton(
       style: OutlinedButton.styleFrom(
         primary: Colors.red,
@@ -16,20 +16,10 @@ Widget roundedOutlinedButton(
         ),
       ),
       onPressed: isButtonEnabled ? onPressed : null,
-      child: Container(
-        width: double.infinity,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 0),
-              child: Text(textContent,
-                  style: kBodyTextStyle1R.copyWith(
-                      fontSize: 16.0, color: kSweaterzColor)),
-            )
-          ],
-        ),
+      child: Center(
+        child: Text(textContent,
+            style: kBodyTextStyle1R.copyWith(
+                fontSize: 13.0, color: kSweaterzColor)),
       ),
     ),
   );

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sweaterz_flutter/view/screens/assets_picker_home.dart';
 import 'package:sweaterz_flutter/view/screens/gallery_video_picker.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/profile_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
 import 'package:sweaterz_flutter/view/screens/video_upload_screen.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'following_feed_screen.dart';
+import '../following_feed_screen.dart';
 import '../gallery_image_picker.dart';
 import 'home_feed_screen.dart';
 import 'local_feed_screen.dart';
@@ -88,45 +88,31 @@ class _HomeRootState extends State<HomeRoot> {
             ),
           ],
           onTap: (index) {
-            setState(
-              () {
-                if (index == 2) {
-                  List<String> bottomSheetList = [
-                    'Video',
-                    'Image',
-                    'Only Text'
-                  ];
+            setState(() {
+              if (index == 2) {
+                Navigator.of(context).push(PageRouteBuilder(
+                  barrierColor: Colors.white,
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      UploadScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    var begin = Offset(0.0, 1.0);
+                    var end = Offset(0.0, 0.0);
+                    var curve = Curves.ease;
 
-                  showModalBottomSheet(
-                    isDismissible: true,
-                    context: context,
-                    builder: (context) {
-                      return Container(
-                        height: 180,
-                        child: ListView.builder(
-                            itemCount: 3,
-                            itemBuilder: (context, listViewIdx) {
-                              return ListTile(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  if (listViewIdx == 0) {
-                                    Get.to(() => AssetsPickerHome());
-                                  } else if (listViewIdx == 1) {
-                                    Get.to(() => AssetsPickerHome());
-                                  } else {}
-                                  // _selectedIndex = index;
-                                },
-                                title: Text(bottomSheetList[listViewIdx]),
-                              );
-                            }),
-                      );
-                    },
-                  );
-                } else {
-                  _selectedIndex = index;
-                }
-              },
-            );
+                    var tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
+
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: child,
+                    );
+                  },
+                ));
+              } else {
+                _selectedIndex = index;
+              }
+            });
           },
         ),
         body: Stack(
@@ -154,7 +140,7 @@ class _HomeRootState extends State<HomeRoot> {
         return [
           HomeFeedScreen(),
           FollowingFeedScreen(onNext: _next), //이렇게 하면 bottomnBar 없이 넘어감!!!!
-          GalleryVideoPicker(),
+          Text('Nope'),
           LocalFeedScreen(),
           ProfileScreen(),
         ].elementAt(index);

@@ -35,6 +35,7 @@ class _GalleryImagePickerState extends State<GalleryImagePicker> {
               maxAssets: maxAssetsCount,
               selectedAssets: assets,
               requestType: RequestType.image,
+              themeColor: themeColor,
             );
           },
         ),
@@ -148,12 +149,6 @@ class _GalleryImagePickerState extends State<GalleryImagePicker> {
   Widget _assetWidgetBuilder(AssetEntity asset) {
     Widget widget;
     switch (asset.type) {
-      case AssetType.audio:
-        widget = _audioAssetWidget(asset);
-        break;
-      case AssetType.video:
-        widget = _videoAssetWidget(asset);
-        break;
       case AssetType.image:
       case AssetType.other:
         widget = _imageAssetWidget(asset);
@@ -162,68 +157,10 @@ class _GalleryImagePickerState extends State<GalleryImagePicker> {
     return widget;
   }
 
-  Widget _audioAssetWidget(AssetEntity asset) {
-    return ColoredBox(
-      color: context.themeData.dividerColor,
-      child: Stack(
-        children: <Widget>[
-          AnimatedPositioned(
-            duration: kThemeAnimationDuration,
-            top: 0.0,
-            left: 0.0,
-            right: 0.0,
-            bottom: isDisplayingDetail ? 20.0 : 0.0,
-            child: Center(
-              child: Icon(
-                Icons.audiotrack,
-                size: isDisplayingDetail ? 24.0 : 16.0,
-              ),
-            ),
-          ),
-          AnimatedPositioned(
-            duration: kThemeAnimationDuration,
-            left: 0.0,
-            right: 0.0,
-            bottom: isDisplayingDetail ? 0.0 : -20.0,
-            height: 20.0,
-            child: Text(
-              asset.title,
-              style: const TextStyle(
-                height: 1.0,
-                fontSize: 10.0,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _imageAssetWidget(AssetEntity asset) {
     return Image(
       image: AssetEntityImageProvider(asset, isOriginal: false),
       fit: BoxFit.cover,
-    );
-  }
-
-  Widget _videoAssetWidget(AssetEntity asset) {
-    return Stack(
-      children: <Widget>[
-        Positioned.fill(child: _imageAssetWidget(asset)),
-        ColoredBox(
-          color: context.themeData.dividerColor.withOpacity(0.3),
-          child: Center(
-            child: Icon(
-              Icons.video_library,
-              color: Colors.white,
-              size: isDisplayingDetail ? 24.0 : 16.0,
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -303,7 +240,7 @@ class _GalleryImagePickerState extends State<GalleryImagePicker> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const Text('Selected Assets'),
+                    const Text('Selected Images'),
                     Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 10.0,
