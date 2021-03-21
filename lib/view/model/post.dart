@@ -1,9 +1,11 @@
 import 'package:sweaterz_flutter/view/model/enums.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class Post {
   String _postId;
   String _memberEmail;
-  String _filepath;
+  String _uploadType;
+  List<AssetEntity> _assets;
   String _title;
   String _content;
   int _likeCount = 0;
@@ -13,16 +15,16 @@ class Post {
   PostPrivacy _postPrivacy;
   List<String> _feedbackIdList;
 
-  String getFilePath() {
-    return _filepath;
+  List<AssetEntity> getFilePath() {
+    return _assets;
   }
 
   void setPostId(String postId) {
     _postId = postId;
   }
 
-  void setFilePath(String filePath) {
-    _filepath = filePath;
+  void setFilePath(List<AssetEntity> assets) {
+    _assets = assets;
   }
 
   void setTitle(String title) {

@@ -3,15 +3,22 @@ import 'package:sweaterz_flutter/networking_api/tag_api.dart';
 
 import '../../constants/constants.dart';
 
-class StatefulSportsButton extends StatefulWidget {
+class SportsButton extends StatefulWidget {
   final String sportsName;
   final bool isActivated;
-  StatefulSportsButton({this.sportsName, this.isActivated});
+  final Function enabledCallback;
+  final Function disabledCallback;
+
+  SportsButton(
+      {this.sportsName,
+      this.isActivated,
+      this.enabledCallback,
+      this.disabledCallback});
   @override
-  _StatefulSportsButtonState createState() => _StatefulSportsButtonState();
+  _SportsButtonState createState() => _SportsButtonState();
 }
 
-class _StatefulSportsButtonState extends State<StatefulSportsButton> {
+class _SportsButtonState extends State<SportsButton> {
   Color defaultColor = Color(0xffE4E4E4);
   Color activatedColor = Colors.grey;
   bool _isActivated = false;
@@ -43,9 +50,9 @@ class _StatefulSportsButtonState extends State<StatefulSportsButton> {
           toggleButton();
         });
         if (_isActivated) {
-          TagAPI().followsSport({'name': widget.sportsName});
+          widget.enabledCallback();
         } else {
-          TagAPI().unfollowsSport({'name': widget.sportsName});
+          widget.disabledCallback();
         }
       },
       style: TextButton.styleFrom(

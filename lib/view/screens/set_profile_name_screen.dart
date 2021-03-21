@@ -14,6 +14,7 @@ class SetProfileNameScreen extends StatefulWidget {
 class _SetProfileNameScreenState extends State<SetProfileNameScreen> {
   final TextEditingController profileNameController = TextEditingController();
   bool _isButtonEnabled = false;
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);

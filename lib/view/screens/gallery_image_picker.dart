@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../constants/extensions.dart';
 import '../constants/picker_model.dart';
 import 'package:sweaterz_flutter/main.dart';
+
+import 'components/rounded_outlined_button.dart';
 
 class GalleryImagePicker extends StatefulWidget {
   @override
@@ -11,6 +14,9 @@ class GalleryImagePicker extends StatefulWidget {
 }
 
 class _GalleryImagePickerState extends State<GalleryImagePicker> {
+  final TextEditingController contentsController = TextEditingController();
+  bool _isNextButtonEnabled = false;
+
   final int maxAssetsCount = 9;
 
   List<AssetEntity> assets = <AssetEntity>[];
@@ -35,7 +41,8 @@ class _GalleryImagePickerState extends State<GalleryImagePicker> {
               maxAssets: maxAssetsCount,
               selectedAssets: assets,
               requestType: RequestType.image,
-              themeColor: themeColor,
+              pickerTheme: kAssetsPickerThemeData,
+              textDelegate: EnglishTextDelegate(),
             );
           },
         ),
@@ -71,8 +78,8 @@ class _GalleryImagePickerState extends State<GalleryImagePicker> {
 
   Widget methodItemBuilder(BuildContext _, int index) {
     final PickMethodModel model = pickMethods[index];
-    return InkWell(
-      onTap: () async {
+    return TextButton(
+      onPressed: () async {
         final List<AssetEntity> result = await model.method(context, assets);
         if (result != null && result != assets) {
           assets = List<AssetEntity>.from(result);
@@ -81,70 +88,9 @@ class _GalleryImagePickerState extends State<GalleryImagePicker> {
           }
         }
       },
-      child: Container(
-        height: 72.0,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 30.0,
-          vertical: 10.0,
-        ),
-        child: Row(
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: 1.0,
-              child: Container(
-                margin: const EdgeInsets.all(2.0),
-                child: Center(
-                  child: Text(
-                    model.icon,
-                    style: const TextStyle(fontSize: 24.0),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 12.0),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    model.name,
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    model.description,
-                    style: context.themeData.textTheme.caption,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-            const Icon(
-              Icons.chevron_right,
-              color: Colors.grey,
-            ),
-          ],
-        ),
-      ),
+      child: Text('Select Images'),
     );
   }
-
-  Widget get methodListView => Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 10.0),
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            itemCount: pickMethods.length,
-            itemBuilder: methodItemBuilder,
-          ),
-        ),
-      );
 
   Widget _assetWidgetBuilder(AssetEntity asset) {
     Widget widget;
@@ -174,7 +120,7 @@ class _GalleryImagePickerState extends State<GalleryImagePicker> {
                 context,
                 currentIndex: index,
                 assets: assets,
-                themeData: AssetPicker.themeData(themeColor),
+                themeData: AssetPicker.themeData(kSweaterzColor),
               );
               if (result != assets && result != null) {
                 assets = List<AssetEntity>.from(result);
@@ -307,11 +253,55 @@ class _GalleryImagePickerState extends State<GalleryImagePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        methodListView,
-        selectedAssetsWidget,
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        backgroundColor: Colors.white,
+        title: Text(
+          'Upload Image Post',
+          style: kBodyTextStyle1M.copyWith(color: Colors.black),
+        ),
+        actions: [
+          SizedBox(
+              width: 90.0,
+              height: 40.0,
+              child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: roundedOutlinedButton(
+                    textContent: 'Next',
+                    onPressed: () {},
+                  )))
+        ],
+        actionsIconTheme: IconThemeData(color: Colors.black),
+      ),
+      body: ListView(
+        children: <Widget>[
+          Container(
+            height: 300,
+            child: TextField(
+              // ToDO 아래 줄 어케지우는지 몰겠음;;
+              decoration: kTextFieldDecoration.copyWith(
+                hintText: 'Write description',
+              ),
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+            ),
+          ),
+          kUploadDivider,
+          Container(
+            height: 70,
+          ),
+          kUploadDivider,
+          Container(
+            height: 70,
+          ),
+          kUploadDivider,
+          methodItemBuilder(context, 0),
+          selectedAssetsWidget,
+        ],
+      ),
     );
   }
 }

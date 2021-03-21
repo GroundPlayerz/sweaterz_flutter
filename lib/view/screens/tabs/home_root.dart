@@ -90,25 +90,34 @@ class _HomeRootState extends State<HomeRoot> {
           onTap: (index) {
             setState(() {
               if (index == 2) {
-                Navigator.of(context).push(PageRouteBuilder(
-                  barrierColor: Colors.white,
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      UploadScreen(),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    var begin = Offset(0.0, 1.0);
-                    var end = Offset(0.0, 0.0);
-                    var curve = Curves.ease;
+                List<String> bottomSheetList = ['Video', 'Image', 'Only Text'];
 
-                    var tween = Tween(begin: begin, end: end)
-                        .chain(CurveTween(curve: curve));
-
-                    return SlideTransition(
-                      position: animation.drive(tween),
-                      child: child,
+                showModalBottomSheet(
+                  isDismissible: true,
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      height: 180,
+                      child: ListView.builder(
+                          itemCount: 3,
+                          itemBuilder: (context, listViewIdx) {
+                            return ListTile(
+                              onTap: () {
+                                Navigator.pop(context);
+                                if (listViewIdx == 0) {
+                                  Get.to(() => GalleryVideoPicker(),
+                                      transition: Transition.downToUp);
+                                } else if (listViewIdx == 1) {
+                                  Get.to(() => GalleryImagePicker(),
+                                      transition: Transition.downToUp);
+                                } else {}
+                              },
+                              title: Text(bottomSheetList[listViewIdx]),
+                            );
+                          }),
                     );
                   },
-                ));
+                );
               } else {
                 _selectedIndex = index;
               }

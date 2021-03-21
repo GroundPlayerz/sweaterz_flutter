@@ -35,8 +35,10 @@ dependencies:
   google_fonts: ^1.1.2
   chewie: ^0.12.2
   video_player: ^1.0.1
-  mime: ^0.9.7
-  wechat_assets_picker: ^4.2.2
+  wechat_assets_picker:
+    git:
+      url: https://github.com/GroundPlayerz/flutter_wechat_assets_picker.git
+      ref: 937141b77d651d71087fbf7c88fce7ddf7c6be0f
 
 dev_dependencies:
   flutter_test:

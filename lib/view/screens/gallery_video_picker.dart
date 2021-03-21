@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../constants/extensions.dart';
 import '../constants/picker_model.dart';
 import 'package:sweaterz_flutter/main.dart';
+
+import 'components/rounded_outlined_button.dart';
 
 class GalleryVideoPicker extends StatefulWidget {
   @override
@@ -30,13 +33,12 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
             BuildContext context,
             List<AssetEntity> assets,
           ) async {
-            return await AssetPicker.pickAssets(
-              context,
-              maxAssets: maxAssetsCount,
-              selectedAssets: assets,
-              requestType: RequestType.video,
-              themeColor: themeColor,
-            );
+            return await AssetPicker.pickAssets(context,
+                maxAssets: maxAssetsCount,
+                selectedAssets: assets,
+                requestType: RequestType.video,
+                pickerTheme: kAssetsPickerThemeData,
+                textDelegate: EnglishTextDelegate());
           },
         ),
       ];
@@ -71,8 +73,8 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
 
   Widget methodItemBuilder(BuildContext _, int index) {
     final PickMethodModel model = pickMethods[index];
-    return InkWell(
-      onTap: () async {
+    return TextButton(
+      onPressed: () async {
         final List<AssetEntity> result = await model.method(context, assets);
         if (result != null && result != assets) {
           assets = List<AssetEntity>.from(result);
@@ -81,66 +83,9 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
           }
         }
       },
-      child: Container(
-        height: 72.0,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 30.0,
-          vertical: 10.0,
-        ),
-        child: Row(
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: 1.0,
-              child: Container(
-                margin: const EdgeInsets.all(2.0),
-                child: Center(
-                  child: Text(
-                    model.icon,
-                    style: const TextStyle(fontSize: 24.0),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 12.0),
-            // Todo 여기 아래 부분 바꿔서 우리가 원하는 버튼 형식으로 디자인하기!!!
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    model.name,
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    model.description,
-                    style: context.themeData.textTheme.caption,
-                    maxLines: 2,
-                    overflow: TextOverflow.fade,
-                  ),
-                ],
-              ),
-            ),
-            const Icon(
-              Icons.chevron_right,
-              color: Colors.grey,
-            ),
-          ],
-        ),
-      ),
+      child: Text('Select Video'),
     );
   }
-
-  Widget get methodListView => Expanded(
-        child: ListView.builder(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          itemCount: pickMethods.length,
-          itemBuilder: methodItemBuilder,
-        ),
-      );
 
   Widget _assetWidgetBuilder(AssetEntity asset) {
     Widget widget;
@@ -191,7 +136,7 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
                 context,
                 currentIndex: index,
                 assets: assets,
-                themeData: AssetPicker.themeData(themeColor),
+                themeData: AssetPicker.themeData(kSweaterzColor),
               );
               if (result != assets && result != null) {
                 assets = List<AssetEntity>.from(result);
@@ -311,11 +256,53 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        methodListView,
-        if (assets.isNotEmpty) selectedAssetsWidget,
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        backgroundColor: Colors.white,
+        title: Text(
+          'Upload Video Post',
+          style: kBodyTextStyle1M.copyWith(color: Colors.black),
+        ),
+        actions: [
+          SizedBox(
+              width: 90.0,
+              height: 40.0,
+              child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: roundedOutlinedButton(
+                      textContent: 'Next', onPressed: null)))
+        ],
+        actionsIconTheme: IconThemeData(color: Colors.black),
+      ),
+      body: ListView(
+        children: <Widget>[
+          Container(
+            height: 300,
+            child: TextField(
+              // ToDO 아래 줄 어케지우는지 몰겠음;;
+              decoration: kTextFieldDecoration.copyWith(
+                hintText: 'Write description',
+              ),
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+            ),
+          ),
+          kUploadDivider,
+          Container(
+            height: 70,
+          ),
+          kUploadDivider,
+          Container(
+            height: 70,
+          ),
+          kUploadDivider,
+          methodItemBuilder(context, 0),
+          selectedAssetsWidget,
+        ],
+      ),
     );
   }
 }

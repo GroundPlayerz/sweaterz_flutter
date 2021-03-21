@@ -17,8 +17,6 @@ import 'package:sweaterz_flutter/view/screens/video_upload_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-const Color themeColor = Color(0xFFef5454);
-
 bool get currentIsDark => true; //Screens.mediaQuery.platformBrightness.isDark;
 
 void main() async {

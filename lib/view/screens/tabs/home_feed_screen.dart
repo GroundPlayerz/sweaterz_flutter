@@ -1,18 +1,11 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/networking_api/login_api.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/networking_api/tag_api.dart';
-import 'package:sweaterz_flutter/view/model/enums.dart';
 import 'package:sweaterz_flutter/view/model/member_provider.dart';
-import 'package:sweaterz_flutter/view/model/member_profile.dart';
-import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.dart';
-import 'package:sweaterz_flutter/view/screens/components/sports_button.dart';
 import 'package:sweaterz_flutter/view/screens/login_screen.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/tab_item.dart';
-import 'package:sweaterz_flutter/view/screens/video_upload_screen.dart';
+import 'package:sweaterz_flutter/view/screens/widget/sports_button_list_widget.dart';
 
 import '../splash_screen.dart';
 
@@ -88,37 +81,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
                   .profilePhotoURL
                   .toString()),
               Text(Provider.of<MemberProvider>(context).profileName),
-              FutureBuilder<List>(
-                  future: Future.wait([
-                    TagAPI().getAllSports(),
-                    TagAPI().getFollowingSports(),
-                  ]),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      List sportsList = snapshot.data[0];
-                      List followingSportsList = snapshot.data[1];
-                      List<Widget> sportsButtonList = [];
-                      for (Map map in sportsList) {
-                        bool _isActivated = false;
-                        if (followingSportsList.contains(map['name'])) {
-                          _isActivated = true;
-                        }
-                        sportsButtonList.add(StatefulSportsButton(
-                          sportsName: map['name'],
-                          isActivated: _isActivated,
-                        ));
-                      }
-                      return Wrap(
-                        spacing: 8.0,
-                        runSpacing: 8.0,
-                        children: sportsButtonList,
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('error');
-                    } else {
-                      return Text('loading');
-                    }
-                  }),
+              SportsFollowsListWidget(),
             ],
           ),
         ),
