@@ -100,7 +100,7 @@ final kAssetsPickerThemeData = ThemeData.light().copyWith(
 
 const kUploadDivider = Divider(
   height: 20,
-  thickness: 2,
+  thickness: 1,
   indent: 0,
   endIndent: 0,
 );
