@@ -90,6 +90,8 @@ class _GalleryVideoPickerState extends State<GalleryVideoPicker> {
   Widget _assetWidgetBuilder(AssetEntity asset) {
     Widget widget;
     switch (asset.type) {
+      case AssetType.audio:
+        break;
       case AssetType.video:
         widget = _videoAssetWidget(asset);
         break;

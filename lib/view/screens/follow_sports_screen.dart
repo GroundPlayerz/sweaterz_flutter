@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:sweaterz_flutter/networking_api/registration_api.dart';
 import 'package:sweaterz_flutter/networking_api/tag_api.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
-import 'package:sweaterz_flutter/view/screens/registration_complete_screen.dart';
 import 'components/rounded_color_button.dart';
 import 'components/rounded_outlined_button.dart';
 

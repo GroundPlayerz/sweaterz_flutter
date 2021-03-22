@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
+import 'package:sweaterz_flutter/view/screens/post_sports_add_screen.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../constants/extensions.dart';
@@ -15,6 +16,9 @@ class GalleryImagePicker extends StatefulWidget {
 
 class _GalleryImagePickerState extends State<GalleryImagePicker> {
   final TextEditingController contentsController = TextEditingController();
+
+  List<String> addedSportsList = [];
+
   bool _isNextButtonEnabled = false;
 
   final int maxAssetsCount = 9;
@@ -291,7 +295,53 @@ class _GalleryImagePickerState extends State<GalleryImagePicker> {
           ),
           kUploadDivider,
           Container(
-            height: 70,
+            height: 90,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Text(
+                        'Sports',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18.0),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(top: 10.0, right: 10.0, bottom: 10.0),
+                      child: Text('What kinds of sports are you playing?'),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        TextButton(
+                          onPressed: () async {
+                            final result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PostSportsAddScreen(),
+                                ));
+                            setState(() {
+                              addedSportsList.addAll(result);
+                            });
+                            print(addedSportsList);
+                          },
+                          child: Text('+ Add'),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
           kUploadDivider,
           Container(
