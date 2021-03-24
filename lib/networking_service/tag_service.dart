@@ -23,6 +23,7 @@ class TagService {
         .collection('member')
         .doc(_auth.currentUser.email)
         .collection('following_sports')
+        .orderBy('name')
         .get()
         .then((value) {
       value.docs.forEach((doc) {
@@ -30,6 +31,20 @@ class TagService {
       });
     });
     return followingSportsList;
+  }
+
+  Future<void> increaseSportsFollowingMemberCount(String sportsName) async {
+    DocumentReference _sportRef =
+        _firestore.collection('sports_tag').doc(sportsName);
+
+    try {
+      int _followingMemberCount = await _sportRef.get().then((value) {
+        return value.data()['following_member_count'];
+      });
+      _sportRef.update({'following_member_count': _followingMemberCount + 1});
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   Future<void> followsSport(Map followSport) async {

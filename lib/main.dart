@@ -11,7 +11,7 @@ import 'package:sweaterz_flutter/view/screens/login_screen.dart';
 import 'package:sweaterz_flutter/view/screens/registration_complete_screen.dart';
 import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
-import 'package:sweaterz_flutter/view/screens/gallery_video_picker.dart';
+import 'package:sweaterz_flutter/view/screens/video_type_upload.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
 import 'package:sweaterz_flutter/view/screens/video_upload_screen.dart';
 import 'package:flutter/services.dart';

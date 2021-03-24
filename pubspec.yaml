@@ -39,6 +39,9 @@ dependencies:
     git:
       url: https://github.com/GroundPlayerz/flutter_wechat_assets_picker.git
       ref: 937141b77d651d71087fbf7c88fce7ddf7c6be0f
+  intl: ^0.16.1
+  flutter_native_image: ^0.0.5
+  video_compress: ^2.1.1
 
 dev_dependencies:
   flutter_test:

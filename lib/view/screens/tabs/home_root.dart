@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sweaterz_flutter/view/screens/gallery_video_picker.dart';
+import 'package:sweaterz_flutter/view/screens/video_type_upload.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/profile_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
 import 'package:sweaterz_flutter/view/screens/video_upload_screen.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import '../following_feed_screen.dart';
-import '../gallery_image_picker.dart';
+import '../images_type_upload.dart';
 import 'home_feed_screen.dart';
 import 'local_feed_screen.dart';
 
@@ -105,10 +105,10 @@ class _HomeRootState extends State<HomeRoot> {
                               onTap: () {
                                 Navigator.pop(context);
                                 if (listViewIdx == 0) {
-                                  Get.to(() => GalleryVideoPicker(),
+                                  Get.to(() => VideoTypeUpload(),
                                       transition: Transition.downToUp);
                                 } else if (listViewIdx == 1) {
-                                  Get.to(() => GalleryImagePicker(),
+                                  Get.to(() => ImagesTypeUpload(),
                                       transition: Transition.downToUp);
                                 } else {}
                               },

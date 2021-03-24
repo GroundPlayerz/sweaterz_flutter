@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/screens/components/rounded_outlined_button.dart';
 
-import '../gallery_image_picker.dart';
-import '../gallery_video_picker.dart';
+import '../images_type_upload.dart';
+import '../video_type_upload.dart';
 
 class UploadScreen extends StatefulWidget {
   @override
@@ -77,8 +77,8 @@ class _UploadScreenState extends State<UploadScreen> {
               child: PageView(
                 controller: controller,
                 children: <Widget>[
-                  GalleryImagePicker(),
-                  GalleryVideoPicker(),
+                  ImagesTypeUpload(),
+                  VideoTypeUpload(),
                 ],
               ),
             ),
