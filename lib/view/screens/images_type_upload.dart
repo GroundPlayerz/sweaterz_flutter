@@ -1,13 +1,12 @@
 import 'dart:io';
 import 'package:flutter_native_image/flutter_native_image.dart';
-import 'package:path/path.dart' as p;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:sweaterz_flutter/networking_api/upload_post_api.dart';
+import 'package:sweaterz_flutter/networking_service/upload_post_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/view/model/member_provider.dart';
+import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/model/post.dart';
 import 'package:sweaterz_flutter/view/screens/components/alert_dialog.dart';
 import 'package:sweaterz_flutter/view/screens/post_sports_add_screen.dart';
@@ -401,7 +400,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
                           Provider.of<MemberProvider>(context, listen: false)
                               .email,
                     );
-                    await UploadPostAPI().uploadPost(newPost);
+                    await UploadPostService().uploadImagesTypePost(newPost);
                     Navigator.pop(context);
                     Get.off(() => HomeRoot());
                   } else {
@@ -429,6 +428,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: TextField(
+                  style: kPostContentTextStyle,
                   controller: contentsController,
                   focusNode: myFocusNode,
                   autofocus: false,

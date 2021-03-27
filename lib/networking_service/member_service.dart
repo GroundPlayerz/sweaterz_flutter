@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sweaterz_flutter/networking_api/login_api.dart';
+import 'package:sweaterz_flutter/networking_service/login_service.dart';
 import 'package:sweaterz_flutter/view/model/member_profile.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
 class MemberService {
   Future<Map> getMemberInfo() async {
-    User _currentUser = await LoginAPI().getCurrentUser();
+    User _currentUser = await LoginService().getCurrentUser();
     return _firestore
         .collection('member')
         .doc(_currentUser.email)

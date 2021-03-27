@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sweaterz_flutter/view/screens/video_type_upload.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/profile_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
-import 'package:sweaterz_flutter/view/screens/video_upload_screen.dart';
+import 'package:sweaterz_flutter/view/screens/video_player.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import '../following_feed_screen.dart';
 import '../images_type_upload.dart';
@@ -78,7 +78,7 @@ class _HomeRootState extends State<HomeRoot> {
               icon: Padding(
                   padding: EdgeInsets.only(bottom: 4.0),
                   child: Icon(Icons.home)),
-              label: 'Local',
+              label: 'Video Show',
             ),
             BottomNavigationBarItem(
               icon: Padding(
@@ -150,7 +150,7 @@ class _HomeRootState extends State<HomeRoot> {
           HomeFeedScreen(),
           FollowingFeedScreen(onNext: _next), //이렇게 하면 bottomnBar 없이 넘어감!!!!
           Text('Nope'),
-          LocalFeedScreen(),
+          VideoPlayer(),
           ProfileScreen(),
         ].elementAt(index);
       },

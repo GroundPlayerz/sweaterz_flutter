@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sweaterz_flutter/networking_api/tag_api.dart';
+import 'package:sweaterz_flutter/networking_service/tag_service.dart';
 import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.dart';
 
 import 'components/sports_button.dart';
@@ -43,7 +43,7 @@ class _PostSportsAddScreenState extends State<PostSportsAddScreen> {
           ),
           FutureBuilder<List>(
               future: Future.wait([
-                TagAPI().getAllSports(),
+                TagService().getAllSports(),
               ]),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {

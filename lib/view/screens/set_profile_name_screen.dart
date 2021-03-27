@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:sweaterz_flutter/networking_api/registration_api.dart';
+import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/screens/registration_complete_screen.dart';
 import 'components/rounded_color_button.dart';
@@ -71,9 +71,9 @@ class _SetProfileNameScreenState extends State<SetProfileNameScreen> {
                     textContent: 'Done',
                     isButtonEnabled: _isButtonEnabled,
                     onPressed: () async {
-                      RegistrationAPI().setInitialProfileName(
+                      RegistrationService().setInitialProfileName(
                           profileNameController.text.trim());
-                      RegistrationAPI().setInitialMemberInfo();
+                      RegistrationService().setInitialMemberInfo();
                       Get.offAll(() => RegistrationCompleteScreen());
                     }),
               ],

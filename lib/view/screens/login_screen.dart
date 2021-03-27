@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sweaterz_flutter/networking_api/registration_api.dart';
-import 'package:sweaterz_flutter/networking_api/login_api.dart';
+import 'package:sweaterz_flutter/networking_service/login_service.dart';
+import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/screens/splash_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
@@ -68,9 +68,9 @@ Widget _signInButton() {
       ),
     ),
     onPressed: () async {
-      await LoginAPI().logIn();
-      if (await LoginAPI().getCurrentUser() != null) {
-        if (await RegistrationAPI().isRegistered()) {
+      await LoginService().logIn();
+      if (await LoginService().getCurrentUser() != null) {
+        if (await RegistrationService().isRegistered()) {
           Get.offAll(() => SplashScreen());
           //Member 정보 세팅하기
         } else {

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:sweaterz_flutter/networking_api/registration_api.dart';
 import 'package:sweaterz_flutter/view/screens/follow_sports_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
 

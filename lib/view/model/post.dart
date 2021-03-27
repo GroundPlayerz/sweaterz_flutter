@@ -8,9 +8,9 @@ class Post {
   String _postId;
   String _memberEmail;
   String _profileName;
-  String _profile_photo_url;
+  String _profilePhotoURL;
   String _uploadType;
-  List<File> _files;
+  List<File> _imageFileList;
   String _content;
   int _likeCount = 0;
   int _viewCount = 0;
@@ -19,11 +19,13 @@ class Post {
   FeedbackPrivacy _feedbackPrivacy;
   PostPrivacy _postPrivacy;
   List<String> _feedbackIdList;
+  List<Map> _videoFileList;
 
+  List<Map> get videoFileList => _videoFileList;
   String get postId => _postId;
   String get memberEmail => _memberEmail;
   String get uploadType => _uploadType;
-  List<File> get files => _files;
+  List<File> get imageFileList => _imageFileList;
   String get content => _content;
   int get likeCount => _likeCount;
   int get viewCount => _viewCount;
@@ -33,25 +35,45 @@ class Post {
   PostPrivacy get postPrivacy => _postPrivacy;
   List<String> get feedbackIdList => _feedbackIdList;
   String get profileName => _profileName;
-  String get profilePhotoUrl => _profile_photo_url;
+  String get profilePhotoUrl => _profilePhotoURL;
 
-  void setForUpload(
-      {TextEditingController contentsController,
-      List<String> addedSportsList,
-      List<String> addedTagsList,
-      String uploadType,
-      List<File> fileList,
-      String profileName,
-      String profilePhotoUrl,
-      String memberEmail}) {
+  void setForUpload({
+    TextEditingController contentsController,
+    List<String> addedSportsList,
+    List<String> addedTagsList,
+    String uploadType,
+    List<File> fileList,
+    String profileName,
+    String profilePhotoUrl,
+    String memberEmail,
+    List<Map> videoFileList,
+  }) {
+    if (uploadType == 'video') {
+      setVideoFileList(videoFileList);
+    } else if (uploadType == 'images') {
+      setImageFileList(fileList);
+    } else {}
     setContent(contentsController.text);
     setSportsList(addedSportsList);
     setTagsList(addedTagsList);
     setUploadType(uploadType);
-    setFilesList(fileList);
     setProfilePhotoUrl(profilePhotoUrl);
     setProfileName(profileName);
     setMemberEmail(memberEmail);
+  }
+
+  void setForFetchFeed() {}
+
+  void setLikeCount(int likeCount) {
+    _likeCount = likeCount;
+  }
+
+  void setViewCount(int viewCount) {
+    _viewCount = viewCount;
+  }
+
+  void setVideoFileList(List<Map> videoFileList) {
+    _videoFileList = videoFileList;
   }
 
   void setMemberEmail(String memberEmail) {
@@ -63,7 +85,7 @@ class Post {
   }
 
   void setProfilePhotoUrl(String profilePhotoUrl) {
-    _profile_photo_url = profilePhotoUrl;
+    _profilePhotoURL = profilePhotoUrl;
   }
 
   void setUploadType(String uploadType) {
@@ -74,8 +96,8 @@ class Post {
     _postId = postId;
   }
 
-  void setFilesList(List<File> filesList) {
-    _files = filesList;
+  void setImageFileList(List<File> imageFileList) {
+    _imageFileList = imageFileList;
   }
 
   void setContent(String content) {

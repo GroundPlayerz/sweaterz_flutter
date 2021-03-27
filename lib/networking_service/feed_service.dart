@@ -1,24 +1,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sweaterz_flutter/view/model/enums.dart';
+import 'package:sweaterz_flutter/view/model/post.dart';
 
 final _firestore = FirebaseFirestore.instance;
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class FeedService {
-  Future<QuerySnapshot> loadHotFeed(
-    List sportsList,
-    PeriodType periodType,
-    LocationType locationType,
-  ) async {}
+  DocumentSnapshot lastDocument;
+  int documentLimit = 20;
+  bool hasMore = true;
+  List<Map> postList = [];
+  bool isLoading = false;
 
-  Future<QuerySnapshot> loadNewFeed(
-    List sportsList,
-    PeriodType periodType,
-    LocationType locationType,
-  ) async {}
+  Future<List<DocumentSnapshot>> fetchFollowingFeed(
+      {List creatorEmailList, bool isOrderedBy = true}) async {
+    DateTime threeDaysAgoDateTime =
+        DateTime.now().subtract(Duration(days: 3)).toUtc();
+    QuerySnapshot querySnapshot;
 
-  Future<QuerySnapshot> loadFollowingFeed(
-    List sportsList,
-    PeriodType periodType,
-    LocationType locationType,
-  ) async {}
+    if (lastDocument == null) {
+      querySnapshot = await _firestore
+          .collection('post')
+          .where("created_time", isGreaterThanOrEqualTo: threeDaysAgoDateTime)
+          .orderBy('created_time')
+          .limit(20)
+          .get();
+    } else {
+      querySnapshot = await _firestore
+          .collection('post')
+          .where("created_time", isGreaterThanOrEqualTo: threeDaysAgoDateTime)
+          .orderBy('created_time')
+          .startAfterDocument(lastDocument)
+          .limit(20)
+          .get();
+    }
+
+    if (querySnapshot.docs.length < documentLimit) {
+      hasMore = false;
+    }
+
+    lastDocument = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    return querySnapshot.docs;
+  }
 }

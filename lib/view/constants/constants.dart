@@ -24,6 +24,13 @@ const TextStyle kBodyTextStyle1M = TextStyle(
   color: kDefaultColor,
 );
 
+const TextStyle kPostContentTextStyle = TextStyle(
+  fontFamily: 'Roboto',
+  fontWeight: FontWeight.w400, //medium
+  fontSize: 20.0,
+  color: kDefaultColor,
+);
+
 const TextStyle kBodyTextStyle1R = TextStyle(
   fontFamily: 'Roboto',
   fontWeight: FontWeight.normal,

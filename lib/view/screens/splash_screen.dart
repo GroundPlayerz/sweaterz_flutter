@@ -5,11 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:sweaterz_flutter/networking_api/member_api.dart';
-import 'package:sweaterz_flutter/networking_api/registration_api.dart';
-import 'package:sweaterz_flutter/networking_api/login_api.dart';
+import 'package:sweaterz_flutter/networking_service/login_service.dart';
+import 'package:sweaterz_flutter/networking_service/member_service.dart';
+import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/view/model/member_provider.dart';
+import 'package:sweaterz_flutter/view/screens/provider/following_feed_provider.dart';
+import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/screens/login_screen.dart';
 import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
@@ -37,29 +38,21 @@ class _SplashScreenState extends State<SplashScreen> with ChangeNotifier {
   void _init(context) async {
     String _nextScreenRoute;
     //print(await LoginAPI().isLoggedIn());
-    if (await LoginAPI().isLoggedIn()) {
-      if (await RegistrationAPI().isRegistered()) {
-        await setLoggedInMemberProvider();
-        Get.offAll(() => HomeRoot());
+    if (await LoginService().isLoggedIn()) {
+      if (await RegistrationService().isRegistered()) {
+        await Provider.of<MemberProvider>(context, listen: false)
+            .setLoggedInMemberProvider();
+        // Provider.of<FollowingFeedProvider>(context, listen: false)
+        //     .fetchNewPostWidget(context);
+        Future.delayed(Duration(seconds: 1), () {
+          Get.offAll(() => HomeRoot());
+        });
       } else {
         Get.offAll(() => SetProfileNameScreen());
       }
     } else {
       Get.offAll(() => LoginScreen());
     }
-  }
-
-  Future<void> setLoggedInMemberProvider() async {
-    User _currentUser = await LoginAPI().getCurrentUser();
-    assert(_currentUser != null);
-    final provider = Provider.of<MemberProvider>(context, listen: false);
-    Map memberInfo = await MemberAPI().getMemberInfo();
-    provider.setEmail(email: memberInfo['email']);
-    provider.setProfileName(profileName: memberInfo['profile_name']);
-    provider.setMemberRole(memberRole: memberInfo['member_role']);
-    provider.setProfilePhotoUrl(
-        profilePhotoURL: memberInfo['profile_photo_url']);
-    log('Set ${provider.email} information complete!');
   }
 
   @override

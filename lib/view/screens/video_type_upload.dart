@@ -4,9 +4,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:sweaterz_flutter/networking_api/upload_post_api.dart';
+import 'package:sweaterz_flutter/networking_service/upload_post_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/view/model/member_provider.dart';
+import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/model/post.dart';
 import 'package:sweaterz_flutter/view/screens/post_sports_add_screen.dart';
 import 'package:sweaterz_flutter/view/screens/post_tags_add_screen.dart';
@@ -334,7 +334,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
             mainAxisSize: MainAxisSize.min,
             children: [
               new CircularProgressIndicator(),
-              new Text("Uploading... It can take few seconds"),
+              new Text("     Uploading... It can take few seconds"),
             ],
           ),
         );
@@ -344,12 +344,21 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
 
   Future<MediaInfo> compressVideoFileAndGetMediaInfo(File file) async {
     MediaInfo mediaInfo = await videoCompress.compressVideo(file.path,
-        quality: VideoQuality.DefaultQuality, deleteOrigin: false);
+        quality: VideoQuality.MediumQuality, deleteOrigin: false);
 
     print('Original File Size: ' + file.lengthSync().toString());
     print('Compressed File Size: ' + mediaInfo.filesize.toString());
 
     return mediaInfo;
+  }
+
+  Future<File> getVideoThumbnailFile(File file) async {
+    final thumbnailFile = await VideoCompress.getFileThumbnail(file.path,
+        quality: 50, // default(100)
+        position: -1 // default(-1)
+        );
+
+    return thumbnailFile;
   }
 
   @override
@@ -378,14 +387,20 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                       addedSportsList.isNotEmpty &&
                       addedTagsList.isNotEmpty) {
                     _onLoading();
-                    List<File> videoFileList = [];
+                    List<Map> videoFileList = [];
                     for (AssetEntity asset in assets) {
                       File file = await asset.originFile;
                       try {
                         MediaInfo compressedMediaInfo =
                             await compressVideoFileAndGetMediaInfo(file);
-                        File compressedFile = compressedMediaInfo.file;
-                        videoFileList.add(compressedFile);
+                        File compressedVideoFile = compressedMediaInfo.file;
+                        File videoThumbnailFile =
+                            await getVideoThumbnailFile(file);
+
+                        videoFileList.add({
+                          'video_file': compressedVideoFile,
+                          'thumbnail_file': videoThumbnailFile,
+                        });
                       } catch (e) {
                         videoCompress.cancelCompression();
                         print(e);
@@ -397,7 +412,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                       addedSportsList: addedSportsList,
                       addedTagsList: addedTagsList,
                       uploadType: 'video',
-                      fileList: videoFileList,
+                      videoFileList: videoFileList,
                       profileName:
                           Provider.of<MemberProvider>(context, listen: false)
                               .profileName,
@@ -408,7 +423,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                           Provider.of<MemberProvider>(context, listen: false)
                               .email,
                     );
-                    await UploadPostAPI().uploadPost(newPost);
+                    await UploadPostService().uploadVideoTypePost(newPost);
                     Navigator.pop(context);
                     Get.off(() => HomeRoot());
                   } else {
@@ -439,6 +454,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                   controller: contentsController,
                   focusNode: myFocusNode,
                   autofocus: false,
+                  style: kPostContentTextStyle,
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Write description',
                     border: InputBorder.none,

@@ -1,4 +1,9 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sweaterz_flutter/networking_service/login_service.dart';
+import 'package:sweaterz_flutter/networking_service/member_service.dart';
 import 'package:sweaterz_flutter/view/model/enums.dart';
 
 class MemberProvider with ChangeNotifier {
@@ -15,6 +20,18 @@ class MemberProvider with ChangeNotifier {
     this.profileName = null;
     this.memberRole = null;
     this.profilePhotoURL = null;
+    notifyListeners();
+  }
+
+  Future<void> setLoggedInMemberProvider() async {
+    User _currentUser = await LoginService().getCurrentUser();
+    assert(_currentUser != null);
+    Map memberInfo = await MemberService().getMemberInfo();
+    setEmail(email: memberInfo['email']);
+    setProfileName(profileName: memberInfo['profile_name']);
+    setMemberRole(memberRole: memberInfo['member_role']);
+    setProfilePhotoUrl(profilePhotoURL: memberInfo['profile_photo_url']);
+    log('Set ${email} information complete!');
     notifyListeners();
   }
 

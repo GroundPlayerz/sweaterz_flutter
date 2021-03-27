@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:sweaterz_flutter/networking_api/tag_api.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.dart';
 
@@ -73,12 +72,34 @@ class _PostTagsAddScreenState extends State<PostTagsAddScreen> {
         child: SafeArea(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            SizedBox(
+              height: 20.0,
+            ),
             roundedColorButton(
               textContent: 'Confirm',
               onPressed: () {
                 myFocusNode.unfocus();
                 Navigator.pop(context, _addedTagsList);
               },
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Wrap(
+              alignment: WrapAlignment.start,
+              children: [
+                Text(
+                  "Tip!",
+                  style: TextStyle(color: kSweaterzColor),
+                ),
+                Text(
+                    "Enter the skill's name, skill difficulty, exercise location, and more."
+                    " If you use tags well, you can keep your posts organized! "
+                    "The tag you entered will be used to search for posts and sort posts in your profile."),
+              ],
+            ),
+            SizedBox(
+              height: 20.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
