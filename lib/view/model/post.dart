@@ -14,7 +14,7 @@ class Post {
   String _content;
   int _likeCount = 0;
   int _viewCount = 0;
-  List<String> _sportsList;
+  String _sports;
   List<String> _tagsList;
   FeedbackPrivacy _feedbackPrivacy;
   PostPrivacy _postPrivacy;
@@ -29,7 +29,7 @@ class Post {
   String get content => _content;
   int get likeCount => _likeCount;
   int get viewCount => _viewCount;
-  List<String> get sportsList => _sportsList;
+  String get sports => _sports;
   List<String> get tagsList => _tagsList;
   FeedbackPrivacy get feedbackPrivacy => _feedbackPrivacy;
   PostPrivacy get postPrivacy => _postPrivacy;
@@ -39,7 +39,7 @@ class Post {
 
   void setForUpload({
     TextEditingController contentsController,
-    List<String> addedSportsList,
+    String addedSports,
     List<String> addedTagsList,
     String uploadType,
     List<File> fileList,
@@ -54,7 +54,7 @@ class Post {
       setImageFileList(fileList);
     } else {}
     setContent(contentsController.text);
-    setSportsList(addedSportsList);
+    setSports(addedSports);
     setTagsList(addedTagsList);
     setUploadType(uploadType);
     setProfilePhotoUrl(profilePhotoUrl);
@@ -104,8 +104,8 @@ class Post {
     _content = content;
   }
 
-  void setSportsList(List<String> sportsList) {
-    _sportsList = sportsList;
+  void setSports(String sports) {
+    _sports = sports;
   }
 
   void setTagsList(List<String> tagsList) {

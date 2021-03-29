@@ -6,21 +6,21 @@ import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.da
 import 'components/sports_button.dart';
 
 class PostSportsAddScreen extends StatefulWidget {
-  final List<String> addedSportsList;
+  final String addedSports;
 
-  PostSportsAddScreen({this.addedSportsList});
+  PostSportsAddScreen({this.addedSports});
 
   @override
   _PostSportsAddScreenState createState() => _PostSportsAddScreenState();
 }
 
 class _PostSportsAddScreenState extends State<PostSportsAddScreen> {
-  List<String> _addedSportsList = [];
+  String _addedSports;
 
   @override
   void initState() {
     // TODO: implement initState
-    _addedSportsList.addAll(widget.addedSportsList);
+    _addedSports = widget.addedSports;
     super.initState();
   }
 
@@ -33,12 +33,15 @@ class _PostSportsAddScreenState extends State<PostSportsAddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [],
+      ),
       body: SafeArea(
         child: Column(children: [
           roundedColorButton(
             textContent: 'Confirm',
             onPressed: () {
-              Navigator.pop(context, _addedSportsList);
+              Navigator.pop(context, _addedSports);
             },
           ),
           FutureBuilder<List>(
@@ -51,22 +54,25 @@ class _PostSportsAddScreenState extends State<PostSportsAddScreen> {
                   List<Widget> sportsButtonList = [];
                   for (Map map in sportsList) {
                     bool _isActivated = false;
-                    if (_addedSportsList.contains(map['name'])) {
+                    bool _isEnabled = _addedSports == null ? true : false;
+                    if (_addedSports == map['name']) {
                       _isActivated = true;
+                      _isEnabled = true;
                     }
                     sportsButtonList.add(
                       SportsButton(
                         sportsName: map['name'],
                         isActivated: _isActivated,
-                        enabledCallback: () {
+                        isEnabled: _isEnabled,
+                        activatedCallback: () {
                           // Todo 여기에서 어떤 함수를 집어넣는지에 따라 다른 행동을 할 수 있도록 하고싶음
                           setState(() {
-                            _addedSportsList.add(map['name']);
+                            _addedSports = map['name'];
                           });
                         },
-                        disabledCallback: () {
+                        deactivatedCallback: () {
                           setState(() {
-                            _addedSportsList.remove(map['name']);
+                            _addedSports = null;
                           });
                         },
                       ),

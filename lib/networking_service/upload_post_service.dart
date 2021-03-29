@@ -26,7 +26,7 @@ class UploadPostService {
     return downloadURL;
   }
 
-  Future<bool> uploadVideoTypePost(Post post) async {
+  Future<void> uploadVideoTypePost(Post post) async {
     final DateTime now = DateTime.now().toUtc();
     final String formattedNow = DateFormat('yyyyMMdd').format(now);
     final String postDocumentId = post.profileName + now.toIso8601String();
@@ -34,8 +34,11 @@ class UploadPostService {
     List<Map> downloadURLList = [];
 
     WriteBatch batch = _firestore.batch();
-    DocumentReference _postRef =
-        _firestore.collection('post').doc(postDocumentId); // post가 생기는 문서 레퍼런스
+    DocumentReference _postRef = _firestore
+        .collection('sports_tag')
+        .doc(post.sports)
+        .collection('post')
+        .doc(postDocumentId); // post가 생기는 문서 레퍼런스
     Reference storageRef;
 
     //cloud storage
@@ -62,6 +65,7 @@ class UploadPostService {
     //Post Metadata upload to firestore
     try {
       batch.set(_postRef, {
+        'document_id': postDocumentId,
         'upload_type': post.uploadType,
         'content': post.content,
         'created_time': now,
@@ -71,6 +75,7 @@ class UploadPostService {
         'thumbnail_download_url': downloadURLList[0]['thumbnail_download_url'],
         'view_count': post.viewCount,
         'like_count': post.likeCount,
+        'post_sports_tag': post.sports
       });
 
       List<Map> videoFileListToUpload = [];
@@ -85,32 +90,6 @@ class UploadPostService {
       batch.set(_postRef, {'file_list': videoFileListToUpload},
           SetOptions(merge: true));
 
-      List<Map> sportsTagListToUpload = [];
-      for (int i = 0; i < post.sportsList.length; i++) {
-        sportsTagListToUpload.add({
-          'name': post.sportsList[i],
-          'order': i,
-          'created_time': now,
-        });
-        // Todo Cloud Functions 사용하 게시물이 올라가면 태그된 스포츠태그, 태그를 확인해서 여
-        // Todo 해당 스포츠태그,태그 컬렉션에 업데이트 해주는 것 구현
-        // DocumentReference _sportRef =
-        //     _firestore.collection('sports_tag').doc(post.sportsList[i]);
-        // int _taggedPostCount = await _sportRef.get().then((value) {
-        //   return value.data()['tagged_post_count'];
-        // });
-        // if (_taggedPostCount != null) {
-        //   batch.update(_sportRef, {'tagged_post_count': _taggedPostCount + 1});
-        //   batch.set(_sportRef.collection('tagged_post').doc(postDocumentId),
-        //       {'post_document_id': postDocumentId, 'created_time': now}, SetOptions(merge: true));
-        // } else {
-        //   batch.set(
-        //       _sportRef, {'tagged_post_count': 1}, SetOptions(merge: true));
-        // }
-      }
-      batch.set(_postRef, {'post_sports_tag_list': sportsTagListToUpload},
-          SetOptions(merge: true));
-
       List<Map> tagListToUpload = [];
       for (int i = 0; i < post.tagsList.length; i++) {
         tagListToUpload.add({
@@ -119,51 +98,29 @@ class UploadPostService {
           'name_lower': post.tagsList[i].toLowerCase(),
           'created_time': now,
         });
-
-        // Todo Cloud Functions 사용하 게시물이 올라가면 태그된 스포츠태그, 태그를 확인해서 여
-        // Todo 해당 스포츠태그,태그 컬렉션에 업데이트 해주는 것 구현
-        // DocumentReference _tagRef =
-        //     _firestore.collection('tag').doc(post.tagsList[i]);
-        // int _taggedPostCount = await _tagRef.get().then((value) {
-        //   if (value.exists) {
-        //     return value.data()['tagged_post_count'];
-        //   } else {
-        //     return null;
-        //   }
-        // });
-        // if (_taggedPostCount != null) {
-        //   batch.update(_tagRef, {'tagged_post_count': _taggedPostCount + 1});
-        // } else {
-        //   batch.set(
-        //       _tagRef,
-        //       {
-        //         'tagged_post_count': 1,
-        //         'name_lower': post.tagsList[i].toLowerCase(),
-        //       },
-        //       SetOptions(merge: true));
-        // }
       }
       batch.set(_postRef, {'post_tag_list': tagListToUpload},
           SetOptions(merge: true));
 
       log('Uploaded post successfully');
       batch.commit();
-      return true;
     } catch (e) {
       log(e.toString());
-      return false;
     }
   }
 
-  Future<bool> uploadImagesTypePost(Post post) async {
+  Future<void> uploadImagesTypePost(Post post) async {
     final DateTime now = DateTime.now().toUtc();
     final String formattedNow = DateFormat('yyyyMMdd').format(now);
-    final postDocumentId = now.toIso8601String();
+    final postDocumentId = post.profileName + now.toIso8601String();
     List<String> downloadURLList = [];
 
     WriteBatch batch = _firestore.batch();
-    DocumentReference _postRef =
-        _firestore.collection('post').doc(postDocumentId); // post가 생기는 문서 레퍼런스
+    DocumentReference _postRef = _firestore
+        .collection('sports_tag')
+        .doc(post.sports)
+        .collection('post')
+        .doc(postDocumentId); // post가 생기는 문서 레퍼런스
     Reference storageRef;
 
     //cloud storage
@@ -197,6 +154,7 @@ class UploadPostService {
         'creator_profile_photo_url': post.profilePhotoUrl,
         'view_count': post.viewCount,
         'like_count': post.likeCount,
+        'post_sports_tag': post.sports,
       });
 
       List<Map> imageFileListToUpload = [];
@@ -209,17 +167,6 @@ class UploadPostService {
         });
       }
       batch.set(_postRef, {'file_list': imageFileListToUpload},
-          SetOptions(merge: true));
-
-      List<Map> sportsTagListToUpload = [];
-      for (int i = 0; i < post.sportsList.length; i++) {
-        sportsTagListToUpload.add({
-          'name': post.sportsList[i],
-          'order': i,
-          'created_time': now,
-        });
-      }
-      batch.set(_postRef, {'post_sports_tag_list': sportsTagListToUpload},
           SetOptions(merge: true));
 
       List<Map> tagListToUpload = [];
@@ -236,10 +183,8 @@ class UploadPostService {
 
       log('Uploaded post successfully');
       batch.commit();
-      return true;
     } catch (e) {
       log(e.toString());
-      return false;
     }
   }
 }

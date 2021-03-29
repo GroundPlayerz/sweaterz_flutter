@@ -5,14 +5,16 @@ import '../../constants/constants.dart';
 class SportsButton extends StatefulWidget {
   final String sportsName;
   final bool isActivated;
-  final Function enabledCallback;
-  final Function disabledCallback;
+  final Function activatedCallback;
+  final Function deactivatedCallback;
+  final bool isEnabled;
 
   SportsButton(
       {this.sportsName,
       this.isActivated,
-      this.enabledCallback,
-      this.disabledCallback});
+      this.activatedCallback,
+      this.deactivatedCallback,
+      this.isEnabled = true});
   @override
   _SportsButtonState createState() => _SportsButtonState();
 }
@@ -45,13 +47,15 @@ class _SportsButtonState extends State<SportsButton> {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        setState(() {
-          toggleButton();
-        });
-        if (_isActivated) {
-          widget.enabledCallback();
-        } else {
-          widget.disabledCallback();
+        if (widget.isEnabled) {
+          setState(() {
+            toggleButton();
+          });
+          if (_isActivated) {
+            widget.activatedCallback();
+          } else {
+            widget.deactivatedCallback();
+          }
         }
       },
       style: TextButton.styleFrom(

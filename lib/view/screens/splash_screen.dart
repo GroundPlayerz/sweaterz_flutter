@@ -9,7 +9,7 @@ import 'package:sweaterz_flutter/networking_service/login_service.dart';
 import 'package:sweaterz_flutter/networking_service/member_service.dart';
 import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/view/screens/provider/following_feed_provider.dart';
+import 'package:sweaterz_flutter/view/screens/provider/home_feed_provider.dart';
 import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/screens/login_screen.dart';
 import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';

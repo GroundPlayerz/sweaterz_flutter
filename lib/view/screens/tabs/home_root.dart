@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sweaterz_flutter/view/screens/video_type_upload.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/video_type_upload.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/profile_screen.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/upload_screen.dart';
 import 'package:sweaterz_flutter/view/screens/video_player.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import '../following_feed_screen.dart';
-import '../images_type_upload.dart';
+import 'images_type_upload.dart';
 import 'home_feed_screen.dart';
 import 'local_feed_screen.dart';
 

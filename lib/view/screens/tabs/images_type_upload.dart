@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,33 +8,29 @@ import 'package:sweaterz_flutter/networking_service/upload_post_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/model/post.dart';
+import 'package:sweaterz_flutter/view/screens/components/alert_dialog.dart';
 import 'package:sweaterz_flutter/view/screens/post_sports_add_screen.dart';
 import 'package:sweaterz_flutter/view/screens/post_tags_add_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
-import 'package:video_compress/video_compress.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-import '../constants/extensions.dart';
-import '../constants/picker_model.dart';
-import 'package:sweaterz_flutter/main.dart';
+import '../../constants/extensions.dart';
+import '../../constants/picker_model.dart';
 
-import 'components/alert_dialog.dart';
-import 'components/rounded_outlined_button.dart';
+import '../components/rounded_outlined_button.dart';
 
-class VideoTypeUpload extends StatefulWidget {
+class ImagesTypeUpload extends StatefulWidget {
   @override
-  _VideoTypeUploadState createState() => _VideoTypeUploadState();
+  _ImagesTypeUploadState createState() => _ImagesTypeUploadState();
 }
 
-class _VideoTypeUploadState extends State<VideoTypeUpload> {
+class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
   final TextEditingController contentsController = TextEditingController();
   FocusNode myFocusNode;
-  List<String> addedSportsList = [];
+  String addedSports;
   List<String> addedTagsList = [];
-  Subscription _progressSubscription;
-  IVideoCompress videoCompress = VideoCompress;
 
-  final int maxAssetsCount = 1;
+  final int maxAssetsCount = 9;
 
   List<AssetEntity> assets = <AssetEntity>[];
 
@@ -53,7 +49,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
             context,
             maxAssets: maxAssetsCount,
             selectedAssets: assets,
-            requestType: RequestType.video,
+            requestType: RequestType.image,
             pickerTheme: kAssetsPickerThemeData,
             textDelegate: EnglishTextDelegate(),
           );
@@ -64,6 +60,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     final PickMethodModel model = pickMethod;
     return TextButton(
       onPressed: () async {
+        myFocusNode.unfocus();
         final List<AssetEntity> result = await model.method(context, assets);
         if (result != null && result != assets) {
           assets = List<AssetEntity>.from(result);
@@ -72,7 +69,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
           }
         }
       },
-      child: Text('Select Video'),
+      child: Text('Select Images'),
     );
   }
 
@@ -101,7 +98,6 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
       case AssetType.audio:
         break;
       case AssetType.video:
-        widget = _videoAssetWidget(asset);
         break;
       case AssetType.image:
       case AssetType.other:
@@ -115,24 +111,6 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     return Image(
       image: AssetEntityImageProvider(asset, isOriginal: false),
       fit: BoxFit.cover,
-    );
-  }
-
-  Widget _videoAssetWidget(AssetEntity asset) {
-    return Stack(
-      children: <Widget>[
-        Positioned.fill(child: _imageAssetWidget(asset)),
-        ColoredBox(
-          color: context.themeData.dividerColor.withOpacity(0.3),
-          child: Center(
-            child: Icon(
-              Icons.video_library,
-              color: Colors.white,
-              size: isDisplayingDetail ? 24.0 : 16.0,
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -165,35 +143,11 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     );
   }
 
-  Widget _selectedAssetDeleteButton(int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          assets.remove(assets.elementAt(index));
-          if (assetsLength == 0) {
-            isDisplayingDetail = false;
-          }
-        });
-      },
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4.0),
-          color: currentTheme.canvasColor.withOpacity(0.5),
-        ),
-        child: Icon(
-          Icons.close,
-          color: currentTheme.iconTheme.color,
-          size: 18.0,
-        ),
-      ),
-    );
-  }
-
   Widget _selectedSportsDeleteButton(sport) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          addedSportsList.remove(sport);
+          addedSports = null;
         });
       },
       child: DecoratedBox(
@@ -231,6 +185,30 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     );
   }
 
+  Widget _selectedAssetDeleteButton(int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          assets.remove(assets.elementAt(index));
+          if (assetsLength == 0) {
+            isDisplayingDetail = false;
+          }
+        });
+      },
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.0),
+          color: currentTheme.canvasColor.withOpacity(0.5),
+        ),
+        child: Icon(
+          Icons.close,
+          color: currentTheme.iconTheme.color,
+          size: 18.0,
+        ),
+      ),
+    );
+  }
+
   Widget get selectedAssetsWidget => AnimatedContainer(
         duration: kThemeChangeDuration,
         curve: Curves.easeInOut,
@@ -241,32 +219,55 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
             : 40.0,
         child: Column(
           children: <Widget>[
-            SizedBox(
-              height: 20.0,
-              child: GestureDetector(
-                onTap: () {
-                  if (assets.isNotEmpty) {
-                    setState(() {
-                      isDisplayingDetail = !isDisplayingDetail;
-                    });
-                  }
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    if (assets.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Icon(
-                          isDisplayingDetail
-                              ? Icons.arrow_downward
-                              : Icons.arrow_upward,
-                          size: 18.0,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  height: 20.0,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (assets.isNotEmpty) {
+                        setState(() {
+                          isDisplayingDetail = !isDisplayingDetail;
+                        });
+                      }
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      // mainAxisAlignment: MainAxisAlignment.,
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 10.0,
+                          ),
+                          padding: const EdgeInsets.all(4.0),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey,
+                          ),
+                          child: Text(
+                            '${assets.length}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              height: 1.0,
+                            ),
+                          ),
                         ),
-                      ),
-                  ],
+                        if (assets.isNotEmpty)
+                          Icon(
+                            isDisplayingDetail
+                                ? Icons.arrow_downward
+                                : Icons.arrow_upward,
+                            size: 18.0,
+                          ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
             selectedAssetsListView,
           ],
@@ -275,7 +276,6 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
 
   Widget get selectedAssetsListView => Expanded(
         child: ListView.builder(
-          shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           scrollDirection: Axis.horizontal,
@@ -304,14 +304,11 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
           },
         ),
       );
+
   @override
   void initState() {
     // TODO: implement initState
     myFocusNode = FocusNode();
-    _progressSubscription =
-        videoCompress.compressProgress$.subscribe((progress) {
-      debugPrint('progress: $progress');
-    });
     super.initState();
   }
 
@@ -320,7 +317,6 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     // TODO: implement dispose
     myFocusNode.unfocus();
     myFocusNode.dispose();
-    _progressSubscription.unsubscribe();
     super.dispose();
   }
 
@@ -329,36 +325,22 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return Dialog(
-          child: new Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              new CircularProgressIndicator(),
-              new Text("     Uploading... It can take few seconds"),
-            ],
-          ),
-        );
+        return uploadingDialog();
       },
     );
   }
 
-  Future<MediaInfo> compressVideoFileAndGetMediaInfo(File file) async {
-    MediaInfo mediaInfo = await videoCompress.compressVideo(file.path,
-        quality: VideoQuality.MediumQuality, deleteOrigin: false);
+  Future<File> compressAndGetFile(File file) async {
+    File result = await FlutterNativeImage.compressImage(
+      file.absolute.path,
+      quality: 50,
+    );
+    print(result);
 
     print('Original File Size: ' + file.lengthSync().toString());
-    print('Compressed File Size: ' + mediaInfo.filesize.toString());
+    print('Compressed File Size: ' + result.lengthSync().toString());
 
-    return mediaInfo;
-  }
-
-  Future<File> getVideoThumbnailFile(File file) async {
-    final thumbnailFile = await VideoCompress.getFileThumbnail(file.path,
-        quality: 50, // default(100)
-        position: -1 // default(-1)
-        );
-
-    return thumbnailFile;
+    return result;
   }
 
   @override
@@ -370,7 +352,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
         ),
         backgroundColor: Colors.white,
         title: Text(
-          'Upload Video Post',
+          'Upload Image Post',
           style: kBodyTextStyle1M.copyWith(color: Colors.black),
         ),
         actions: [
@@ -384,35 +366,22 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                 onPressed: () async {
                   if (assets.isNotEmpty &&
                       contentsController.text.length != 0 &&
-                      addedSportsList.isNotEmpty &&
+                      addedSports.isNotEmpty &&
                       addedTagsList.isNotEmpty) {
                     _onLoading();
-                    List<Map> videoFileList = [];
+                    List<File> imageFileList = [];
                     for (AssetEntity asset in assets) {
                       File file = await asset.originFile;
-                      try {
-                        MediaInfo compressedMediaInfo =
-                            await compressVideoFileAndGetMediaInfo(file);
-                        File compressedVideoFile = compressedMediaInfo.file;
-                        File videoThumbnailFile =
-                            await getVideoThumbnailFile(file);
-
-                        videoFileList.add({
-                          'video_file': compressedVideoFile,
-                          'thumbnail_file': videoThumbnailFile,
-                        });
-                      } catch (e) {
-                        videoCompress.cancelCompression();
-                        print(e);
-                      }
+                      File compressedFile = await compressAndGetFile(file);
+                      imageFileList.add(compressedFile);
                     }
                     Post newPost = Post();
                     newPost.setForUpload(
                       contentsController: contentsController,
-                      addedSportsList: addedSportsList,
+                      addedSports: addedSports,
                       addedTagsList: addedTagsList,
-                      uploadType: 'video',
-                      videoFileList: videoFileList,
+                      uploadType: 'images',
+                      fileList: imageFileList,
                       profileName:
                           Provider.of<MemberProvider>(context, listen: false)
                               .profileName,
@@ -423,14 +392,15 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                           Provider.of<MemberProvider>(context, listen: false)
                               .email,
                     );
-                    await UploadPostService().uploadVideoTypePost(newPost);
+                    UploadPostService().uploadImagesTypePost(newPost);
+                    Future.delayed(Duration(seconds: 3));
                     Navigator.pop(context);
                     Get.off(() => HomeRoot());
                   } else {
                     showDialog(
                         context: context,
                         builder: (context) {
-                          return uploadAlertDialog(context);
+                          return uploadScreeNextButtonAlertDialog(context);
                         });
                   }
                 },
@@ -451,10 +421,10 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: TextField(
+                  style: kPostContentTextStyle,
                   controller: contentsController,
                   focusNode: myFocusNode,
                   autofocus: false,
-                  style: kPostContentTextStyle,
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Write description',
                     border: InputBorder.none,
@@ -501,11 +471,11 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PostSportsAddScreen(
-                                    addedSportsList: addedSportsList),
+                                    addedSports: addedSports),
                               ));
                           setState(() {
                             if (result != null) {
-                              addedSportsList = result;
+                              addedSports = result;
                             }
                           });
                         },
@@ -519,30 +489,27 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             // crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (addedSportsList != null)
-                                if (addedSportsList.length != 0)
-                                  for (String sport in addedSportsList)
+                              if (addedSports != null)
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 5.0),
+                                  child: Stack(children: [
                                     Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5.0),
-                                      child: Stack(children: [
-                                        Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.0,
-                                                vertical: 10.0),
-                                            child: Text(
-                                              sport,
-                                              style: TextStyle(fontSize: 16.0),
-                                            )),
-                                        AnimatedPositioned(
-                                          duration: kThemeAnimationDuration,
-                                          top: -3.0,
-                                          right: -3.0,
-                                          child: _selectedSportsDeleteButton(
-                                              sport),
-                                        ),
-                                      ]),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10.0, vertical: 10.0),
+                                        child: Text(
+                                          addedSports,
+                                          style: TextStyle(fontSize: 16.0),
+                                        )),
+                                    AnimatedPositioned(
+                                      duration: kThemeAnimationDuration,
+                                      top: -3.0,
+                                      right: -3.0,
+                                      child: _selectedSportsDeleteButton(
+                                          addedSports),
                                     ),
+                                  ]),
+                                ),
                             ],
                           ),
                         ),

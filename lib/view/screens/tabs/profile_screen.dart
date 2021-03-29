@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
+import 'package:sweaterz_flutter/view/screens/components/sign_out_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -18,10 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              Text(
-                'Profile tab screen',
-                style: kBigTitleTextStyle,
-              ),
+              signOutButton(context),
             ],
           ),
         ),

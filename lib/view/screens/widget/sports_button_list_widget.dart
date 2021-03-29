@@ -28,10 +28,10 @@ class SportsFollowsListWidget extends StatelessWidget {
                 SportsButton(
                   sportsName: map['name'],
                   isActivated: _isActivated,
-                  enabledCallback: () {
+                  activatedCallback: () {
                     TagService().followsSport({'name': map['name']});
                   },
-                  disabledCallback: () {
+                  deactivatedCallback: () {
                     TagService().unfollowsSport({'name': map['name']});
                   },
                 ),

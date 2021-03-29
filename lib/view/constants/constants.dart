@@ -9,6 +9,7 @@ const kSweaterzColor = Color(0xFFef5454);
 const kDefaultColor = Colors.black;
 const kGreyColor1_999999 = Color(0xFF999999);
 const kGreyColor2_767676 = Color(0xFF767676);
+const kIconGreyColor_B2B2B2 = Color(0xFFB2B2B2);
 
 const TextStyle kBigTitleTextStyle = TextStyle(
   fontFamily: 'Roboto',
@@ -26,7 +27,7 @@ const TextStyle kBodyTextStyle1M = TextStyle(
 
 const TextStyle kPostContentTextStyle = TextStyle(
   fontFamily: 'Roboto',
-  fontWeight: FontWeight.w400, //medium
+  fontWeight: FontWeight.w400, //regular
   fontSize: 20.0,
   color: kDefaultColor,
 );

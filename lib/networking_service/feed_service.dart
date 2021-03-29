@@ -10,7 +10,6 @@ class FeedService {
   DocumentSnapshot lastDocument;
   int documentLimit = 20;
   bool hasMore = true;
-  List<Map> postList = [];
   bool isLoading = false;
 
   Future<List<DocumentSnapshot>> fetchFollowingFeed(
@@ -21,16 +20,16 @@ class FeedService {
 
     if (lastDocument == null) {
       querySnapshot = await _firestore
-          .collection('post')
+          .collectionGroup("post")
           .where("created_time", isGreaterThanOrEqualTo: threeDaysAgoDateTime)
-          .orderBy('created_time')
+          .orderBy("created_time", descending: true)
           .limit(20)
           .get();
     } else {
       querySnapshot = await _firestore
-          .collection('post')
+          .collectionGroup("post")
           .where("created_time", isGreaterThanOrEqualTo: threeDaysAgoDateTime)
-          .orderBy('created_time')
+          .orderBy("created_time", descending: true)
           .startAfterDocument(lastDocument)
           .limit(20)
           .get();
@@ -41,7 +40,6 @@ class FeedService {
     }
 
     lastDocument = querySnapshot.docs[querySnapshot.docs.length - 1];
-
     return querySnapshot.docs;
   }
 }

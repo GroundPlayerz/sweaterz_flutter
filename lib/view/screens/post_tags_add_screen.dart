@@ -65,6 +65,21 @@ class _PostTagsAddScreenState extends State<PostTagsAddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(
+          color: kIconGreyColor_B2B2B2, //change your color here
+        ),
+        actions: [
+          TextButton(
+              onPressed: () {
+                myFocusNode.unfocus();
+                Navigator.pop(context, _addedTagsList);
+              },
+              child: Text('Done'))
+        ],
+      ),
       body: GestureDetector(
         onTap: () {
           myFocusNode.unfocus();
@@ -72,16 +87,6 @@ class _PostTagsAddScreenState extends State<PostTagsAddScreen> {
         child: SafeArea(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(
-              height: 20.0,
-            ),
-            roundedColorButton(
-              textContent: 'Confirm',
-              onPressed: () {
-                myFocusNode.unfocus();
-                Navigator.pop(context, _addedTagsList);
-              },
-            ),
             SizedBox(
               height: 20.0,
             ),
@@ -171,7 +176,7 @@ class _PostTagsAddScreenState extends State<PostTagsAddScreen> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10.0, vertical: 10.0),
                                   child: Text(
-                                    tag,
+                                    '# $tag',
                                     style: TextStyle(fontSize: 16.0),
                                   )),
                               AnimatedPositioned(
