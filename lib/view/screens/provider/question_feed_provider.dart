@@ -6,15 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/networking_service/feed_service.dart';
 import 'package:sweaterz_flutter/networking_service/post_detail_service.dart';
 import 'package:sweaterz_flutter/view/constants/text_styles.dart';
-import 'package:sweaterz_flutter/view/screens/home_feed_post_detail_screen.dart';
+import 'package:sweaterz_flutter/view/screens/question_feed_post_detail_screen.dart';
 import 'package:sweaterz_flutter/view/screens/widget/post_profile_list_tile.dart';
 
-class HomeFeedProvider extends ChangeNotifier {
+class QuestionFeedProvider extends ChangeNotifier {
   FeedService _feedService = FeedService();
   List<Widget> postWidgetList = [];
-  List<Map> postDataList = [];
   bool isLoading = false;
-
+  List<Map> postDataList = [];
   void initializePostWidgetList() {
     postWidgetList = [];
     postDataList = [];
@@ -30,7 +29,7 @@ class HomeFeedProvider extends ChangeNotifier {
     }
     if (_feedService.hasMore) {
       isLoading = true;
-      List<DocumentSnapshot> _posts = await _feedService.fetchHomeFeed();
+      List<DocumentSnapshot> _posts = await _feedService.fetchQuestionFeed();
       for (int i = 0; i < _posts.length; i++) {
         Map postData = _posts[i].data();
         postDataList.add(postData);
@@ -46,7 +45,6 @@ class HomeFeedProvider extends ChangeNotifier {
   toggleLikeButton(int postDataIndex) async {
     postDataList[postDataIndex]['is_like_button_pressed'] =
         !postDataList[postDataIndex]['is_like_button_pressed'];
-    print(postDataList[postDataIndex]['is_like_button_pressed']);
     notifyListeners();
   }
 
@@ -130,9 +128,9 @@ class HomeFeedProvider extends ChangeNotifier {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => HomeFeedPostDetailScreen(
+                    builder: (context) => QuestionFeedPostDetailScreen(
                           postDataIndex: postDataIndex,
-                          feedType: 'home',
+                          feedType: 'question',
                         )));
           },
           child: Container(
@@ -223,7 +221,7 @@ class HomeFeedProvider extends ChangeNotifier {
                           } else if (postData['upload_type'] == 'images') {
                             int fileLength = postData['file_list'].length;
                             return Container(
-                              height: 90,
+                              height: 150,
                               width: double.infinity,
                               child: GridView.builder(
                                 physics: NeverScrollableScrollPhysics(),
@@ -231,8 +229,8 @@ class HomeFeedProvider extends ChangeNotifier {
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 3,
-                                        crossAxisSpacing: 1.0,
-                                        mainAxisSpacing: 1.0),
+                                        crossAxisSpacing: 4.0,
+                                        mainAxisSpacing: 4.0),
                                 itemBuilder: (BuildContext context, int index) {
                                   return Stack(
                                     alignment: Alignment.center,
@@ -269,7 +267,7 @@ class HomeFeedProvider extends ChangeNotifier {
                             return Container();
                           }
                         },
-                      ),
+                      )
                     ],
                   ),
                 ),

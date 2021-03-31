@@ -1,10 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sweaterz_flutter/view/model/enums.dart';
-import 'package:sweaterz_flutter/view/model/post.dart';
 
 final _firestore = FirebaseFirestore.instance;
-final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class FeedService {
   DocumentSnapshot lastDocument;
@@ -12,7 +8,7 @@ class FeedService {
   bool hasMore = true;
   bool isLoading = false;
 
-  Future<List<DocumentSnapshot>> fetchFollowingFeed(
+  Future<List<DocumentSnapshot>> fetchHomeFeed(
       {List creatorEmailList, bool isOrderedBy = true}) async {
     DateTime threeDaysAgoDateTime =
         DateTime.now().subtract(Duration(days: 3)).toUtc();
@@ -23,11 +19,44 @@ class FeedService {
           .collectionGroup("post")
           .where("created_time", isGreaterThanOrEqualTo: threeDaysAgoDateTime)
           .orderBy("created_time", descending: true)
-          .limit(20)
+          .limit(10)
           .get();
     } else {
       querySnapshot = await _firestore
           .collectionGroup("post")
+          .where("created_time", isGreaterThanOrEqualTo: threeDaysAgoDateTime)
+          .orderBy("created_time", descending: true)
+          .startAfterDocument(lastDocument)
+          .limit(20)
+          .get();
+    }
+
+    if (querySnapshot.docs.length < documentLimit) {
+      hasMore = false;
+    }
+
+    lastDocument = querySnapshot.docs[querySnapshot.docs.length - 1];
+    return querySnapshot.docs;
+  }
+
+  Future<List<DocumentSnapshot>> fetchQuestionFeed(
+      {List creatorEmailList, bool isOrderedBy = true}) async {
+    DateTime threeDaysAgoDateTime =
+        DateTime.now().subtract(Duration(days: 3)).toUtc();
+    QuerySnapshot querySnapshot;
+
+    if (lastDocument == null) {
+      querySnapshot = await _firestore
+          .collectionGroup("post")
+          .where("is_question", isEqualTo: true)
+          .where("created_time", isGreaterThanOrEqualTo: threeDaysAgoDateTime)
+          .orderBy("created_time", descending: true)
+          .limit(10)
+          .get();
+    } else {
+      querySnapshot = await _firestore
+          .collectionGroup("post")
+          .where("is_question", isEqualTo: true)
           .where("created_time", isGreaterThanOrEqualTo: threeDaysAgoDateTime)
           .orderBy("created_time", descending: true)
           .startAfterDocument(lastDocument)

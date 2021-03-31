@@ -2,18 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:sweaterz_flutter/view/constants/screens.dart';
-import 'package:sweaterz_flutter/view/screens/post_detail_screen.dart';
+import 'package:sweaterz_flutter/view/screens/home_feed_post_detail_screen.dart';
 import 'package:sweaterz_flutter/view/screens/provider/home_feed_provider.dart';
 import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/screens/follow_sports_screen.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
+import 'package:sweaterz_flutter/view/screens/provider/question_feed_provider.dart';
 import 'package:sweaterz_flutter/view/screens/splash_screen.dart';
-import 'package:sweaterz_flutter/view/screens/login_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/login_screen.dart';
 import 'package:sweaterz_flutter/view/screens/registration_complete_screen.dart';
 import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
-import 'package:sweaterz_flutter/view/screens/video_player.dart';
 import 'package:flutter/services.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
@@ -42,6 +40,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => HomeFeedProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => QuestionFeedProvider(),
         ),
       ],
       child: GetMaterialApp(
@@ -82,7 +83,7 @@ class MyApp extends StatelessWidget {
           ),
           GetPage(
             name: '/post_detail_screen',
-            page: () => PostDetailScreen(),
+            page: () => HomeFeedPostDetailScreen(),
           ),
           // GetPage(
           //   name: '/upload_screen',

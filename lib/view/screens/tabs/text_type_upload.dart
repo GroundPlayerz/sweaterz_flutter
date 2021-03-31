@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,188 +5,25 @@ import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/networking_service/upload_post_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/constants/text_styles.dart';
-import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/model/post.dart';
+import 'package:sweaterz_flutter/view/screens/components/dialog.dart';
+import 'package:sweaterz_flutter/view/screens/components/rounded_outlined_button.dart';
 import 'package:sweaterz_flutter/view/screens/post_sports_add_screen.dart';
 import 'package:sweaterz_flutter/view/screens/post_tags_add_screen.dart';
+import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
-import 'package:video_compress/video_compress.dart';
-import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-import '../../constants/extensions.dart';
-import '../../constants/picker_model.dart';
-
-import '../components/dialog.dart';
-import '../components/rounded_outlined_button.dart';
-
-class VideoTypeUpload extends StatefulWidget {
+class TextTypeUpload extends StatefulWidget {
   @override
-  _VideoTypeUploadState createState() => _VideoTypeUploadState();
+  _TextTypeUploadState createState() => _TextTypeUploadState();
 }
 
-class _VideoTypeUploadState extends State<VideoTypeUpload> {
+class _TextTypeUploadState extends State<TextTypeUpload> {
   final TextEditingController contentsController = TextEditingController();
   FocusNode myFocusNode;
   String addedSports;
   List<String> addedTagsList = [];
-  Subscription _progressSubscription;
-  IVideoCompress videoCompress = VideoCompress;
   bool isQuestion = false;
-
-  final int maxAssetsCount = 1;
-
-  List<AssetEntity> assets = <AssetEntity>[];
-
-  bool isDisplayingDetail = true;
-
-  int get assetsLength => assets.length;
-
-  ThemeData get currentTheme => context.themeData;
-
-  PickMethodModel get pickMethod => PickMethodModel(
-        method: (
-          BuildContext context,
-          List<AssetEntity> assets,
-        ) async {
-          return await AssetPicker.pickAssets(
-            context,
-            maxAssets: maxAssetsCount,
-            selectedAssets: assets,
-            requestType: RequestType.video,
-            pickerTheme: kAssetsPickerThemeData,
-            textDelegate: EnglishTextDelegate(),
-          );
-        },
-      );
-
-  Widget methodItemBuilder(BuildContext context) {
-    final PickMethodModel model = pickMethod;
-    return TextButton(
-      onPressed: () async {
-        final List<AssetEntity> result = await model.method(context, assets);
-        if (result != null && result != assets) {
-          assets = List<AssetEntity>.from(result);
-          if (mounted) {
-            setState(() {});
-          }
-        }
-      },
-      child: Text('Select Video'),
-    );
-  }
-
-  Future<void> selectAssets(PickMethodModel model) async {
-    final List<AssetEntity> result = await model.method(context, assets);
-    if (result != null) {
-      assets = List<AssetEntity>.from(result);
-      if (mounted) {
-        setState(() {});
-      }
-    }
-  }
-
-  void removeAsset(int index) {
-    setState(() {
-      assets.remove(assets.elementAt(index));
-      if (assets.isEmpty) {
-        isDisplayingDetail = false;
-      }
-    });
-  }
-
-  Widget _assetWidgetBuilder(AssetEntity asset) {
-    Widget widget;
-    switch (asset.type) {
-      case AssetType.audio:
-        break;
-      case AssetType.video:
-        widget = _videoAssetWidget(asset);
-        break;
-      case AssetType.image:
-      case AssetType.other:
-        widget = _imageAssetWidget(asset);
-        break;
-    }
-    return widget;
-  }
-
-  Widget _imageAssetWidget(AssetEntity asset) {
-    return Image(
-      image: AssetEntityImageProvider(asset, isOriginal: false),
-      fit: BoxFit.cover,
-    );
-  }
-
-  Widget _videoAssetWidget(AssetEntity asset) {
-    return Stack(
-      children: <Widget>[
-        Positioned.fill(child: _imageAssetWidget(asset)),
-        ColoredBox(
-          color: context.themeData.dividerColor.withOpacity(0.3),
-          child: Center(
-            child: Icon(
-              Icons.video_library,
-              color: Colors.white,
-              size: isDisplayingDetail ? 24.0 : 16.0,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _selectedAssetWidget(int index) {
-    final AssetEntity asset = assets.elementAt(index);
-    return GestureDetector(
-      onTap: isDisplayingDetail
-          ? () async {
-              final List<AssetEntity> result =
-                  await AssetPickerViewer.pushToViewer(
-                context,
-                currentIndex: index,
-                assets: assets,
-                themeData: AssetPicker.themeData(kSweaterzColor),
-              );
-              if (result != assets && result != null) {
-                assets = List<AssetEntity>.from(result);
-                if (mounted) {
-                  setState(() {});
-                }
-              }
-            }
-          : null,
-      child: RepaintBoundary(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
-          child: _assetWidgetBuilder(asset),
-        ),
-      ),
-    );
-  }
-
-  Widget _selectedAssetDeleteButton(int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          assets.remove(assets.elementAt(index));
-          if (assetsLength == 0) {
-            isDisplayingDetail = false;
-          }
-        });
-      },
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4.0),
-          color: currentTheme.canvasColor.withOpacity(0.5),
-        ),
-        child: Icon(
-          Icons.close,
-          color: currentTheme.iconTheme.color,
-          size: 18.0,
-        ),
-      ),
-    );
-  }
 
   Widget _selectedSportsDeleteButton(sport) {
     return GestureDetector(
@@ -200,11 +35,11 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4.0),
-          color: currentTheme.canvasColor.withOpacity(0.5),
+          color: Colors.white.withOpacity(0.5),
         ),
         child: Icon(
           Icons.close,
-          color: currentTheme.iconTheme.color,
+          color: Colors.black,
           size: 18.0,
         ),
       ),
@@ -232,87 +67,10 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     );
   }
 
-  Widget get selectedAssetsWidget => AnimatedContainer(
-        duration: kThemeChangeDuration,
-        curve: Curves.easeInOut,
-        height: assets.isNotEmpty
-            ? isDisplayingDetail
-                ? 120.0
-                : 80.0
-            : 40.0,
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 20.0,
-              child: GestureDetector(
-                onTap: () {
-                  if (assets.isNotEmpty) {
-                    setState(() {
-                      isDisplayingDetail = !isDisplayingDetail;
-                    });
-                  }
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    if (assets.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Icon(
-                          isDisplayingDetail
-                              ? Icons.arrow_downward
-                              : Icons.arrow_upward,
-                          size: 18.0,
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-            selectedAssetsListView,
-          ],
-        ),
-      );
-
-  Widget get selectedAssetsListView => Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          scrollDirection: Axis.horizontal,
-          itemCount: assetsLength,
-          itemBuilder: (BuildContext _, int index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 16.0,
-              ),
-              child: AspectRatio(
-                aspectRatio: 1.0,
-                child: Stack(
-                  children: <Widget>[
-                    Positioned.fill(child: _selectedAssetWidget(index)),
-                    AnimatedPositioned(
-                      duration: kThemeAnimationDuration,
-                      top: isDisplayingDetail ? 6.0 : -30.0,
-                      right: isDisplayingDetail ? 6.0 : -30.0,
-                      child: _selectedAssetDeleteButton(index),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-      );
   @override
   void initState() {
     // TODO: implement initState
     myFocusNode = FocusNode();
-    _progressSubscription =
-        videoCompress.compressProgress$.subscribe((progress) {
-      debugPrint('progress: $progress');
-    });
     super.initState();
   }
 
@@ -321,7 +79,6 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     // TODO: implement dispose
     myFocusNode.unfocus();
     myFocusNode.dispose();
-    _progressSubscription.unsubscribe();
     super.dispose();
   }
 
@@ -335,32 +92,13 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     );
   }
 
-  Future<MediaInfo> compressVideoFileAndGetMediaInfo(File file) async {
-    MediaInfo mediaInfo = await videoCompress.compressVideo(file.path,
-        quality: VideoQuality.DefaultQuality, deleteOrigin: false);
-
-    print('Original File Size: ' + file.lengthSync().toString());
-    print('Compressed File Size: ' + mediaInfo.filesize.toString());
-
-    return mediaInfo;
-  }
-
-  Future<File> getVideoThumbnailFile(File file) async {
-    final thumbnailFile = await VideoCompress.getFileThumbnail(file.path,
-        quality: 50, // default(100)
-        position: -1 // default(-1)
-        );
-
-    return thumbnailFile;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundWhiteColor,
       appBar: AppBar(
-        elevation: 0.0,
         backgroundColor: kBackgroundWhiteColor,
+        elevation: 0.0,
         iconTheme: IconThemeData(
           color: kIconGreyColor1_B2B2B2, //change your color here
         ),
@@ -373,40 +111,18 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
               child: roundedOutlinedButton(
                 textContent: 'Next',
                 onPressed: () async {
-                  if (assets.isNotEmpty &&
-                      contentsController.text.length != 0 &&
+                  if (contentsController.text.length != 0 &&
                       addedSports.isNotEmpty &&
                       addedTagsList.isNotEmpty) {
                     _onLoading();
-                    List<Map> videoFileList = [];
-                    for (AssetEntity asset in assets) {
-                      File file = await asset.originFile;
-                      try {
-                        MediaInfo compressedMediaInfo =
-                            await compressVideoFileAndGetMediaInfo(file);
-                        File compressedVideoFile = compressedMediaInfo.file;
-                        double mediaLength = compressedMediaInfo.duration;
-                        File videoThumbnailFile =
-                            await getVideoThumbnailFile(file);
 
-                        videoFileList.add({
-                          'video_file': compressedVideoFile,
-                          'thumbnail_file': videoThumbnailFile,
-                          'media_length': mediaLength,
-                        });
-                      } catch (e) {
-                        videoCompress.cancelCompression();
-                        print(e);
-                      }
-                    }
                     Post newPost = Post();
                     newPost.setForUpload(
                       isQuestion: isQuestion,
                       contentsController: contentsController,
                       addedSports: addedSports,
                       addedTagsList: addedTagsList,
-                      uploadType: 'video',
-                      videoFileList: videoFileList,
+                      uploadType: 'text',
                       profileName:
                           Provider.of<MemberProvider>(context, listen: false)
                               .profileName,
@@ -417,7 +133,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                           Provider.of<MemberProvider>(context, listen: false)
                               .email,
                     );
-                    UploadPostService().uploadVideoTypePost(newPost);
+                    UploadPostService().uploadTextTypePost(newPost);
                     Future.delayed(Duration(seconds: 3));
                     Navigator.pop(context);
                     Get.off(() => HomeRoot());
@@ -655,14 +371,6 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                 ],
               ),
             ),
-
-            kDivider,
-            Row(
-              children: [
-                methodItemBuilder(context),
-              ],
-            ),
-            selectedAssetsWidget,
             kDivider,
             CheckboxListTile(
                 title: Text('Post with question mark?'),

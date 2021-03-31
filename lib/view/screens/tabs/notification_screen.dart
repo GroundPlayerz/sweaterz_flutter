@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 
-class LocalFeedScreen extends StatefulWidget {
+class NotificationScreen extends StatefulWidget {
   @override
-  _LocalFeedScreenState createState() => _LocalFeedScreenState();
+  _NotificationScreenState createState() => _NotificationScreenState();
 }
 
-class _LocalFeedScreenState extends State<LocalFeedScreen> {
+class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
-    double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
-    double convertWidthRatio = mediaQuery.size.width / kIphoneXWidth;
-
     return Scaffold(
       body: Center(
         child: SafeArea(
           child: Column(
             children: [
               Text(
-                'Local feed screen',
+                'notification screen',
                 style: kBigTitleTextStyle,
               ),
             ],

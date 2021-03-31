@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/view/screens/components/sign_out_button.dart';
 import 'package:sweaterz_flutter/view/screens/provider/home_feed_provider.dart';
-import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/images_type_upload.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/text_type_upload.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/video_type_upload.dart';
 
 class HomeFeedScreen extends StatefulWidget {
   @override
@@ -53,7 +55,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final followingFeedProvider =
+    final homeFeedProvider =
         Provider.of<HomeFeedProvider>(context, listen: true);
     // var mediaQuery = MediaQuery.of(context);
     // double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
@@ -61,69 +63,107 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      //backgroundColor: Colors.white,
+      backgroundColor: kBackgroundGreyColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: kBackgroundGreyColor,
         elevation: 0,
 
-        leadingWidth: 2000,
+        leadingWidth: 200,
         leading: SizedBox(
-          width: 2000,
-          child: Image(
-            image: AssetImage('images/logo_small@3x.png'),
-            fit: BoxFit.fitWidth,
+          width: 200,
+          child: Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Image(
+              image: AssetImage('images/logo_small@3x.png'),
+              fit: BoxFit.fitWidth,
+            ),
           ),
         ),
         //로고
+
         actions: [
-          Padding(
-            padding: EdgeInsets.all(3),
-            child: Icon(
-              Icons.home,
-            ),
+          IconButton(
+            icon: Icon(Icons.add_box_outlined),
+            onPressed: () {
+              List<String> bottomSheetList = ['Video', 'Image', 'Only Text'];
+
+              showModalBottomSheet(
+                isDismissible: true,
+                context: context,
+                builder: (context) {
+                  return Container(
+                    height: 180,
+                    child: ListView.builder(
+                        itemCount: 3,
+                        itemBuilder: (context, listViewIdx) {
+                          return ListTile(
+                            onTap: () {
+                              Navigator.pop(context);
+                              if (listViewIdx == 0) {
+                                Get.to(() => VideoTypeUpload(),
+                                    transition: Transition.downToUp);
+                              } else if (listViewIdx == 1) {
+                                Get.to(() => ImagesTypeUpload(),
+                                    transition: Transition.downToUp);
+                              } else {
+                                Get.to(() => TextTypeUpload(),
+                                    transition: Transition.downToUp);
+                              }
+                            },
+                            title: Text(bottomSheetList[listViewIdx]),
+                          );
+                        }),
+                  );
+                },
+              );
+            },
           ),
-          Padding(
-            padding: EdgeInsets.all(3),
-            child: Icon(
-              Icons.home,
+          IconButton(
+            icon: Icon(
+              Icons.contact_mail_outlined,
             ),
+            onPressed: () {},
           ),
-          Padding(
-            padding: EdgeInsets.all(3),
-            child: Icon(
-              Icons.home,
+          IconButton(
+            icon: Icon(
+              Icons.chat_bubble_outline,
             ),
+            onPressed: () {},
           ),
         ],
-        actionsIconTheme: IconThemeData(color: Colors.black),
+        actionsIconTheme: IconThemeData(color: kIconGreyColor2_656565),
         //shadowColor: Colors.white.withOpacity(0.0),
       ),
-      body: Center(
-        child: SafeArea(
-          child: Column(
-            children: [
-              // Text(
-              //     '${Provider.of<MemberProvider>(context).email} has logged in'),
-              // Text(Provider.of<MemberProvider>(context).profileName),
-              Expanded(
-                  child: followingFeedProvider.postWidgetList.length == 0
-                      ? Center(
-                          child: Text('No Data ...'),
-                        )
-                      : RefreshIndicator(
-                          onRefresh: _onRefresh,
-                          child: ListView.builder(
-                            controller: _scrollController,
-                            itemCount:
-                                followingFeedProvider.postWidgetList.length,
-                            itemBuilder: (context, index) {
-                              return followingFeedProvider
-                                  .postWidgetList[index];
-                            },
-                          ),
-                        )),
-            ],
-          ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Text(
+            //     '${Provider.of<MemberProvider>(context).email} has logged in'),
+            // Text(Provider.of<MemberProvider>(context).profileName),
+            Expanded(
+                child: homeFeedProvider.postWidgetList.length == 0
+                    //ToDO 피드가 없어도 새로고침 될 수 있게 스크롤 가능하게 해야함.
+                    ? Center(
+                        child: Text('Loading...'),
+                      )
+                    : RefreshIndicator(
+                        onRefresh: _onRefresh,
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          itemCount: homeFeedProvider.postWidgetList.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index ==
+                                homeFeedProvider.postWidgetList.length) {
+                              return Container(
+                                height: 30.0,
+                                width: double.infinity,
+                              );
+                            }
+                            return homeFeedProvider.postWidgetList[index];
+                          },
+                        ),
+                      )),
+          ],
         ),
       ),
     );

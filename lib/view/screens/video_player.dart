@@ -1,25 +1,22 @@
 import 'dart:async';
-import 'dart:io';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:chewie/chewie.dart';
-import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.dart';
-import 'package:sweaterz_flutter/view/screens/components/video_item.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayer extends StatefulWidget {
   final String videoDownloadURL;
+  final String thumbnailDownloadURL;
 
-  VideoPlayer({this.videoDownloadURL});
+  VideoPlayer({this.videoDownloadURL, this.thumbnailDownloadURL});
 
   @override
   _VideoPlayerState createState() => _VideoPlayerState();
 }
 
 class _VideoPlayerState extends State<VideoPlayer> {
-  TargetPlatform _platform;
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
 
@@ -76,12 +73,23 @@ class _VideoPlayerState extends State<VideoPlayer> {
                   ? Chewie(
                       controller: _chewieController,
                     )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 20),
-                        Text('Loading'),
+                  : Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          color: Colors.black12,
+                        ),
+                        Container(
+                          // Show a light blue background before the image loads
+                          child: CachedNetworkImage(
+                            imageUrl: widget.thumbnailDownloadURL,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(kSweaterzColor),
+                        ),
                       ],
                     ),
             ),

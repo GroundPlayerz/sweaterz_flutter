@@ -19,7 +19,7 @@ class _SetProfileNameScreenState extends State<SetProfileNameScreen> {
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
     double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
-    double convertWidthRatio = mediaQuery.size.width / kIphoneXWidth;
+    // double convertWidthRatio = mediaQuery.size.width / kIphoneXWidth;
 
     return Scaffold(
       body: Center(
@@ -39,7 +39,7 @@ class _SetProfileNameScreenState extends State<SetProfileNameScreen> {
                 Text(
                   'Please enter your profile name.\n'
                   'This profile name will be used in our app.',
-                  style: kBodyTextStyle1M.copyWith(color: kGreyColor2_767676),
+                  style: kBodyTextStyle1M.copyWith(color: kGreyColor1_767676),
                 ),
                 SizedBox(height: 90 * convertHeightRatio),
                 TextField(

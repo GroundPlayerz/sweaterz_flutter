@@ -5,9 +5,8 @@ import 'package:get/get.dart';
 import 'package:sweaterz_flutter/networking_service/login_service.dart';
 import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/view/screens/splash_screen.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
 import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';
+import 'package:sweaterz_flutter/view/screens/splash_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -31,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
     double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
-    double convertWidthRatio = mediaQuery.size.width / kIphoneXWidth;
+    // double convertWidthRatio = mediaQuery.size.width / kIphoneXWidth;
 
     return Scaffold(
       body: Center(

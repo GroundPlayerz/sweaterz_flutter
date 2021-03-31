@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/video_type_upload.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/profile_screen.dart';
-import 'package:sweaterz_flutter/view/screens/video_player.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import '../following_feed_screen.dart';
-import 'images_type_upload.dart';
+import 'package:sweaterz_flutter/view/constants/text_styles.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/notification_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/profile_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/question_feed_screen.dart';
+
 import 'home_feed_screen.dart';
-import 'local_feed_screen.dart';
+import 'letter_feed_screen.dart';
 
 class HomeRoot extends StatefulWidget {
   @override
@@ -40,15 +39,16 @@ class _HomeRootState extends State<HomeRoot> {
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.black,
-          unselectedItemColor: kGreyColor1_999999,
+          unselectedItemColor: kGreyColor2_999999,
           selectedFontSize: 13.0,
           unselectedFontSize: 13.0,
-          showUnselectedLabels: true,
+          showUnselectedLabels: false,
           currentIndex: _selectedIndex,
+          selectedLabelStyle: kBottomNavigationBarTextStyle,
           items: [
             BottomNavigationBarItem(
               icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
+                padding: EdgeInsets.only(bottom: 2.0),
                 child: Container(
                   // height: 20.0,
                   // width: 20.0,
@@ -63,63 +63,51 @@ class _HomeRootState extends State<HomeRoot> {
             BottomNavigationBarItem(
               icon: Padding(
                 padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(Icons.home),
+                child: Icon(Icons.mail_outline),
               ),
-              label: 'Following',
+              label: 'Letter',
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                width: 20,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 0.0),
+                  child: Image(
+                    image: _selectedIndex == 2
+                        ? AssetImage('images/question_mark_big@3x.png')
+                        : AssetImage(
+                            'images/question_mark_big_grey999999@3x.png'),
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
+              label: '',
             ),
             BottomNavigationBarItem(
               icon: Padding(
                   padding: EdgeInsets.only(bottom: 4.0),
-                  child: Icon(Icons.home)),
-              label: 'Upload',
+                  child: Icon(Icons.notifications)),
+              label: 'Notification',
             ),
             BottomNavigationBarItem(
               icon: Padding(
                   padding: EdgeInsets.only(bottom: 4.0),
-                  child: Icon(Icons.home)),
-              label: 'Video Show',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                  padding: EdgeInsets.only(bottom: 4.0),
-                  child: Icon(Icons.home)),
-              label: 'Profile',
+                  child: Icon(Icons.person)),
+              label: 'My Ground',
             ),
           ],
           onTap: (index) {
-            setState(() {
-              if (index == 2) {
-                List<String> bottomSheetList = ['Video', 'Image', 'Only Text'];
-
-                showModalBottomSheet(
-                  isDismissible: true,
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      height: 180,
-                      child: ListView.builder(
-                          itemCount: 3,
-                          itemBuilder: (context, listViewIdx) {
-                            return ListTile(
-                              onTap: () {
-                                Navigator.pop(context);
-                                if (listViewIdx == 0) {
-                                  Get.to(() => VideoTypeUpload(),
-                                      transition: Transition.downToUp);
-                                } else if (listViewIdx == 1) {
-                                  Get.to(() => ImagesTypeUpload(),
-                                      transition: Transition.downToUp);
-                                } else {}
-                              },
-                              title: Text(bottomSheetList[listViewIdx]),
-                            );
-                          }),
-                    );
-                  },
-                );
+            if (_selectedIndex == index) {
+              if (!Navigator.of(_navigatorKeys[index].currentContext)
+                  .canPop()) {
               } else {
-                _selectedIndex = index;
+                Navigator.of(
+                  _navigatorKeys[index].currentContext,
+                ).popUntil((route) => route.isFirst);
               }
+            }
+            setState(() {
+              _selectedIndex = index;
             });
           },
         ),
@@ -147,9 +135,9 @@ class _HomeRootState extends State<HomeRoot> {
       '/': (context) {
         return [
           HomeFeedScreen(),
-          FollowingFeedScreen(onNext: _next), //이렇게 하면 bottomnBar 없이 넘어감!!!!
-          Text('Nope'),
-          VideoPlayer(),
+          LetterFeedScreen(onNext: _next), //이렇게 하면 bottomnBar 없이 넘어감!!!!
+          QuestionFeedScreen(),
+          NotificationScreen(),
           ProfileScreen(),
         ].elementAt(index);
       },

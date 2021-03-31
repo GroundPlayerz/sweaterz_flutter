@@ -6,8 +6,9 @@ import 'package:sweaterz_flutter/view/constants/constants.dart';
 
 class PhotoViewGalleryScreen extends StatefulWidget {
   final List fileList;
+  final int firstPage;
 
-  PhotoViewGalleryScreen({this.fileList});
+  PhotoViewGalleryScreen({this.fileList, this.firstPage});
 
   @override
   _PhotoViewGalleryScreenState createState() => _PhotoViewGalleryScreenState();
@@ -16,12 +17,15 @@ class PhotoViewGalleryScreen extends StatefulWidget {
 class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen> {
   @override
   Widget build(BuildContext context) {
+    final PageController _pageController =
+        PageController(initialPage: widget.firstPage);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(
-          color: kIconGreyColor_B2B2B2, //change your color here
+          color: kIconGreyColor1_B2B2B2, //change your color here
         ),
       ),
       // add this body tag with container and photoview widget
@@ -40,11 +44,12 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen> {
             );
           },
           scrollPhysics: BouncingScrollPhysics(),
+          pageController: _pageController,
           backgroundDecoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             color: Theme.of(context).canvasColor,
           ),
-          enableRotation: true,
+          enableRotation: false,
           loadingBuilder: (context, event) => Center(
             child: Container(
               width: 30.0,

@@ -16,12 +16,21 @@ Widget uploadScreeNextButtonAlertDialog(BuildContext context) {
 
 Widget uploadingDialog() {
   return Dialog(
-    child: Row(
+    child: Column(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CircularProgressIndicator(),
-        Text("Uploading can take few seconds to minutes \n "
-            "depending on file size after this dialog pops."),
+        Wrap(children: [
+          Row(children: [
+            CircularProgressIndicator(),
+            Text(" Compressing now. ")
+          ]),
+          SizedBox(
+            height: 5.0,
+          ),
+          Text("Uploading can take few seconds to minutes \n "
+              "depending on file size after this dialog pops."),
+        ]),
       ],
     ),
   );

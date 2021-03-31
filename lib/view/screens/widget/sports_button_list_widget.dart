@@ -38,8 +38,8 @@ class SportsFollowsListWidget extends StatelessWidget {
               );
             }
             return Wrap(
-              spacing: 8.0,
-              runSpacing: 8.0,
+              spacing: 5.0,
+              runSpacing: 1.0,
               children: sportsButtonList,
             );
           } else if (snapshot.hasError) {

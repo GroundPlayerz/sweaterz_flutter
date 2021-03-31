@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/networking_service/login_service.dart';
-import 'package:sweaterz_flutter/view/screens/login_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/login_screen.dart';
 import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 
 Widget signOutButton(BuildContext context) {
-  return OutlineButton(
-    splashColor: Colors.grey,
+  return OutlinedButton(
+    // splashColor: Colors.grey,
     onPressed: () async {
       Get.offAll(() => LoginScreen());
       LoginService().logOut();
       Provider.of<MemberProvider>(context).initialize();
     },
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-    highlightElevation: 0,
-    borderSide: BorderSide(color: Colors.grey),
+    // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+    // highlightElevation: 0,
+    // borderSide: BorderSide(color: Colors.grey),
     child: Padding(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: Row(

@@ -1,5 +1,3 @@
-import 'enums.dart';
-
 class MemberProfile {
   List<String> _profileSports;
   String _introduction;

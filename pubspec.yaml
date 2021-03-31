@@ -44,6 +44,7 @@ dependencies:
   video_compress: ^2.1.1
   cached_network_image: ^2.5.1
   photo_view: ^0.10.3
+  carousel_slider: ^3.0.0
 
 
 

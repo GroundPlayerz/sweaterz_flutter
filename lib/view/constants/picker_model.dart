@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-import 'package:sweaterz_flutter/main.dart';
-
 class PickMethodModel {
   const PickMethodModel({
     this.icon,

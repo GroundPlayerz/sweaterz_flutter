@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:sweaterz_flutter/view/model/enums.dart';
-import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class Post {
   String _postId;
@@ -20,7 +19,9 @@ class Post {
   PostPrivacy _postPrivacy;
   List<String> _feedbackIdList;
   List<Map> _videoFileList;
+  bool _isQuestion;
 
+  bool get isQuestion => _isQuestion;
   List<Map> get videoFileList => _videoFileList;
   String get postId => _postId;
   String get memberEmail => _memberEmail;
@@ -47,12 +48,14 @@ class Post {
     String profilePhotoUrl,
     String memberEmail,
     List<Map> videoFileList,
+    bool isQuestion,
   }) {
     if (uploadType == 'video') {
       setVideoFileList(videoFileList);
     } else if (uploadType == 'images') {
       setImageFileList(fileList);
     } else {}
+    setIsQuestion(isQuestion);
     setContent(contentsController.text);
     setSports(addedSports);
     setTagsList(addedTagsList);
@@ -62,7 +65,9 @@ class Post {
     setMemberEmail(memberEmail);
   }
 
-  void setForFetchFeed() {}
+  void setIsQuestion(bool isQuestion) {
+    _isQuestion = isQuestion;
+  }
 
   void setLikeCount(int likeCount) {
     _likeCount = likeCount;

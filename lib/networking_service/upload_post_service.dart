@@ -2,15 +2,11 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/model/post.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
 class UploadPostService {
@@ -75,7 +71,8 @@ class UploadPostService {
         'thumbnail_download_url': downloadURLList[0]['thumbnail_download_url'],
         'view_count': post.viewCount,
         'like_count': post.likeCount,
-        'post_sports_tag': post.sports
+        'post_sports_tag': post.sports,
+        'is_question': post.isQuestion,
       });
 
       List<Map> videoFileListToUpload = [];
@@ -85,6 +82,7 @@ class UploadPostService {
           'order': i,
           'download_url': downloadURLList[i]['video_download_url'],
           'size': post.videoFileList[i]['video_file'].lengthSync(),
+          'media_length': post.videoFileList[i]['media_length'],
         });
       }
       batch.set(_postRef, {'file_list': videoFileListToUpload},
@@ -146,6 +144,7 @@ class UploadPostService {
     //Post Metadata upload to firestore
     try {
       batch.set(_postRef, {
+        'document_id': postDocumentId,
         'upload_type': post.uploadType,
         'content': post.content,
         'created_time': now,
@@ -155,6 +154,7 @@ class UploadPostService {
         'view_count': post.viewCount,
         'like_count': post.likeCount,
         'post_sports_tag': post.sports,
+        'is_question': post.isQuestion,
       });
 
       List<Map> imageFileListToUpload = [];
@@ -168,6 +168,52 @@ class UploadPostService {
       }
       batch.set(_postRef, {'file_list': imageFileListToUpload},
           SetOptions(merge: true));
+
+      List<Map> tagListToUpload = [];
+      for (int i = 0; i < post.tagsList.length; i++) {
+        tagListToUpload.add({
+          'name': post.tagsList[i],
+          'order': i,
+          'name_lower': post.tagsList[i].toLowerCase(),
+          'created_time': now,
+        });
+      }
+      batch.set(_postRef, {'post_tag_list': tagListToUpload},
+          SetOptions(merge: true));
+
+      log('Uploaded post successfully');
+      batch.commit();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<void> uploadTextTypePost(Post post) async {
+    final DateTime now = DateTime.now().toUtc();
+    final postDocumentId = post.profileName + now.toIso8601String();
+
+    WriteBatch batch = _firestore.batch();
+    DocumentReference _postRef = _firestore
+        .collection('sports_tag')
+        .doc(post.sports)
+        .collection('post')
+        .doc(postDocumentId); // post가 생기는 문서 레퍼런스
+
+    //Post Metadata upload to firestore
+    try {
+      batch.set(_postRef, {
+        'document_id': postDocumentId,
+        'upload_type': post.uploadType,
+        'content': post.content,
+        'created_time': now,
+        'creator_email': post.memberEmail,
+        'creator_profile_name': post.profileName,
+        'creator_profile_photo_url': post.profilePhotoUrl,
+        'view_count': post.viewCount,
+        'like_count': post.likeCount,
+        'post_sports_tag': post.sports,
+        'is_question': post.isQuestion,
+      });
 
       List<Map> tagListToUpload = [];
       for (int i = 0; i < post.tagsList.length; i++) {

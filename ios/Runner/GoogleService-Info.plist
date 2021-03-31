@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>199732300051-nosce3b96aktfj3r368cccdqcp83qcec.apps.googleusercontent.com</string>
+	<string>199732300051-d02pmh6f57t9o02s98g551je2daicumu.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.199732300051-nosce3b96aktfj3r368cccdqcp83qcec</string>
+	<string>com.googleusercontent.apps.199732300051-d02pmh6f57t9o02s98g551je2daicumu</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>199732300051-k1cfcha587d1d5hv4bdcnfrc8knbnp8o.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC3e5reeQ69AR6jgvj5ahO1PdTJ44qyovI</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>groundplayers.com.sweaterzFlutter</string>
+	<string>groundplayers.com.sweaterzFlutter1</string>
 	<key>PROJECT_ID</key>
 	<string>sweaterz-flutter</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:199732300051:ios:8e7e17cc686731ab26b2e6</string>
+	<string>1:199732300051:ios:26f0fa7b9d5c791c26b2e6</string>
 </dict>
 </plist>

@@ -1,20 +1,15 @@
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/networking_service/login_service.dart';
-import 'package:sweaterz_flutter/networking_service/member_service.dart';
 import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/view/screens/provider/home_feed_provider.dart';
 import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
-import 'package:sweaterz_flutter/view/screens/login_screen.dart';
 import 'package:sweaterz_flutter/view/screens/set_profile_name_screen.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/home_feed_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -36,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen> with ChangeNotifier {
   }
 
   void _init(context) async {
-    String _nextScreenRoute;
     //print(await LoginAPI().isLoggedIn());
     if (await LoginService().isLoggedIn()) {
       if (await RegistrationService().isRegistered()) {

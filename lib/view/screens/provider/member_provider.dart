@@ -31,7 +31,7 @@ class MemberProvider with ChangeNotifier {
     setProfileName(profileName: memberInfo['profile_name']);
     setMemberRole(memberRole: memberInfo['member_role']);
     setProfilePhotoUrl(profilePhotoURL: memberInfo['profile_photo_url']);
-    log('Set ${email} information complete!');
+    log('Set $email information complete!');
     notifyListeners();
   }
 
