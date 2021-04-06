@@ -20,7 +20,6 @@ class QuestionFeedProvider extends ChangeNotifier {
     _feedService.lastDocument = null;
     _feedService.hasMore = true;
     notifyListeners();
-    print('yes');
   }
 
   void fetchNewPostWidget(BuildContext context) async {
@@ -31,7 +30,7 @@ class QuestionFeedProvider extends ChangeNotifier {
       isLoading = true;
       List<DocumentSnapshot> _posts = await _feedService.fetchQuestionFeed();
       for (int i = 0; i < _posts.length; i++) {
-        Map postData = _posts[i].data();
+        Map postData = _posts[i].data()!;
         postDataList.add(postData);
         Widget postWidget = _postWidget(postDataIndex: i, context: context);
         postWidgetList.add(postWidget);
@@ -50,7 +49,7 @@ class QuestionFeedProvider extends ChangeNotifier {
 
   setLikeButtonState(int postDataIndex) async {
     bool isLikeButtonPressed = await PostDetailService()
-        .checkLikeButtonPressed(postDataList[postDataIndex]);
+        .checkPostLikeButtonPressed(postDataList[postDataIndex]);
     postDataList[postDataIndex]['is_like_button_pressed'] = isLikeButtonPressed;
     notifyListeners();
   }
@@ -74,8 +73,8 @@ class QuestionFeedProvider extends ChangeNotifier {
   // }) {}
 
   Widget _postWidget({
-    int postDataIndex,
-    BuildContext context,
+    required int postDataIndex,
+    required BuildContext context,
   }) {
     Map postData = postDataList[postDataIndex];
     return Padding(

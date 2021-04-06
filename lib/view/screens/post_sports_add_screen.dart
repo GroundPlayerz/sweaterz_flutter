@@ -5,7 +5,7 @@ import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'components/sports_button.dart';
 
 class PostSportsAddScreen extends StatefulWidget {
-  final String addedSports;
+  final String? addedSports;
 
   PostSportsAddScreen({this.addedSports});
 
@@ -14,7 +14,7 @@ class PostSportsAddScreen extends StatefulWidget {
 }
 
 class _PostSportsAddScreenState extends State<PostSportsAddScreen> {
-  String _addedSports;
+  String? _addedSports;
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _PostSportsAddScreenState extends State<PostSportsAddScreen> {
                 ]),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    List sportsList = snapshot.data[0];
+                    List sportsList = snapshot.data![0];
                     List<Widget> sportsButtonList = [];
                     for (Map map in sportsList) {
                       bool _isActivated = false;

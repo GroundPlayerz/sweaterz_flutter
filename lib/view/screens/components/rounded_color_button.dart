@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
 
 Widget roundedColorButton(
-    {String textContent, bool isButtonEnabled = true, Function onPressed}) {
+    {required String textContent,
+    bool isButtonEnabled = true,
+    required VoidCallback onPressed}) {
   return Container(
     height: 40.0,
     width: double.infinity,

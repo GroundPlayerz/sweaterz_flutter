@@ -1,8 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
 
 Widget roundedOutlinedButton(
-    {String textContent, bool isButtonEnabled = true, Function onPressed}) {
+    {required String textContent,
+    bool isButtonEnabled = true,
+    required VoidCallback onPressed}) {
   return Container(
     width: double.infinity,
     height: double.infinity,
@@ -15,7 +18,7 @@ Widget roundedOutlinedButton(
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
       ),
-      onPressed: isButtonEnabled ? onPressed : null,
+      onPressed: isButtonEnabled ? onPressed : () {},
       child: Center(
         child: Text(textContent,
             style: kBodyTextStyle1R.copyWith(

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 
 class LetterFeedScreen extends StatefulWidget {
-  final Function onNext;
-  LetterFeedScreen({this.onNext}); //추갇
-
   @override
   _LetterFeedScreenState createState() => _LetterFeedScreenState();
 }

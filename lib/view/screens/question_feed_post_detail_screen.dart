@@ -16,7 +16,8 @@ class QuestionFeedPostDetailScreen extends StatefulWidget {
   final int postDataIndex;
   final String feedType;
 
-  QuestionFeedPostDetailScreen({this.postDataIndex, this.feedType});
+  QuestionFeedPostDetailScreen(
+      {required this.postDataIndex, required this.feedType});
 
   @override
   _QuestionFeedPostDetailScreenState createState() =>

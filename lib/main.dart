@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:sweaterz_flutter/view/screens/home_feed_post_detail_screen.dart';
 import 'package:sweaterz_flutter/view/screens/provider/home_feed_provider.dart';
 import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/screens/follow_sports_screen.dart';
@@ -80,10 +79,6 @@ class MyApp extends StatelessWidget {
           GetPage(
             name: '/follow_sports_screen',
             page: () => FollowSportsScreen(),
-          ),
-          GetPage(
-            name: '/post_detail_screen',
-            page: () => HomeFeedPostDetailScreen(),
           ),
           // GetPage(
           //   name: '/upload_screen',

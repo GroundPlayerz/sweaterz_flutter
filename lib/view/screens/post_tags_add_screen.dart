@@ -7,7 +7,7 @@ import 'package:sweaterz_flutter/view/constants/text_styles.dart';
 class PostTagsAddScreen extends StatefulWidget {
   final List<String> addedTagsList;
 
-  PostTagsAddScreen({this.addedTagsList});
+  PostTagsAddScreen({required this.addedTagsList});
 
   @override
   _PostTagsAddScreenState createState() => _PostTagsAddScreenState();
@@ -15,7 +15,7 @@ class PostTagsAddScreen extends StatefulWidget {
 
 class _PostTagsAddScreenState extends State<PostTagsAddScreen> {
   List<String> _addedTagsList = [];
-  FocusNode myFocusNode;
+  FocusNode? myFocusNode;
 
   final TextEditingController tagAddController = TextEditingController();
   //ThemeData get currentTheme => context.themeData;
@@ -53,9 +53,9 @@ class _PostTagsAddScreenState extends State<PostTagsAddScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    myFocusNode.unfocus();
+    myFocusNode?.unfocus();
     tagAddController.dispose();
-    myFocusNode.dispose();
+    myFocusNode?.dispose();
     super.dispose();
   }
 
@@ -72,7 +72,7 @@ class _PostTagsAddScreenState extends State<PostTagsAddScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                myFocusNode.unfocus();
+                myFocusNode?.unfocus();
                 Navigator.pop(context, _addedTagsList);
               },
               child: Text('Done'))
@@ -80,7 +80,7 @@ class _PostTagsAddScreenState extends State<PostTagsAddScreen> {
       ),
       body: GestureDetector(
         onTap: () {
-          myFocusNode.unfocus();
+          myFocusNode?.unfocus();
         },
         child: SafeArea(
           child: Padding(
@@ -220,7 +220,9 @@ class _PostTagsAddScreenState extends State<PostTagsAddScreen> {
   }
 
   Widget addButton(
-      {String textContent, bool isButtonEnabled = true, Function onPressed}) {
+      {required String textContent,
+      bool isButtonEnabled = true,
+      required VoidCallback onPressed}) {
     return TextButton(
       style: TextButton.styleFrom(
         //primary: Colors.red,

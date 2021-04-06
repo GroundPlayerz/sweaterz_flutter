@@ -29,7 +29,7 @@ class _HomeRootState extends State<HomeRoot> {
     return WillPopScope(
       onWillPop: () async {
         final isFirstRouteInCurrentTab =
-            !await _navigatorKeys[_selectedIndex].currentState.maybePop();
+            !await _navigatorKeys[_selectedIndex].currentState!.maybePop();
 
         // let system handle back button if we're on the first route
         return isFirstRouteInCurrentTab;
@@ -98,11 +98,11 @@ class _HomeRootState extends State<HomeRoot> {
           ],
           onTap: (index) {
             if (_selectedIndex == index) {
-              if (!Navigator.of(_navigatorKeys[index].currentContext)
+              if (!Navigator.of(_navigatorKeys[index].currentContext!)
                   .canPop()) {
               } else {
                 Navigator.of(
-                  _navigatorKeys[index].currentContext,
+                  _navigatorKeys[index].currentContext!,
                 ).popUntil((route) => route.isFirst);
               }
             }
@@ -124,10 +124,6 @@ class _HomeRootState extends State<HomeRoot> {
     );
   }
 
-  void _next() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => null));
-  }
-
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context, int index) {
     //여기서 WidgetBuilder는 (context){return HomePage()}
     return {
@@ -135,7 +131,7 @@ class _HomeRootState extends State<HomeRoot> {
       '/': (context) {
         return [
           HomeFeedScreen(),
-          LetterFeedScreen(onNext: _next), //이렇게 하면 bottomnBar 없이 넘어감!!!!
+          LetterFeedScreen(), //이렇게 하면 bottomnBar 없이 넘어감!!!!
           QuestionFeedScreen(),
           NotificationScreen(),
           ProfileScreen(),
@@ -153,7 +149,7 @@ class _HomeRootState extends State<HomeRoot> {
         key: _navigatorKeys[index],
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
-            builder: (context) => routeBuilders[routeSettings.name](context),
+            builder: (context) => routeBuilders[routeSettings.name]!(context),
           );
         },
       ),

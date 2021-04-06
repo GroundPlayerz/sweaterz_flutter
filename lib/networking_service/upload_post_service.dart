@@ -10,7 +10,7 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
 class UploadPostService {
-  Future<String> uploadToStorageAndGetDownloadURL(
+  Future<String> _uploadToStorageAndGetDownloadURL(
       Reference storageRef, File file) async {
     Reference fileRef = storageRef.child(DateTime.now().toIso8601String());
 
@@ -25,7 +25,7 @@ class UploadPostService {
   Future<void> uploadVideoTypePost(Post post) async {
     final DateTime now = DateTime.now().toUtc();
     final String formattedNow = DateFormat('yyyyMMdd').format(now);
-    final String postDocumentId = post.profileName + now.toIso8601String();
+    final String postDocumentId = post.profileName! + now.toIso8601String();
 
     List<Map> downloadURLList = [];
 
@@ -43,11 +43,11 @@ class UploadPostService {
         .child("$formattedNow/videos/${post.memberEmail}");
     //File upload to Cloud Storage
     try {
-      for (int i = 0; i < post.videoFileList.length; i++) {
-        String videoDownloadURL = await uploadToStorageAndGetDownloadURL(
-            storageRef, post.videoFileList[i]['video_file']);
-        String thumbnailDownloadURL = await uploadToStorageAndGetDownloadURL(
-            storageRef, post.videoFileList[i]['thumbnail_file']);
+      for (int i = 0; i < post.videoFileList!.length; i++) {
+        String videoDownloadURL = await _uploadToStorageAndGetDownloadURL(
+            storageRef, post.videoFileList![i]['video_file']);
+        String thumbnailDownloadURL = await _uploadToStorageAndGetDownloadURL(
+            storageRef, post.videoFileList![i]['thumbnail_file']);
 
         downloadURLList.add({
           'video_download_url': videoDownloadURL,
@@ -76,24 +76,24 @@ class UploadPostService {
       });
 
       List<Map> videoFileListToUpload = [];
-      for (int i = 0; i < post.videoFileList.length; i++) {
+      for (int i = 0; i < post.videoFileList!.length; i++) {
         videoFileListToUpload.add({
-          'original_file_name': post.videoFileList[i]['video_file'].path,
+          'original_file_name': post.videoFileList![i]['video_file'].path,
           'order': i,
           'download_url': downloadURLList[i]['video_download_url'],
-          'size': post.videoFileList[i]['video_file'].lengthSync(),
-          'media_length': post.videoFileList[i]['media_length'],
+          'size': post.videoFileList![i]['video_file'].lengthSync(),
+          'media_length': post.videoFileList![i]['media_length'],
         });
       }
       batch.set(_postRef, {'file_list': videoFileListToUpload},
           SetOptions(merge: true));
 
       List<Map> tagListToUpload = [];
-      for (int i = 0; i < post.tagsList.length; i++) {
+      for (int i = 0; i < post.tagsList!.length; i++) {
         tagListToUpload.add({
-          'name': post.tagsList[i],
+          'name': post.tagsList![i],
           'order': i,
-          'name_lower': post.tagsList[i].toLowerCase(),
+          'name_lower': post.tagsList![i].toLowerCase(),
           'created_time': now,
         });
       }
@@ -110,7 +110,7 @@ class UploadPostService {
   Future<void> uploadImagesTypePost(Post post) async {
     final DateTime now = DateTime.now().toUtc();
     final String formattedNow = DateFormat('yyyyMMdd').format(now);
-    final postDocumentId = post.profileName + now.toIso8601String();
+    final postDocumentId = post.profileName! + now.toIso8601String();
     List<String> downloadURLList = [];
 
     WriteBatch batch = _firestore.batch();
@@ -128,10 +128,10 @@ class UploadPostService {
 
     //File upload to Cloud Storage
     try {
-      for (int i = 0; i < post.imageFileList.length; i++) {
+      for (int i = 0; i < post.imageFileList!.length; i++) {
         Reference fileRef = storageRef.child(DateTime.now().toIso8601String());
 
-        UploadTask storageUploadTask = fileRef.putFile(post.imageFileList[i]);
+        UploadTask storageUploadTask = fileRef.putFile(post.imageFileList![i]);
         String downloadURL;
         await storageUploadTask.whenComplete(() {});
         downloadURL = await fileRef.getDownloadURL();
@@ -158,23 +158,23 @@ class UploadPostService {
       });
 
       List<Map> imageFileListToUpload = [];
-      for (int i = 0; i < post.imageFileList.length; i++) {
+      for (int i = 0; i < post.imageFileList!.length; i++) {
         imageFileListToUpload.add({
-          'original_file_name': post.imageFileList[i].path,
+          'original_file_name': post.imageFileList![i].path,
           'order': i,
           'download_url': downloadURLList[i],
-          'size': post.imageFileList[i].lengthSync(),
+          'size': post.imageFileList![i].lengthSync(),
         });
       }
       batch.set(_postRef, {'file_list': imageFileListToUpload},
           SetOptions(merge: true));
 
       List<Map> tagListToUpload = [];
-      for (int i = 0; i < post.tagsList.length; i++) {
+      for (int i = 0; i < post.tagsList!.length; i++) {
         tagListToUpload.add({
-          'name': post.tagsList[i],
+          'name': post.tagsList![i],
           'order': i,
-          'name_lower': post.tagsList[i].toLowerCase(),
+          'name_lower': post.tagsList![i].toLowerCase(),
           'created_time': now,
         });
       }
@@ -190,7 +190,7 @@ class UploadPostService {
 
   Future<void> uploadTextTypePost(Post post) async {
     final DateTime now = DateTime.now().toUtc();
-    final postDocumentId = post.profileName + now.toIso8601String();
+    final postDocumentId = post.profileName! + now.toIso8601String();
 
     WriteBatch batch = _firestore.batch();
     DocumentReference _postRef = _firestore
@@ -216,11 +216,11 @@ class UploadPostService {
       });
 
       List<Map> tagListToUpload = [];
-      for (int i = 0; i < post.tagsList.length; i++) {
+      for (int i = 0; i < post.tagsList!.length; i++) {
         tagListToUpload.add({
-          'name': post.tagsList[i],
+          'name': post.tagsList![i],
           'order': i,
-          'name_lower': post.tagsList[i].toLowerCase(),
+          'name_lower': post.tagsList![i].toLowerCase(),
           'created_time': now,
         });
       }

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,8 +26,8 @@ class ImagesTypeUpload extends StatefulWidget {
 
 class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
   final TextEditingController contentsController = TextEditingController();
-  FocusNode myFocusNode;
-  String addedSports;
+  FocusNode? myFocusNode;
+  String? addedSports;
   List<String> addedTagsList = [];
   bool isQuestion = false;
 
@@ -62,8 +61,8 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
     final PickMethodModel model = pickMethod;
     return TextButton(
       onPressed: () async {
-        myFocusNode.unfocus();
-        final List<AssetEntity> result = await model.method(context, assets);
+        myFocusNode?.unfocus();
+        final List<AssetEntity>? result = await model.method(context, assets);
         if (result != null && result != assets) {
           assets = List<AssetEntity>.from(result);
           if (mounted) {
@@ -76,7 +75,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
   }
 
   Future<void> selectAssets(PickMethodModel model) async {
-    final List<AssetEntity> result = await model.method(context, assets);
+    final List<AssetEntity>? result = await model.method(context, assets);
     if (result != null) {
       assets = List<AssetEntity>.from(result);
       if (mounted) {
@@ -95,17 +94,8 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
   }
 
   Widget _assetWidgetBuilder(AssetEntity asset) {
-    Widget widget;
-    switch (asset.type) {
-      case AssetType.audio:
-        break;
-      case AssetType.video:
-        break;
-      case AssetType.image:
-      case AssetType.other:
-        widget = _imageAssetWidget(asset);
-        break;
-    }
+    Widget widget = _imageAssetWidget(asset);
+
     return widget;
   }
 
@@ -121,11 +111,11 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
     return GestureDetector(
       onTap: isDisplayingDetail
           ? () async {
-              final List<AssetEntity> result =
+              final List<AssetEntity>? result =
                   await AssetPickerViewer.pushToViewer(
                 context,
                 currentIndex: index,
-                assets: assets,
+                previewAssets: assets,
                 themeData: AssetPicker.themeData(kSweaterzColor),
               );
               if (result != assets && result != null) {
@@ -317,8 +307,8 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
   @override
   void dispose() {
     // TODO: implement dispose
-    myFocusNode.unfocus();
-    myFocusNode.dispose();
+    myFocusNode?.unfocus();
+    myFocusNode?.dispose();
     super.dispose();
   }
 
@@ -331,19 +321,19 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
       },
     );
   }
-
-  Future<File> compressAndGetFile(File file) async {
-    File result = await FlutterNativeImage.compressImage(
-      file.absolute.path,
-      quality: 70,
-    );
-    print(result);
-
-    print('Original File Size: ' + file.lengthSync().toString());
-    print('Compressed File Size: ' + result.lengthSync().toString());
-
-    return result;
-  }
+  // ToDo flutter_image_compressor 패키지 이용하여 이미지 파일 압축하기, path_provider의 getTemporarayPath 이용!
+  // Future<File> compressAndGetFile(File file) async {
+  //   File result = await FlutterNativeImage.compressImage(
+  //     file.absolute.path,
+  //     quality: 70,
+  //   );
+  //   print(result);
+  //
+  //   print('Original File Size: ' + file.lengthSync().toString());
+  //   print('Compressed File Size: ' + result.lengthSync().toString());
+  //
+  //   return result;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -366,31 +356,33 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
                 onPressed: () async {
                   if (assets.isNotEmpty &&
                       contentsController.text.length != 0 &&
-                      addedSports.isNotEmpty &&
+                      addedSports != null &&
                       addedTagsList.isNotEmpty) {
                     _onLoading();
                     List<File> imageFileList = [];
                     for (AssetEntity asset in assets) {
-                      File file = await asset.originFile;
-                      File compressedFile = await compressAndGetFile(file);
-                      imageFileList.add(compressedFile);
+                      File? file = await asset.originFile;
+                      //ToDo image 파일 압축하
+                      // File compressedFile = await compressAndGetFile(file);
+                      imageFileList.add(file!);
                     }
                     Post newPost = Post();
                     newPost.setForUpload(
+                      isQuestion: isQuestion,
                       contentsController: contentsController,
-                      addedSports: addedSports,
+                      addedSports: addedSports!,
                       addedTagsList: addedTagsList,
                       uploadType: 'images',
-                      fileList: imageFileList,
+                      imageFileList: imageFileList,
                       profileName:
                           Provider.of<MemberProvider>(context, listen: false)
-                              .profileName,
+                              .profileName!,
                       profilePhotoUrl:
                           Provider.of<MemberProvider>(context, listen: false)
-                              .profilePhotoURL,
+                              .profilePhotoURL!,
                       memberEmail:
                           Provider.of<MemberProvider>(context, listen: false)
-                              .email,
+                              .email!,
                     );
                     UploadPostService().uploadImagesTypePost(newPost);
                     Future.delayed(Duration(seconds: 3));
@@ -412,7 +404,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
       ),
       body: GestureDetector(
         onTap: () {
-          myFocusNode.unfocus();
+          myFocusNode?.unfocus();
         },
         child: ListView(
           children: <Widget>[
@@ -475,7 +467,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
                       children: [
                         TextButton(
                           onPressed: () async {
-                            myFocusNode.unfocus();
+                            myFocusNode?.unfocus();
                             final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -511,7 +503,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 10.0, vertical: 10.0),
                                           child: Text(
-                                            addedSports,
+                                            addedSports!,
                                             style: TextStyle(fontSize: 16.0),
                                           )),
                                       AnimatedPositioned(
@@ -568,7 +560,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
                       children: [
                         TextButton(
                           onPressed: () async {
-                            myFocusNode.unfocus();
+                            myFocusNode?.unfocus();
                             final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -595,7 +587,6 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               // crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                if (addedTagsList != null)
                                   if (addedTagsList.length != 0)
                                     for (String tag in addedTagsList)
                                       Padding(
@@ -644,7 +635,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
                 value: isQuestion,
                 onChanged: (value) {
                   setState(() {
-                    isQuestion = value;
+                    isQuestion = value!;
                   });
                 })
           ],

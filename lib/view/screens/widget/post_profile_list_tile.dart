@@ -7,11 +7,11 @@ import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/constants/text_styles.dart';
 
 Widget postProfileListTile(
-    {String email,
-    String profilePhotoURL,
-    String profileName,
-    Timestamp createdTime,
-    int viewCount}) {
+    {required String email,
+    required String profilePhotoURL,
+    required String profileName,
+    required Timestamp createdTime,
+    required int viewCount}) {
   List<String> months = [
     'Jan',
     'Feb',
@@ -34,8 +34,8 @@ Widget postProfileListTile(
   return ListTile(
     onTap: () async {
       //  Todo 해당 멤버의 프로필로 이동
-      User currentUser = await LoginService().getCurrentUser();
-      if (email == currentUser.email) {
+      User? currentUser = await LoginService().getCurrentUser();
+      if (email == currentUser?.email) {
         // Todo 내 프로필로 이동
       } else {
         // Todo 다른사람 프로필로 이동

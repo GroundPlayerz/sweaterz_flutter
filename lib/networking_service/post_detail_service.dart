@@ -18,7 +18,7 @@ class PostDetailService {
         return transaction.get(postDocumentReference).then((value) async {
           if (value.exists) {
             int viewCount = await postDocumentReference.get().then((value) {
-              return value.data()['view_count'];
+              return value.data()!['view_count'];
             });
             print('viewCount' + viewCount.toString());
             transaction
@@ -33,7 +33,7 @@ class PostDetailService {
   }
 
   Future<void> pressPostLikeButton(Map postData) async {
-    String currentUserEmail = _auth.currentUser.email;
+    String currentUserEmail = _auth.currentUser!.email!;
     try {
       await _firestore.runTransaction((transaction) {
         DocumentReference postDocumentReference = _firestore
@@ -44,7 +44,7 @@ class PostDetailService {
         return transaction.get(postDocumentReference).then((value) async {
           if (value.exists) {
             int likeCount = await postDocumentReference.get().then((value) {
-              return value.data()['like_count'];
+              return value.data()!['like_count'];
             });
             print('likeCount' + likeCount.toString());
             transaction.update(postDocumentReference, {
@@ -69,7 +69,7 @@ class PostDetailService {
   }
 
   Future<void> cancelPostLikeButton(Map postData) async {
-    String currentUserEmail = _auth.currentUser.email;
+    String currentUserEmail = _auth.currentUser!.email!;
     try {
       await _firestore.runTransaction((transaction) {
         DocumentReference postDocumentReference = _firestore
@@ -80,7 +80,7 @@ class PostDetailService {
         return transaction.get(postDocumentReference).then((value) async {
           if (value.exists) {
             int likeCount = await postDocumentReference.get().then((value) {
-              return value.data()['like_count'];
+              return value.data()!['like_count'];
             });
             print('likeCount' + likeCount.toString());
             transaction
@@ -97,8 +97,8 @@ class PostDetailService {
     }
   }
 
-  Future<bool> checkLikeButtonPressed(Map postData) {
-    String currentUserEmail = _auth.currentUser.email;
+  Future<bool> checkPostLikeButtonPressed(Map postData) {
+    String currentUserEmail = _auth.currentUser!.email!;
     DocumentReference postDocumentLikeMemberRef = _firestore
         .collection('sports_tag')
         .doc(postData['post_sports_tag'])

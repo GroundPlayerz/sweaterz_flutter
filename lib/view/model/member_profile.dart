@@ -1,17 +1,17 @@
 class MemberProfile {
-  List<String> _profileSports;
-  String _introduction;
-  List<String> _postIdList;
+  List<String>? _profileSports;
+  String? _introduction;
+  List<String>? _postIdList;
 
-  void setProfileSports({List<String> profileSports}) {
+  void setProfileSports({required List<String> profileSports}) {
     this._profileSports = profileSports;
   }
 
-  void setIntroduction({String introduction}) {
+  void setIntroduction({required String introduction}) {
     this._introduction = introduction;
   }
 
-  void setPostIdList({List<String> postIdList}) {
+  void setPostIdList({required List<String> postIdList}) {
     this._postIdList = postIdList;
   }
 }

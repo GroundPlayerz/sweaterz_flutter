@@ -28,10 +28,10 @@ class VideoTypeUpload extends StatefulWidget {
 
 class _VideoTypeUploadState extends State<VideoTypeUpload> {
   final TextEditingController contentsController = TextEditingController();
-  FocusNode myFocusNode;
-  String addedSports;
+  FocusNode? myFocusNode;
+  String? addedSports;
   List<String> addedTagsList = [];
-  Subscription _progressSubscription;
+  Subscription? _progressSubscription;
   IVideoCompress videoCompress = VideoCompress;
   bool isQuestion = false;
 
@@ -65,7 +65,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     final PickMethodModel model = pickMethod;
     return TextButton(
       onPressed: () async {
-        final List<AssetEntity> result = await model.method(context, assets);
+        final List<AssetEntity>? result = await model.method(context, assets);
         if (result != null && result != assets) {
           assets = List<AssetEntity>.from(result);
           if (mounted) {
@@ -78,7 +78,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
   }
 
   Future<void> selectAssets(PickMethodModel model) async {
-    final List<AssetEntity> result = await model.method(context, assets);
+    final List<AssetEntity>? result = await model.method(context, assets);
     if (result != null) {
       assets = List<AssetEntity>.from(result);
       if (mounted) {
@@ -97,18 +97,8 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
   }
 
   Widget _assetWidgetBuilder(AssetEntity asset) {
-    Widget widget;
-    switch (asset.type) {
-      case AssetType.audio:
-        break;
-      case AssetType.video:
-        widget = _videoAssetWidget(asset);
-        break;
-      case AssetType.image:
-      case AssetType.other:
-        widget = _imageAssetWidget(asset);
-        break;
-    }
+    Widget widget = _videoAssetWidget(asset);
+
     return widget;
   }
 
@@ -142,11 +132,11 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     return GestureDetector(
       onTap: isDisplayingDetail
           ? () async {
-              final List<AssetEntity> result =
+              final List<AssetEntity>? result =
                   await AssetPickerViewer.pushToViewer(
                 context,
                 currentIndex: index,
-                assets: assets,
+                previewAssets: assets,
                 themeData: AssetPicker.themeData(kSweaterzColor),
               );
               if (result != assets && result != null) {
@@ -319,9 +309,9 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
   @override
   void dispose() {
     // TODO: implement dispose
-    myFocusNode.unfocus();
-    myFocusNode.dispose();
-    _progressSubscription.unsubscribe();
+    myFocusNode?.unfocus();
+    myFocusNode?.dispose();
+    _progressSubscription?.unsubscribe();
     super.dispose();
   }
 
@@ -335,14 +325,16 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
     );
   }
 
-  Future<MediaInfo> compressVideoFileAndGetMediaInfo(File file) async {
-    MediaInfo mediaInfo = await videoCompress.compressVideo(file.path,
+  Future<MediaInfo?> compressVideoFileAndGetMediaInfo(File file) async {
+    MediaInfo? mediaInfo = await videoCompress.compressVideo(file.path,
         quality: VideoQuality.DefaultQuality, deleteOrigin: false);
 
-    print('Original File Size: ' + file.lengthSync().toString());
-    print('Compressed File Size: ' + mediaInfo.filesize.toString());
+    if (mediaInfo != null) {
+      print('Original File Size: ' + file.lengthSync().toString());
+      print('Compressed File Size: ' + mediaInfo.filesize.toString());
 
-    return mediaInfo;
+      return mediaInfo;
+    }
   }
 
   Future<File> getVideoThumbnailFile(File file) async {
@@ -375,25 +367,26 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                 onPressed: () async {
                   if (assets.isNotEmpty &&
                       contentsController.text.length != 0 &&
-                      addedSports.isNotEmpty &&
+                      addedSports != null &&
                       addedTagsList.isNotEmpty) {
                     _onLoading();
                     List<Map> videoFileList = [];
                     for (AssetEntity asset in assets) {
-                      File file = await asset.originFile;
+                      File? file = await asset.originFile;
                       try {
-                        MediaInfo compressedMediaInfo =
-                            await compressVideoFileAndGetMediaInfo(file);
-                        File compressedVideoFile = compressedMediaInfo.file;
-                        double mediaLength = compressedMediaInfo.duration;
-                        File videoThumbnailFile =
-                            await getVideoThumbnailFile(file);
-
-                        videoFileList.add({
-                          'video_file': compressedVideoFile,
-                          'thumbnail_file': videoThumbnailFile,
-                          'media_length': mediaLength,
-                        });
+                        if (file != null) {
+                          MediaInfo? compressedMediaInfo =
+                              await compressVideoFileAndGetMediaInfo(file);
+                          File? compressedVideoFile = compressedMediaInfo!.file;
+                          double? mediaLength = compressedMediaInfo.duration;
+                          File videoThumbnailFile =
+                              await getVideoThumbnailFile(file);
+                          videoFileList.add({
+                            'video_file': compressedVideoFile,
+                            'thumbnail_file': videoThumbnailFile,
+                            'media_length': mediaLength,
+                          });
+                        }
                       } catch (e) {
                         videoCompress.cancelCompression();
                         print(e);
@@ -403,19 +396,19 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                     newPost.setForUpload(
                       isQuestion: isQuestion,
                       contentsController: contentsController,
-                      addedSports: addedSports,
+                      addedSports: addedSports!,
                       addedTagsList: addedTagsList,
                       uploadType: 'video',
                       videoFileList: videoFileList,
                       profileName:
                           Provider.of<MemberProvider>(context, listen: false)
-                              .profileName,
+                              .profileName!,
                       profilePhotoUrl:
                           Provider.of<MemberProvider>(context, listen: false)
-                              .profilePhotoURL,
+                              .profilePhotoURL!,
                       memberEmail:
                           Provider.of<MemberProvider>(context, listen: false)
-                              .email,
+                              .email!,
                     );
                     UploadPostService().uploadVideoTypePost(newPost);
                     Future.delayed(Duration(seconds: 3));
@@ -437,7 +430,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
       ),
       body: GestureDetector(
         onTap: () {
-          myFocusNode.unfocus();
+          myFocusNode?.unfocus();
         },
         child: ListView(
           children: <Widget>[
@@ -500,7 +493,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                       children: [
                         TextButton(
                           onPressed: () async {
-                            myFocusNode.unfocus();
+                            myFocusNode?.unfocus();
                             final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -536,7 +529,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 10.0, vertical: 10.0),
                                           child: Text(
-                                            addedSports,
+                                            addedSports!,
                                             style: TextStyle(fontSize: 16.0),
                                           )),
                                       AnimatedPositioned(
@@ -593,7 +586,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                       children: [
                         TextButton(
                           onPressed: () async {
-                            myFocusNode.unfocus();
+                            myFocusNode?.unfocus();
                             final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -669,7 +662,7 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                 value: isQuestion,
                 onChanged: (value) {
                   setState(() {
-                    isQuestion = value;
+                    isQuestion = value!;
                   });
                 }),
           ],

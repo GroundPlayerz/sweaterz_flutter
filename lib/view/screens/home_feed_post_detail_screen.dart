@@ -19,7 +19,8 @@ class HomeFeedPostDetailScreen extends StatefulWidget {
   final int postDataIndex;
   final String feedType;
 
-  HomeFeedPostDetailScreen({this.postDataIndex, this.feedType});
+  HomeFeedPostDetailScreen(
+      {required this.postDataIndex, required this.feedType});
 
   @override
   _HomeFeedPostDetailScreenState createState() =>

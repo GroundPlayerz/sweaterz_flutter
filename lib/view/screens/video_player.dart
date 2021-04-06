@@ -10,15 +10,16 @@ class VideoPlayer extends StatefulWidget {
   final String videoDownloadURL;
   final String thumbnailDownloadURL;
 
-  VideoPlayer({this.videoDownloadURL, this.thumbnailDownloadURL});
+  VideoPlayer(
+      {required this.videoDownloadURL, required this.thumbnailDownloadURL});
 
   @override
   _VideoPlayerState createState() => _VideoPlayerState();
 }
 
 class _VideoPlayerState extends State<VideoPlayer> {
-  VideoPlayerController _videoPlayerController;
-  ChewieController _chewieController;
+  VideoPlayerController? _videoPlayerController;
+  ChewieController? _chewieController;
 
   @override
   void initState() {
@@ -28,7 +29,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    _videoPlayerController?.dispose();
     _chewieController?.dispose();
     super.dispose();
   }
@@ -38,10 +39,10 @@ class _VideoPlayerState extends State<VideoPlayer> {
         VideoPlayerController.network(widget.videoDownloadURL);
 
     await Future.wait([
-      _videoPlayerController.initialize(),
+      _videoPlayerController!.initialize(),
     ]);
     _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
+      videoPlayerController: _videoPlayerController!,
       autoPlay: false,
       looping: true,
       // Try playing around with some of these other options:
@@ -69,9 +70,10 @@ class _VideoPlayerState extends State<VideoPlayer> {
           Expanded(
             child: Center(
               child: _chewieController != null &&
-                      _chewieController.videoPlayerController.value.initialized
+                      _chewieController!
+                          .videoPlayerController.value.isInitialized
                   ? Chewie(
-                      controller: _chewieController,
+                      controller: _chewieController!,
                     )
                   : Stack(
                       alignment: Alignment.center,

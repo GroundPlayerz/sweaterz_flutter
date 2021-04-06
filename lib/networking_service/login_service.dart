@@ -8,7 +8,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 
 class LoginService {
-  User _currentUser;
+  User? _currentUser;
 
   Future<void> logIn() async {
     await _signInWithGoogle();
@@ -31,7 +31,7 @@ class LoginService {
     }
   }
 
-  Future<User> getCurrentUser() async {
+  Future<User?> getCurrentUser() async {
     try {
       final _currentUser = _auth.currentUser;
       if (_currentUser != null) {
@@ -42,36 +42,39 @@ class LoginService {
         return null;
       }
     } catch (e) {
-      log('$e');
+      log(e.toString());
       return null;
     }
   }
 
   Future<void> _signInWithGoogle() async {
     await Firebase.initializeApp();
-
-    final GoogleSignInAccount googleSignInAccount =
+    final GoogleSignInAccount? googleSignInAccount =
         await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
 
-    final UserCredential authResult =
-        await _auth.signInWithCredential(credential);
-    final User user = authResult.user;
+      final UserCredential authResult =
+          await _auth.signInWithCredential(credential);
+      final User? user = authResult.user;
 
-    if (user != null) {
-      assert(!user.isAnonymous);
-      assert(await user.getIdToken() != null);
+      if (user != null) {
+        assert(!user.isAnonymous);
+        // assert(await user.getIdToken() != null);
 
-      final User currentUser = _auth.currentUser;
-      assert(user.uid == currentUser.uid);
+        final User currentUser = _auth.currentUser!;
+        assert(user.uid == currentUser.uid);
 
-      log('_signInWithGoogle succeeded: $user');
+        log('_signInWithGoogle succeeded: $user');
+      } else {
+        log('Google Sign In Failed');
+      }
     } else {
       log('Google Sign In Failed');
     }

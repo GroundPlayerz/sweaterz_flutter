@@ -5,15 +5,17 @@ import 'package:sweaterz_flutter/networking_service/login_service.dart';
 final _firestore = FirebaseFirestore.instance;
 
 class MemberService {
-  Future<Map> getMemberInfo() async {
-    User _currentUser = await LoginService().getCurrentUser();
-    return _firestore
-        .collection('member')
-        .doc(_currentUser.email)
-        .get()
-        .then((value) {
-      return value.data();
-    });
+  Future<Map?> getMemberInfo() async {
+    User? _currentUser = await LoginService().getCurrentUser();
+    if (_currentUser != null) {
+      return _firestore
+          .collection('member')
+          .doc(_currentUser.email)
+          .get()
+          .then((value) {
+        return value.data();
+      });
+    }
   }
 
   // Future<QuerySnapshot> getMemberProfile(String email) async {}

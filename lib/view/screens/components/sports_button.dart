@@ -10,10 +10,10 @@ class SportsButton extends StatefulWidget {
   final bool isEnabled;
 
   SportsButton(
-      {this.sportsName,
-      this.isActivated,
-      this.activatedCallback,
-      this.deactivatedCallback,
+      {required this.sportsName,
+      required this.isActivated,
+      required this.activatedCallback,
+      required this.deactivatedCallback,
       this.isEnabled = true});
   @override
   _SportsButtonState createState() => _SportsButtonState();

@@ -4,56 +4,56 @@ import 'package:flutter/cupertino.dart';
 import 'package:sweaterz_flutter/view/model/enums.dart';
 
 class Post {
-  String _postId;
-  String _memberEmail;
-  String _profileName;
-  String _profilePhotoURL;
-  String _uploadType;
-  List<File> _imageFileList;
-  String _content;
+  String? _postId;
+  String? _memberEmail;
+  String? _profileName;
+  String? _profilePhotoURL;
+  String? _uploadType;
+  List<File>? _imageFileList;
+  String? _content;
   int _likeCount = 0;
   int _viewCount = 0;
-  String _sports;
-  List<String> _tagsList;
-  FeedbackPrivacy _feedbackPrivacy;
-  PostPrivacy _postPrivacy;
-  List<String> _feedbackIdList;
-  List<Map> _videoFileList;
-  bool _isQuestion;
+  String? _sports;
+  List<String>? _tagsList;
+  FeedbackPrivacy? _feedbackPrivacy;
+  PostPrivacy? _postPrivacy;
+  List<String>? _feedbackIdList;
+  List<Map>? _videoFileList;
+  bool _isQuestion = false;
 
   bool get isQuestion => _isQuestion;
-  List<Map> get videoFileList => _videoFileList;
-  String get postId => _postId;
-  String get memberEmail => _memberEmail;
-  String get uploadType => _uploadType;
-  List<File> get imageFileList => _imageFileList;
-  String get content => _content;
-  int get likeCount => _likeCount;
-  int get viewCount => _viewCount;
-  String get sports => _sports;
-  List<String> get tagsList => _tagsList;
-  FeedbackPrivacy get feedbackPrivacy => _feedbackPrivacy;
-  PostPrivacy get postPrivacy => _postPrivacy;
-  List<String> get feedbackIdList => _feedbackIdList;
-  String get profileName => _profileName;
-  String get profilePhotoUrl => _profilePhotoURL;
+  List<Map>? get videoFileList => _videoFileList;
+  String? get postId => _postId;
+  String? get memberEmail => _memberEmail;
+  String? get uploadType => _uploadType;
+  List<File>? get imageFileList => _imageFileList;
+  String? get content => _content;
+  int? get likeCount => _likeCount;
+  int? get viewCount => _viewCount;
+  String? get sports => _sports;
+  List<String>? get tagsList => _tagsList;
+  FeedbackPrivacy? get feedbackPrivacy => _feedbackPrivacy;
+  PostPrivacy? get postPrivacy => _postPrivacy;
+  List<String>? get feedbackIdList => _feedbackIdList;
+  String? get profileName => _profileName;
+  String? get profilePhotoUrl => _profilePhotoURL;
 
   void setForUpload({
-    TextEditingController contentsController,
-    String addedSports,
-    List<String> addedTagsList,
-    String uploadType,
-    List<File> fileList,
-    String profileName,
-    String profilePhotoUrl,
-    String memberEmail,
-    List<Map> videoFileList,
-    bool isQuestion,
+    required TextEditingController contentsController,
+    required String addedSports,
+    required List<String> addedTagsList,
+    required String uploadType,
+    List<File>? imageFileList,
+    required String profileName,
+    required String profilePhotoUrl,
+    required String memberEmail,
+    List<Map>? videoFileList,
+    required bool isQuestion,
   }) {
     if (uploadType == 'video') {
-      setVideoFileList(videoFileList);
+      setVideoFileList(videoFileList!);
     } else if (uploadType == 'images') {
-      setImageFileList(fileList);
+      setImageFileList(imageFileList!);
     } else {}
     setIsQuestion(isQuestion);
     setContent(contentsController.text);

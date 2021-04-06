@@ -3,10 +3,6 @@ import 'package:sweaterz_flutter/networking_service/tag_service.dart';
 import 'package:sweaterz_flutter/view/screens/components/sports_button.dart';
 
 class SportsFollowsListWidget extends StatelessWidget {
-  const SportsFollowsListWidget({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
@@ -16,8 +12,8 @@ class SportsFollowsListWidget extends StatelessWidget {
         ]),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List sportsList = snapshot.data[0];
-            List followingSportsList = snapshot.data[1];
+            List sportsList = snapshot.data![0];
+            List followingSportsList = snapshot.data![1];
             List<Widget> sportsButtonList = [];
             for (Map map in sportsList) {
               bool _isActivated = false;

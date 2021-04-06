@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/view/screens/components/rounded_color_button.dart';
 import 'package:sweaterz_flutter/view/screens/components/sign_out_button.dart';
 import 'package:sweaterz_flutter/view/screens/widget/sports_button_list_widget.dart';
 

@@ -57,9 +57,6 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
   Widget build(BuildContext context) {
     final homeFeedProvider =
         Provider.of<HomeFeedProvider>(context, listen: true);
-    // var mediaQuery = MediaQuery.of(context);
-    // double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
-    // double convertWidthRatio = mediaQuery.size.width / kIphoneXWidth;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -98,7 +95,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
                         itemBuilder: (context, listViewIdx) {
                           return ListTile(
                             onTap: () {
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
                               if (listViewIdx == 0) {
                                 Get.to(() => VideoTypeUpload(),
                                     transition: Transition.downToUp);

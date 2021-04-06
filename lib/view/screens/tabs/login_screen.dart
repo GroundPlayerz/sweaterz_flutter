@@ -60,7 +60,7 @@ Widget _signInButton() {
     style: OutlinedButton.styleFrom(
       primary: Colors.grey,
       backgroundColor: Color(0xffF8F8FA),
-      side: BorderSide(color: Colors.grey[300], width: 1),
+      side: BorderSide(color: Colors.grey[300]!, width: 1),
       shape: RoundedRectangleBorder(
         borderRadius:
             BorderRadius.all(Radius.circular(kIphoneXHeight)), //곡률 최대치로

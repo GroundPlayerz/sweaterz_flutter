@@ -8,7 +8,7 @@ class PhotoViewGalleryScreen extends StatefulWidget {
   final List fileList;
   final int firstPage;
 
-  PhotoViewGalleryScreen({this.fileList, this.firstPage});
+  PhotoViewGalleryScreen({required this.fileList, required this.firstPage});
 
   @override
   _PhotoViewGalleryScreenState createState() => _PhotoViewGalleryScreenState();
@@ -58,7 +58,7 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen> {
                 backgroundColor: Colors.orange,
                 value: event == null
                     ? 0
-                    : event.cumulativeBytesLoaded / event.expectedTotalBytes,
+                    : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
               ),
             ),
           ),

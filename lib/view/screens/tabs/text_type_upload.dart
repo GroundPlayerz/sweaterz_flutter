@@ -20,8 +20,8 @@ class TextTypeUpload extends StatefulWidget {
 
 class _TextTypeUploadState extends State<TextTypeUpload> {
   final TextEditingController contentsController = TextEditingController();
-  FocusNode myFocusNode;
-  String addedSports;
+  FocusNode? myFocusNode;
+  String? addedSports;
   List<String> addedTagsList = [];
   bool isQuestion = false;
 
@@ -77,8 +77,8 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
   @override
   void dispose() {
     // TODO: implement dispose
-    myFocusNode.unfocus();
-    myFocusNode.dispose();
+    myFocusNode?.unfocus();
+    myFocusNode?.dispose();
     super.dispose();
   }
 
@@ -112,7 +112,7 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
                 textContent: 'Next',
                 onPressed: () async {
                   if (contentsController.text.length != 0 &&
-                      addedSports.isNotEmpty &&
+                      addedSports != null &&
                       addedTagsList.isNotEmpty) {
                     _onLoading();
 
@@ -120,18 +120,18 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
                     newPost.setForUpload(
                       isQuestion: isQuestion,
                       contentsController: contentsController,
-                      addedSports: addedSports,
+                      addedSports: addedSports!,
                       addedTagsList: addedTagsList,
                       uploadType: 'text',
                       profileName:
                           Provider.of<MemberProvider>(context, listen: false)
-                              .profileName,
+                              .profileName!,
                       profilePhotoUrl:
                           Provider.of<MemberProvider>(context, listen: false)
-                              .profilePhotoURL,
+                              .profilePhotoURL!,
                       memberEmail:
                           Provider.of<MemberProvider>(context, listen: false)
-                              .email,
+                              .email!,
                     );
                     UploadPostService().uploadTextTypePost(newPost);
                     Future.delayed(Duration(seconds: 3));
@@ -153,7 +153,7 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
       ),
       body: GestureDetector(
         onTap: () {
-          myFocusNode.unfocus();
+          myFocusNode?.unfocus();
         },
         child: ListView(
           children: <Widget>[
@@ -216,7 +216,7 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
                       children: [
                         TextButton(
                           onPressed: () async {
-                            myFocusNode.unfocus();
+                            myFocusNode?.unfocus();
                             final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -252,7 +252,7 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 10.0, vertical: 10.0),
                                           child: Text(
-                                            addedSports,
+                                            addedSports!,
                                             style: TextStyle(fontSize: 16.0),
                                           )),
                                       AnimatedPositioned(
@@ -309,7 +309,7 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
                       children: [
                         TextButton(
                           onPressed: () async {
-                            myFocusNode.unfocus();
+                            myFocusNode?.unfocus();
                             final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -336,31 +336,28 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               // crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                if (addedTagsList != null)
-                                  if (addedTagsList.length != 0)
-                                    for (String tag in addedTagsList)
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 5.0),
-                                        child: Stack(children: [
-                                          Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 10.0,
-                                                  vertical: 10.0),
-                                              child: Text(
-                                                tag,
-                                                style:
-                                                    TextStyle(fontSize: 16.0),
-                                              )),
-                                          AnimatedPositioned(
-                                            duration: kThemeAnimationDuration,
-                                            top: -3.0,
-                                            right: -3.0,
-                                            child:
-                                                _selectedTagsDeleteButton(tag),
-                                          ),
-                                        ]),
-                                      ),
+                                if (addedTagsList.length != 0)
+                                  for (String tag in addedTagsList)
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5.0),
+                                      child: Stack(children: [
+                                        Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10.0,
+                                                vertical: 10.0),
+                                            child: Text(
+                                              tag,
+                                              style: TextStyle(fontSize: 16.0),
+                                            )),
+                                        AnimatedPositioned(
+                                          duration: kThemeAnimationDuration,
+                                          top: -3.0,
+                                          right: -3.0,
+                                          child: _selectedTagsDeleteButton(tag),
+                                        ),
+                                      ]),
+                                    ),
                               ],
                             ),
                           ),
@@ -377,7 +374,7 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
                 value: isQuestion,
                 onChanged: (value) {
                   setState(() {
-                    isQuestion = value;
+                    isQuestion = value!;
                   });
                 }),
           ],

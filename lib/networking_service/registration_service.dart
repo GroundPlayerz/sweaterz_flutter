@@ -8,10 +8,10 @@ final _firestore = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
 
 class RegistrationService {
-  User _currentUser = _auth.currentUser;
+  User _currentUser = _auth.currentUser!;
 
   Future<bool> isRegistered() async {
-    String email = _currentUser.email;
+    String email = _currentUser.email!;
     var query =
         _firestore.collection('member').where('email', isEqualTo: email);
 
@@ -34,7 +34,7 @@ class RegistrationService {
         'profile_name': profileName,
       });
     } catch (e) {
-      log(e);
+      log(e.toString());
     }
   }
 
@@ -45,7 +45,7 @@ class RegistrationService {
         'profile_photo_url': _currentUser.photoURL,
       }, SetOptions(merge: true));
     } catch (e) {
-      log(e);
+      log(e.toString());
     }
   }
 }

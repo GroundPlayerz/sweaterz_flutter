@@ -21,7 +21,6 @@ class HomeFeedProvider extends ChangeNotifier {
     _feedService.lastDocument = null;
     _feedService.hasMore = true;
     notifyListeners();
-    print('yes');
   }
 
   void fetchNewPostWidget(BuildContext context) async {
@@ -32,7 +31,7 @@ class HomeFeedProvider extends ChangeNotifier {
       isLoading = true;
       List<DocumentSnapshot> _posts = await _feedService.fetchHomeFeed();
       for (int i = 0; i < _posts.length; i++) {
-        Map postData = _posts[i].data();
+        Map postData = _posts[i].data()!;
         postDataList.add(postData);
         Widget postWidget = _postWidget(postDataIndex: i, context: context);
         postWidgetList.add(postWidget);
@@ -52,7 +51,7 @@ class HomeFeedProvider extends ChangeNotifier {
 
   setLikeButtonState(int postDataIndex) async {
     bool isLikeButtonPressed = await PostDetailService()
-        .checkLikeButtonPressed(postDataList[postDataIndex]);
+        .checkPostLikeButtonPressed(postDataList[postDataIndex]);
     postDataList[postDataIndex]['is_like_button_pressed'] = isLikeButtonPressed;
     notifyListeners();
   }
@@ -76,8 +75,8 @@ class HomeFeedProvider extends ChangeNotifier {
   // }) {}
 
   Widget _postWidget({
-    int postDataIndex,
-    BuildContext context,
+    required int postDataIndex,
+    required BuildContext context,
   }) {
     Map postData = postDataList[postDataIndex];
     return Padding(

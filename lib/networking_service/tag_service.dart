@@ -21,7 +21,7 @@ class TagService {
     List followingSportsList = [];
     await _firestore
         .collection('member')
-        .doc(_auth.currentUser.email)
+        .doc(_auth.currentUser!.email)
         .collection('following_sports')
         .orderBy('name')
         .get()
@@ -33,22 +33,8 @@ class TagService {
     return followingSportsList;
   }
 
-  Future<void> increaseSportsFollowingMemberCount(String sportsName) async {
-    DocumentReference _sportRef =
-        _firestore.collection('sports_tag').doc(sportsName);
-
-    try {
-      int _followingMemberCount = await _sportRef.get().then((value) {
-        return value.data()['following_member_count'];
-      });
-      _sportRef.update({'following_member_count': _followingMemberCount + 1});
-    } catch (e) {
-      log(e.toString());
-    }
-  }
-
   Future<void> followsSport(Map followSport) async {
-    String _currentUserEmail = _auth.currentUser.email.toString();
+    String _currentUserEmail = _auth.currentUser!.email.toString();
     DocumentReference _sportRef =
         _firestore.collection('sports_tag').doc(followSport['name']);
     DocumentReference _followerRef =
@@ -62,11 +48,6 @@ class TagService {
       await _firestore.runTransaction((transaction) {
         return transaction.get(_followerRef).then((value) async {
           if (!value.exists) {
-            int _followingMemberCount = await _sportRef.get().then((value) {
-              return value.data()['following_member_count'];
-            });
-            transaction.update(_sportRef,
-                {'following_member_count': _followingMemberCount + 1});
             transaction.set(_followerRef, {
               'email': _currentUserEmail,
               'created_time': DateTime.now().toUtc()
@@ -85,7 +66,7 @@ class TagService {
   }
 
   Future<void> unfollowsSport(Map unfollowSport) async {
-    String _currentUserEmail = _auth.currentUser.email.toString();
+    String _currentUserEmail = _auth.currentUser!.email.toString();
     DocumentReference _sportRef =
         _firestore.collection('sports_tag').doc(unfollowSport['name']);
     DocumentReference _followerRef =
@@ -100,11 +81,6 @@ class TagService {
       _firestore.runTransaction((transaction) {
         return transaction.get(_followerRef).then((value) async {
           if (value.exists) {
-            int _followingMemberCount = await _sportRef.get().then((value) {
-              return value.data()['following_member_count'];
-            });
-            transaction.update(_sportRef,
-                {'following_member_count': _followingMemberCount - 1});
             transaction.delete(_followerRef);
             transaction.delete(_memberRef);
           }
@@ -112,7 +88,7 @@ class TagService {
       });
       log('unfollows ${unfollowSport['name']} successfully');
     } catch (e) {
-      log(e);
+      log(e.toString());
     }
   }
 }
