@@ -6,18 +6,18 @@ import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoPlayer extends StatefulWidget {
+class VideoViewer extends StatefulWidget {
   final String videoDownloadURL;
   final String thumbnailDownloadURL;
 
-  VideoPlayer(
+  VideoViewer(
       {required this.videoDownloadURL, required this.thumbnailDownloadURL});
 
   @override
-  _VideoPlayerState createState() => _VideoPlayerState();
+  _VideoViewerState createState() => _VideoViewerState();
 }
 
-class _VideoPlayerState extends State<VideoPlayer> {
+class _VideoViewerState extends State<VideoViewer> {
   VideoPlayerController? _videoPlayerController;
   ChewieController? _chewieController;
 
