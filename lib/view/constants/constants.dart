@@ -15,7 +15,8 @@ const kIconGreyColor2_656565 = Color(0xff656565);
 const kLightGreyColor1_EBEBEB = Color(0xFFEBEBEB);
 const kLightGreyColor2_EDEDED = Color(0xffEDEDED);
 
-const kBackgroundGreyColor = Color(0xffF4F5F9);
+const kBackgroundGreyColorOld = Color(0xffF4F5F9);
+const kBackgroundGreyColor = Color(0xffFAFAFA);
 const kBackgroundWhiteColor = Colors.white;
 
 const kTextFieldRappingBoxColor = Color(0xffF1F1F5);

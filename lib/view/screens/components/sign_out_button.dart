@@ -11,7 +11,7 @@ Widget signOutButton(BuildContext context) {
     onPressed: () async {
       Get.offAll(() => LoginScreen());
       LoginService().logOut();
-      Provider.of<MemberProvider>(context).initialize();
+      Provider.of<MemberProvider>(context).logoutInitialize();
     },
     // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
     // highlightElevation: 0,

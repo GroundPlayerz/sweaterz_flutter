@@ -17,8 +17,8 @@ class TagService {
     return sportsList;
   }
 
-  Future<List> getFollowingSports() async {
-    List followingSportsList = [];
+  Future<List<String>> getFollowingSports() async {
+    List<String> followingSportsList = [];
     await _firestore
         .collection('member')
         .doc(_auth.currentUser!.email)
