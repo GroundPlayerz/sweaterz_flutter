@@ -5,8 +5,8 @@ import '../../constants/constants.dart';
 class SportsButton extends StatefulWidget {
   final String sportsName;
   final bool isActivated;
-  final Function activatedCallback;
-  final Function deactivatedCallback;
+  final VoidCallback activatedCallback;
+  final VoidCallback deactivatedCallback;
   final bool isEnabled;
 
   SportsButton(

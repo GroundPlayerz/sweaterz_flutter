@@ -121,6 +121,15 @@ flutter:
       fonts:
         - asset: fonts/Brygada_1918/Brygada1918-Medium.ttf
           weight: 500
+    - family: Wemakeprice
+      fonts:
+        - asset: fonts/Wemakeprice/Wemakeprice-SemiBold.otf
+    - family: Quicksand
+      fonts:
+        - asset: fonts/Quicksand/Quicksand-Medium.ttf
+          weight: 500
+        - asset: fonts/Quicksand/Quicksand-SemiBold.ttf
+          weight: 600
 
 
 

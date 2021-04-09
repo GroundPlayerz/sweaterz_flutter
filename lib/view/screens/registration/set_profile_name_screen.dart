@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/view/screens/registration_complete_screen.dart';
-import 'components/rounded_color_button.dart';
+import 'package:sweaterz_flutter/view/screens/registration/registration_complete_screen.dart';
+import '../components/rounded_color_button.dart';
 
 class SetProfileNameScreen extends StatefulWidget {
   @override

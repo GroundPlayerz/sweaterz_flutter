@@ -42,7 +42,9 @@ class RegistrationService {
     try {
       _firestore.collection('member').doc('${_currentUser.email}').set({
         'member_role': MemberRole.GENERAL.toString().split('.').last,
-        'profile_photo_url': _currentUser.photoURL,
+        'profile_photo_url':
+            "https://firebasestorage.googleapis.com/v0/b/sweaterz-flutter.appspot.com/o/sweaterz_official%2Fdefault_profile_photo%403x.png?alt=media&token=b67c2269-76f2-4025-b23e-ab275bfca1da",
+        'profile_introduction': ""
       }, SetOptions(merge: true));
     } catch (e) {
       log(e.toString());

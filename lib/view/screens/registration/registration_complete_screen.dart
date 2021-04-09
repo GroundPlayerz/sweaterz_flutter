@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sweaterz_flutter/view/screens/follow_sports_screen.dart';
+import 'package:sweaterz_flutter/view/screens/registration/follow_sports_screen.dart';
 
-import '../constants/constants.dart';
-import 'components/rounded_color_button.dart';
+import '../../constants/constants.dart';
+import '../components/rounded_color_button.dart';
 
 class RegistrationCompleteScreen extends StatelessWidget {
   @override

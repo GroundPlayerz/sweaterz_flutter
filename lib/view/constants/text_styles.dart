@@ -80,3 +80,39 @@ const TextStyle kTextFieldHintTextStyle = TextStyle(
   fontSize: 14,
   letterSpacing: -0.3,
 );
+
+const TextStyle kProfileScreenFollowingSportsTextStyle = TextStyle(
+  fontFamily: 'Open_Sans',
+  fontWeight: FontWeight.w300, //light
+  fontSize: 16,
+  letterSpacing: -0.8,
+);
+
+const TextStyle kProfileScreenProfileNameTextStyle =
+    TextStyle(fontFamily: 'Wemakeprice', fontSize: 24.0, shadows: [
+  Shadow(
+    blurRadius: 6.0,
+    color: Color(0xff00000029),
+    offset: Offset(0, 3),
+  ),
+]);
+
+const TextStyle kProfileScreenIntroductionTextStyle = TextStyle(
+  fontFamily: 'Open_Sans',
+  fontWeight: FontWeight.w400,
+  fontSize: 13.0,
+  letterSpacing: -0.65,
+);
+
+const TextStyle kProfileScreenFollowNumberTextStyle = TextStyle(
+  fontFamily: 'Quicksand',
+  fontWeight: FontWeight.w500,
+  fontSize: 18.0,
+);
+
+const TextStyle kProfileScreenTitleTextStyle = TextStyle(
+  fontFamily: 'Open_Sans',
+  fontWeight: FontWeight.w700,
+  fontSize: 22.0,
+  letterSpacing: -1.1,
+);

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
+import 'package:sweaterz_flutter/view/constants/text_styles.dart';
 import 'package:sweaterz_flutter/view/screens/components/sign_out_button.dart';
 import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
 import 'package:sweaterz_flutter/view/screens/widget/sports_button_list_widget.dart';
@@ -21,6 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
+    double topSafeAreaLength = mediaQuery.padding.top;
     double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
     // double convertWidthRatio = mediaQuery.size.width / kIphoneXWidth;
     final memberProvider = Provider.of<MemberProvider>(context, listen: true);
@@ -29,45 +31,91 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .replaceAll('[', '')
         .replaceAll(']', '');
     String profileScreenProfileName = memberProvider.profileName!;
-    String profileScreenFollowerCount =
-        memberProvider.followerMembers!.length.toString();
-    String profileScreenFollowingCount =
-        memberProvider.followingMembers!.length.toString();
+    String profileScreenFollowerCount = "12";
+    String profileScreenFollowingCount = "128";
+    String profileScreenIntroduction =
+        "KAIST 17 Basketball Team. Now planning to win the KAIST & POSTECH War.\n- KAIST Basketball team Ace🌟\n- Training Jiu-Jitsu(White Belt)";
 
     return Scaffold(
       body: Center(
-        child: SafeArea(
-          child: Column(
-            children: [
-              Text(profileScreenFollowingSportsList),
-              Image(
-                image: CachedNetworkImageProvider(
-                  memberProvider.profilePhotoURL!,
+        child: Column(
+          children: [
+            // Text(
+            //   profileScreenFollowingSportsList,
+            //   style: kProfileScreenFollowingSportsTextStyle,
+            // ),
+            // Text(
+            //   profileScreenProfileName,
+            //   style: kProfileScreenProfileNameTextStyle,
+            // ),
+            // Text(profileScreenIntroduction,
+            //     style: kProfileScreenIntroductionTextStyle),
+            // Text(
+            //   profileScreenFollowerCount,
+            //   style: kProfileScreenFollowNumberStyle,
+            // ),
+            // Text(
+            //   profileScreenFollowingCount,
+            //   style: kProfileScreenFollowNumberStyle,
+            // ),
+            Stack(
+              children: [
+                Container(
+                  height: mediaQuery.size.width,
+                  //width: mediaQuery.size.width,
+                  child: Image(
+                    image: CachedNetworkImageProvider(
+                      memberProvider.profilePhotoURL!,
+                    ),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                fit: BoxFit.fitWidth,
-              ),
-              // Expanded(
-              //   child: Text(
-              //     maxLines: 5,
-              //     softWrap: false,
-              //     overflow: TextOverflow.ellipsis,
-              //   ),
-              // ),
-              // Builder(builder:(context) {
-              //   for (var i in memberProvider.followingSports)
-              //     return Text('s')
-              //
-              // }),
-              signOutButton(context),
-              SizedBox(height: 90 * convertHeightRatio),
-              Text(
-                'Following Sports',
-                style: kBigTitleTextStyle,
-              ),
-              //TODO: 스포츠 리스트 버튼 추가, 버튼 클릭하면 걔 저장
-              SportsFollowsListWidget(),
-            ],
-          ),
+                Stack(
+                  children: [
+                    Container(
+                      color: Colors.black.withOpacity(0.6),
+                      height: topSafeAreaLength + 44,
+                      //그림자?
+                      //width: mediaQuery.size.width,
+                    ),
+                    Positioned(
+                      left: 15,
+                      bottom: 13,
+                      child: Text(
+                        "My Ground",
+                        style: kProfileScreenTitleTextStyle.copyWith(
+                            color: Colors.black),
+                      ),
+                    ),
+                    Positioned(
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.more_horiz_sharp,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            // Expanded(
+            //   child: Text(
+            //     maxLines: 5,
+            //     softWrap: false,
+            //     overflow: TextOverflow.ellipsis,
+            //   ),
+            // ),
+            // Builder(builder:(context) {
+            //   for (var i in memberProvider.followingSports)
+            //     return Text('s')
+            //
+            // }),
+
+            //요 아래는 ... 누르면 나오는 화면으로.
+            //signOutButton(context),
+            //Expanded(child: SportsFollowsListWidget()),
+          ],
         ),
       ),
     );
