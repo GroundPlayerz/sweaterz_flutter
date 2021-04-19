@@ -26,91 +26,89 @@ class _HomeRootState extends State<HomeRoot> {
 
   @override
   Widget build(BuildContext context) {
+    Widget _bottomNavigationBar = BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: Colors.black,
+      unselectedItemColor: kGreyColor2_999999,
+      selectedFontSize: 13.0,
+      unselectedFontSize: 13.0,
+      showUnselectedLabels: false,
+      currentIndex: _selectedIndex,
+      selectedLabelStyle: kBottomNavigationBarTextStyle,
+      items: [
+        BottomNavigationBarItem(
+          icon: Padding(
+            padding: EdgeInsets.only(bottom: 2.0),
+            child: Container(
+              // height: 20.0,
+              // width: 20.0,
+              child: Icon(
+                Icons.home,
+                //size: 20.0,
+              ),
+            ),
+          ),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Padding(
+            padding: EdgeInsets.only(bottom: 4.0),
+            child: Icon(Icons.mail_outline),
+          ),
+          label: 'Letter',
+        ),
+        BottomNavigationBarItem(
+          icon: SizedBox(
+            width: 20,
+            child: Padding(
+              padding: EdgeInsets.only(left: 0.0),
+              child: Image(
+                image: _selectedIndex == 2
+                    ? AssetImage('images/question_mark_big@3x.png')
+                    : AssetImage('images/question_mark_big_grey999999@3x.png'),
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: Padding(
+              padding: EdgeInsets.only(bottom: 4.0),
+              child: Icon(Icons.notifications)),
+          label: 'Notification',
+        ),
+        BottomNavigationBarItem(
+          icon: Padding(
+              padding: EdgeInsets.only(bottom: 4.0), child: Icon(Icons.person)),
+          label: 'My Ground',
+        ),
+      ],
+      onTap: (index) {
+        if (_selectedIndex == index) {
+          if (!Navigator.of(_navigatorKeys[index].currentContext!).canPop()) {
+          } else {
+            Navigator.of(
+              _navigatorKeys[index].currentContext!,
+            ).popUntil((route) => route.isFirst);
+          }
+        }
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+    );
+
     return WillPopScope(
       onWillPop: () async {
         final isFirstRouteInCurrentTab =
             !await _navigatorKeys[_selectedIndex].currentState!.maybePop();
-
         // let system handle back button if we're on the first route
         return isFirstRouteInCurrentTab;
       },
       child: Scaffold(
         backgroundColor: Colors.white.withOpacity(0.98),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: kGreyColor2_999999,
-          selectedFontSize: 13.0,
-          unselectedFontSize: 13.0,
-          showUnselectedLabels: false,
-          currentIndex: _selectedIndex,
-          selectedLabelStyle: kBottomNavigationBarTextStyle,
-          items: [
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 2.0),
-                child: Container(
-                  // height: 20.0,
-                  // width: 20.0,
-                  child: Icon(
-                    Icons.home,
-                    //size: 20.0,
-                  ),
-                ),
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(Icons.mail_outline),
-              ),
-              label: 'Letter',
-            ),
-            BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 20,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 0.0),
-                  child: Image(
-                    image: _selectedIndex == 2
-                        ? AssetImage('images/question_mark_big@3x.png')
-                        : AssetImage(
-                            'images/question_mark_big_grey999999@3x.png'),
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                  padding: EdgeInsets.only(bottom: 4.0),
-                  child: Icon(Icons.notifications)),
-              label: 'Notification',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                  padding: EdgeInsets.only(bottom: 4.0),
-                  child: Icon(Icons.person)),
-              label: 'My Ground',
-            ),
-          ],
-          onTap: (index) {
-            if (_selectedIndex == index) {
-              if (!Navigator.of(_navigatorKeys[index].currentContext!)
-                  .canPop()) {
-              } else {
-                Navigator.of(
-                  _navigatorKeys[index].currentContext!,
-                ).popUntil((route) => route.isFirst);
-              }
-            }
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-        ),
+        bottomNavigationBar: _bottomNavigationBar,
         body: Stack(
           children: [
             _buildOffstageNavigator(0),
@@ -125,9 +123,7 @@ class _HomeRootState extends State<HomeRoot> {
   }
 
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context, int index) {
-    //여기서 WidgetBuilder는 (context){return HomePage()}
     return {
-      // 결국 return { '/' : (context){return HomePage()} }
       '/': (context) {
         return [
           HomeFeedScreen(),

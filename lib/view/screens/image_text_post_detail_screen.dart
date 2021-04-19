@@ -194,7 +194,7 @@ class _ImageTextPostDetailScreenState extends State<ImageTextPostDetailScreen> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 3.0, vertical: 0.0),
                   child: Text(
-                    '#${tag['name_lower']}',
+                    '#${tag['name']}',
                     style: kTagTextStyle.copyWith(color: kTextColorBlack),
                   ),
                 ),

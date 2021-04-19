@@ -44,7 +44,7 @@ Widget feedPostWidget({
                         padding: EdgeInsets.symmetric(
                             horizontal: 3.0, vertical: 5.0),
                         child: Text(
-                          '#${tag['name_lower']}',
+                          '#${tag['name']}',
                           style: kTagTextStyle,
                         ),
                       ),

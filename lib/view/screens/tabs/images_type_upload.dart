@@ -57,7 +57,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
         },
       );
 
-  Widget methodItemBuilder(BuildContext context) {
+  Widget _selectImagesButton(BuildContext context) {
     final PickMethodModel model = pickMethod;
     return TextButton(
       onPressed: () async {
@@ -201,7 +201,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
     );
   }
 
-  Widget get selectedAssetsWidget => AnimatedContainer(
+  Widget get _selectedAssetsWidget => AnimatedContainer(
         duration: kThemeChangeDuration,
         curve: Curves.easeInOut,
         height: assets.isNotEmpty
@@ -335,11 +335,7 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
   //   return result;
   // }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBackgroundWhiteColor,
-      appBar: AppBar(
+  AppBar _imagesTypeUploadScreenAppBar(BuildContext context) => AppBar(
         backgroundColor: kBackgroundWhiteColor,
         elevation: 0.0,
         iconTheme: IconThemeData(
@@ -401,243 +397,248 @@ class _ImagesTypeUploadState extends State<ImagesTypeUpload> {
           ),
         ],
         actionsIconTheme: IconThemeData(color: Colors.black),
-      ),
+      );
+
+  Widget _imagesTypeUploadScreenContentArea(BuildContext context) => Container(
+        height: 300,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(21, 10, 21, 21),
+          child: TextField(
+            cursorColor: kSweaterzColor,
+            controller: contentsController,
+            focusNode: myFocusNode,
+            autofocus: false,
+            style: kPostBodyTextStyle,
+            decoration: kTextFieldDecoration.copyWith(
+              hintText: 'Write description.',
+              hintStyle: kPostBodyTextStyle.copyWith(color: kGreyColor1_767676),
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+            ),
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+          ),
+        ),
+      );
+
+  Widget get _imagesTypeUploadScreenSportsArea => Container(
+        height: 90,
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 21, top: 13, right: 0, bottom: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'Sports',
+                    style: kUploadScreenCategoryTextStyle,
+                  ),
+                  SizedBox(width: 18),
+                  Text(
+                    'What kinds of sports are you playing?',
+                    style: kUploadScreenCategoryDetailTextStyle.copyWith(
+                        color: kGreyColor1_767676),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: 5,
+                left: 12,
+              ),
+              child: Row(
+                children: [
+                  TextButton(
+                    onPressed: () async {
+                      myFocusNode?.unfocus();
+                      final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PostSportsAddScreen(addedSports: addedSports),
+                          ));
+                      setState(() {
+                        if (result != null) {
+                          addedSports = result;
+                        }
+                      });
+                    },
+                    child: Text(
+                      '+ Add',
+                      style: kUploadScreenAddButtonTextStyle.copyWith(
+                          color: kGreyColor1_767676),
+                    ),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      dragStartBehavior: DragStartBehavior.start,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (addedSports != null)
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Stack(children: [
+                                Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    child: Text(
+                                      addedSports!,
+                                      style: TextStyle(fontSize: 16.0),
+                                    )),
+                                AnimatedPositioned(
+                                  duration: kThemeAnimationDuration,
+                                  top: -3.0,
+                                  right: -3.0,
+                                  child:
+                                      _selectedSportsDeleteButton(addedSports),
+                                ),
+                              ]),
+                            ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget get _imagesTypeUploadScreenHashTagsArea => Container(
+        height: 90,
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 21, top: 13, right: 0, bottom: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'Hashtags',
+                    style: kUploadScreenCategoryTextStyle,
+                  ),
+                  SizedBox(width: 18),
+                  Text(
+                    'Categorize your post with hashtags.',
+                    style: kUploadScreenCategoryDetailTextStyle.copyWith(
+                        color: kGreyColor1_767676),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: 5,
+                left: 12,
+              ),
+              child: Row(
+                children: [
+                  TextButton(
+                    onPressed: () async {
+                      myFocusNode?.unfocus();
+                      final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PostTagsAddScreen(addedTagsList: addedTagsList),
+                          ));
+                      setState(() {
+                        if (result != null) {
+                          addedTagsList = result;
+                        }
+                      });
+                    },
+                    child: Text(
+                      '+ Add',
+                      style: kUploadScreenAddButtonTextStyle.copyWith(
+                          color: kGreyColor1_767676),
+                    ),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      dragStartBehavior: DragStartBehavior.start,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (addedTagsList.length != 0)
+                            for (String tag in addedTagsList)
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                                child: Stack(children: [
+                                  Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 10.0),
+                                      child: Text(
+                                        tag,
+                                        style: TextStyle(fontSize: 16.0),
+                                      )),
+                                  AnimatedPositioned(
+                                    duration: kThemeAnimationDuration,
+                                    top: -3.0,
+                                    right: -3.0,
+                                    child: _selectedTagsDeleteButton(tag),
+                                  ),
+                                ]),
+                              ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget get _postWithQuestionMark => CheckboxListTile(
+        title: Text('Post with question mark?'),
+        value: isQuestion,
+        onChanged: (value) {
+          setState(() {
+            isQuestion = value!;
+          });
+        },
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: kBackgroundWhiteColor,
+      appBar: _imagesTypeUploadScreenAppBar(context),
       body: GestureDetector(
         onTap: () {
           myFocusNode?.unfocus();
         },
         child: ListView(
           children: <Widget>[
-            Container(
-              height: 300,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(21, 10, 21, 21),
-                child: TextField(
-                  cursorColor: kSweaterzColor,
-                  controller: contentsController,
-                  focusNode: myFocusNode,
-                  autofocus: false,
-                  style: kPostBodyTextStyle,
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Write description.',
-                    hintStyle:
-                        kPostBodyTextStyle.copyWith(color: kGreyColor1_767676),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                  ),
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                ),
-              ),
-            ),
+            _imagesTypeUploadScreenContentArea(context),
             kDivider,
-            Container(
-              height: 90,
-              child: Column(
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: 21, top: 13, right: 0, bottom: 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Sports',
-                          style: kUploadScreenCategoryTextStyle,
-                        ),
-                        SizedBox(width: 18),
-                        Text(
-                          'What kinds of sports are you playing?',
-                          style: kUploadScreenCategoryDetailTextStyle.copyWith(
-                              color: kGreyColor1_767676),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 5,
-                      left: 12,
-                    ),
-                    child: Row(
-                      children: [
-                        TextButton(
-                          onPressed: () async {
-                            myFocusNode?.unfocus();
-                            final result = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => PostSportsAddScreen(
-                                      addedSports: addedSports),
-                                ));
-                            setState(() {
-                              if (result != null) {
-                                addedSports = result;
-                              }
-                            });
-                          },
-                          child: Text(
-                            '+ Add',
-                            style: kUploadScreenAddButtonTextStyle.copyWith(
-                                color: kGreyColor1_767676),
-                          ),
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            dragStartBehavior: DragStartBehavior.start,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              // crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (addedSports != null)
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5.0),
-                                    child: Stack(children: [
-                                      Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10.0, vertical: 10.0),
-                                          child: Text(
-                                            addedSports!,
-                                            style: TextStyle(fontSize: 16.0),
-                                          )),
-                                      AnimatedPositioned(
-                                        duration: kThemeAnimationDuration,
-                                        top: -3.0,
-                                        right: -3.0,
-                                        child: _selectedSportsDeleteButton(
-                                            addedSports),
-                                      ),
-                                    ]),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _imagesTypeUploadScreenSportsArea,
             kDivider,
-            //여기서부터 Tags
-            Container(
-              height: 90,
-              child: Column(
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: 21, top: 13, right: 0, bottom: 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Hashtags',
-                          style: kUploadScreenCategoryTextStyle,
-                        ),
-                        SizedBox(width: 18),
-                        Text(
-                          'Categorize your post with hashtags.',
-                          style: kUploadScreenCategoryDetailTextStyle.copyWith(
-                              color: kGreyColor1_767676),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 5,
-                      left: 12,
-                    ),
-                    child: Row(
-                      children: [
-                        TextButton(
-                          onPressed: () async {
-                            myFocusNode?.unfocus();
-                            final result = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => PostTagsAddScreen(
-                                      addedTagsList: addedTagsList),
-                                ));
-                            setState(() {
-                              if (result != null) {
-                                addedTagsList = result;
-                              }
-                            });
-                          },
-                          child: Text(
-                            '+ Add',
-                            style: kUploadScreenAddButtonTextStyle.copyWith(
-                                color: kGreyColor1_767676),
-                          ),
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            dragStartBehavior: DragStartBehavior.start,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              // crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                  if (addedTagsList.length != 0)
-                                    for (String tag in addedTagsList)
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 5.0),
-                                        child: Stack(children: [
-                                          Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 10.0,
-                                                  vertical: 10.0),
-                                              child: Text(
-                                                tag,
-                                                style:
-                                                    TextStyle(fontSize: 16.0),
-                                              )),
-                                          AnimatedPositioned(
-                                            duration: kThemeAnimationDuration,
-                                            top: -3.0,
-                                            right: -3.0,
-                                            child:
-                                                _selectedTagsDeleteButton(tag),
-                                          ),
-                                        ]),
-                                      ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
+            _imagesTypeUploadScreenHashTagsArea,
             kDivider,
             Row(
               children: [
-                methodItemBuilder(context),
+                _selectImagesButton(context),
               ],
             ),
-            selectedAssetsWidget,
+            _selectedAssetsWidget,
             kDivider,
-            CheckboxListTile(
-                title: Text('Post with question mark?'),
-                value: isQuestion,
-                onChanged: (value) {
-                  setState(() {
-                    isQuestion = value!;
-                  });
-                })
+            _postWithQuestionMark,
           ],
         ),
       ),

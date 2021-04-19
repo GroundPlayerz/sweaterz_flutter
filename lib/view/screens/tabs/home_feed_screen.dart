@@ -53,15 +53,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final homeFeedProvider =
-        Provider.of<HomeFeedProvider>(context, listen: true);
-
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: kBackgroundGreyColor,
-      appBar: AppBar(
+  AppBar _homeFeedScreenAppBar(BuildContext context) => AppBar(
         backgroundColor: kBackgroundGreyColor,
         elevation: 0,
         iconTheme: IconThemeData(color: kIconGreyColor2_656565),
@@ -130,7 +122,34 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
         ],
         //actionsIconTheme: IconThemeData(color: kIconGreyColor2_656565),
         //shadowColor: Colors.white.withOpacity(0.0),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    final homeFeedProvider =
+        Provider.of<HomeFeedProvider>(context, listen: true);
+
+    Widget _homeFeedScreenFeed = RefreshIndicator(
+      onRefresh: _onRefresh,
+      child: ListView.builder(
+        controller: _scrollController,
+        itemCount: homeFeedProvider.postWidgetList.length + 1,
+        itemBuilder: (context, index) {
+          if (index == homeFeedProvider.postWidgetList.length) {
+            return Container(
+              height: 30.0,
+              width: double.infinity,
+            );
+          }
+          return homeFeedProvider.postWidgetList[index];
+        },
       ),
+    );
+
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: kBackgroundGreyColor,
+      appBar: _homeFeedScreenAppBar(context),
       body: SafeArea(
         child: Column(
           children: [
@@ -138,28 +157,13 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
             //     '${Provider.of<MemberProvider>(context).email} has logged in'),
             // Text(Provider.of<MemberProvider>(context).profileName),
             Expanded(
-                child: homeFeedProvider.postWidgetList.length == 0
-                    //ToDO 피드가 없어도 새로고침 될 수 있게 스크롤 가능하게 해야함.
-                    ? Center(
-                        child: Text('Loading...'),
-                      )
-                    : RefreshIndicator(
-                        onRefresh: _onRefresh,
-                        child: ListView.builder(
-                          controller: _scrollController,
-                          itemCount: homeFeedProvider.postWidgetList.length + 1,
-                          itemBuilder: (context, index) {
-                            if (index ==
-                                homeFeedProvider.postWidgetList.length) {
-                              return Container(
-                                height: 30.0,
-                                width: double.infinity,
-                              );
-                            }
-                            return homeFeedProvider.postWidgetList[index];
-                          },
-                        ),
-                      )),
+              child: homeFeedProvider.postWidgetList.length == 0
+                  //ToDO 피드가 없어도 새로고침 될 수 있게 스크롤 가능하게 해야함.
+                  ? Center(
+                      child: Text('Loading...'),
+                    )
+                  : _homeFeedScreenFeed,
+            ),
           ],
         ),
       ),

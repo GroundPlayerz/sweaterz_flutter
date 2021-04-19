@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //const kIPAdress = '172.30.1.14:5000'; //월평집
-const kIPAdress = '172.30.1.1:5000'; //봉명사무실5g
+const kIPAddress = 'http://172.30.1.60:5000'; //봉명사무실5g
 
 const double kIphoneXHeight = 812.0;
 const double kIphoneXWidth = 375.0;

@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
+import 'package:sweaterz_flutter/view/constants/constants.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -13,6 +16,16 @@ class LoginService {
   Future<void> logIn() async {
     await _signInWithGoogle();
     _currentUser = _auth.currentUser;
+    if (_currentUser != null) {
+      final http.Response response = await http.post(
+          Uri.parse(kIPAddress + '/api/auth/signin'),
+          body: jsonEncode({'email': _currentUser!.email}));
+      if (response.statusCode == 200) {
+        print('response1: ' + response.body.toString());
+      } else {
+        print('response2: ' + response.body.toString());
+      }
+    }
   }
 
   void logOut() async {
