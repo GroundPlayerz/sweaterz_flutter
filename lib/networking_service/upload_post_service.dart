@@ -93,8 +93,8 @@ class UploadPostService {
         tagListToUpload.add({
           'name': post.tagsList![i],
           'order': i,
-          'name_lower': post.tagsList![i].toLowerCase(),
-          'created_time': now,
+          //'name_lower': post.tagsList![i].toLowerCase(),
+          //'created_time': now,
         });
       }
       batch.set(_postRef, {'post_tag_list': tagListToUpload},
@@ -174,9 +174,9 @@ class UploadPostService {
         tagListToUpload.add({
           'name': post.tagsList![i],
           'order': i,
-          'name_lower': post.tagsList![i].toLowerCase(),
-          'created_time': now,
-        });
+          //'name_lower': post.tagsList![i].toLowerCase(),
+          //'created_time': now,
+        }); //Todo: 프론트에서 작성
       }
       batch.set(_postRef, {'post_tag_list': tagListToUpload},
           SetOptions(merge: true));
@@ -220,8 +220,8 @@ class UploadPostService {
         tagListToUpload.add({
           'name': post.tagsList![i],
           'order': i,
-          'name_lower': post.tagsList![i].toLowerCase(),
-          'created_time': now,
+          //'name_lower': post.tagsList![i].toLowerCase(),
+          //'created_time': now,
         });
       }
       batch.set(_postRef, {'post_tag_list': tagListToUpload},

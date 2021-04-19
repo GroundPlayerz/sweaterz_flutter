@@ -6,6 +6,7 @@ import 'package:sweaterz_flutter/networking_service/tag_service.dart';
 import 'package:sweaterz_flutter/view/model/enums.dart';
 
 class MemberProvider with ChangeNotifier {
+  int? user_id;
   String? email;
   String? profileName;
   MemberRole? memberRole;

@@ -110,9 +110,36 @@ const TextStyle kProfileScreenFollowNumberTextStyle = TextStyle(
   fontSize: 18.0,
 );
 
+const TextStyle kProfileScreenFollowTextTextStyle = TextStyle(
+  fontFamily: 'Lato',
+  fontWeight: FontWeight.w400,
+  fontSize: 12.0,
+  letterSpacing: -0.24,
+);
+
 const TextStyle kProfileScreenTitleTextStyle = TextStyle(
   fontFamily: 'Open_Sans',
   fontWeight: FontWeight.w700,
   fontSize: 22.0,
   letterSpacing: -1.1,
+);
+
+const TextStyle kPostFeedbackProfileNameTextStyle = TextStyle(
+  fontFamily: 'Lato',
+  fontWeight: FontWeight.w700,
+  fontSize: 14.0,
+  letterSpacing: -0.39,
+);
+
+const TextStyle kPostFeedbackContentTextStyle = TextStyle(
+  fontFamily: 'Open_Sans',
+  fontWeight: FontWeight.w400,
+  fontSize: 14.0,
+  letterSpacing: -0.7,
+);
+
+const TextStyle kPostFeedbackNumberTextStyle = TextStyle(
+  fontFamily: 'Lato',
+  fontWeight: FontWeight.w900,
+  fontSize: 15.0,
 );

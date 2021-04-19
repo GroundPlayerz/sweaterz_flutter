@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
+//const kIPAdress = '172.30.1.14:5000'; //월평집
+const kIPAdress = '172.30.1.1:5000'; //봉명사무실5g
+
 const double kIphoneXHeight = 812.0;
 const double kIphoneXWidth = 375.0;
 
 const kSweaterzColor = Color(0xFFef5454);
 const kDefaultColor = Colors.black;
+const kTextColorBlack = Colors.black;
 
 const kGreyColor1_767676 = Color(0xFF767676);
 const kGreyColor2_999999 = Color(0xFF999999);

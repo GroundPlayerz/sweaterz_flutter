@@ -64,18 +64,22 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
       appBar: AppBar(
         backgroundColor: kBackgroundGreyColor,
         elevation: 0,
-
-        leadingWidth: 200,
-        leading: SizedBox(
-          width: 200,
-          child: Padding(
-            padding: EdgeInsets.only(left: 10.0),
-            child: Image(
-              image: AssetImage('images/logo_small@3x.png'),
-              fit: BoxFit.fitWidth,
-            ),
-          ),
+        iconTheme: IconThemeData(color: kIconGreyColor2_656565),
+        leading: IconButton(
+          icon: Icon(CupertinoIcons.search),
+          onPressed: () {},
         ),
+        // leadingWidth: 200,
+        // leading: SizedBox(
+        //   width: 200,
+        //   child: Padding(
+        //     padding: EdgeInsets.only(left: 10.0),
+        //     child: Image(
+        //       image: AssetImage('images/logo_small@3x.png'),
+        //       fit: BoxFit.fitWidth,
+        //     ),
+        //   ),
+        // ),
         //로고
 
         actions: [
@@ -116,19 +120,15 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
             },
           ),
           IconButton(
-            icon: Icon(
-              Icons.contact_mail_outlined,
-            ),
+            icon: Icon(CupertinoIcons.archivebox_fill),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(
-              Icons.chat_bubble_outline,
-            ),
+            icon: Icon(Icons.chat_bubble_outline),
             onPressed: () {},
           ),
         ],
-        actionsIconTheme: IconThemeData(color: kIconGreyColor2_656565),
+        //actionsIconTheme: IconThemeData(color: kIconGreyColor2_656565),
         //shadowColor: Colors.white.withOpacity(0.0),
       ),
       body: SafeArea(
