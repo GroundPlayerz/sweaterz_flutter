@@ -2,7 +2,7 @@ enum PostPrivacy { ALL, ONLY_FOLLOWERS, ONLY_ME }
 
 enum FeedbackPrivacy { ALL, ONLY_FOLLOWERS, ONLY_ME }
 
-enum MemberRole { ADMIN, GENERAL, COACH }
+enum Role { ADMIN, GENERAL, COACH }
 
 enum PeriodType {
   ANY_TIME,

@@ -5,11 +5,11 @@ import 'package:sweaterz_flutter/networking_service/member_service.dart';
 import 'package:sweaterz_flutter/networking_service/tag_service.dart';
 import 'package:sweaterz_flutter/view/model/enums.dart';
 
-class MemberProvider with ChangeNotifier {
-  int? user_id;
+class UserProvider with ChangeNotifier {
+  int? id;
   String? email;
   String? profileName;
-  MemberRole? memberRole;
+  Role? role;
   String? profilePhotoURL;
   List<String>? followingSports;
   List<String>? followingMembers;
@@ -19,7 +19,7 @@ class MemberProvider with ChangeNotifier {
   void logoutInitialize() {
     this.email = null;
     this.profileName = null;
-    this.memberRole = null;
+    this.role = null;
     this.profilePhotoURL = null;
     this.followingSports = null;
     this.followingMembers = null;
@@ -34,7 +34,7 @@ class MemberProvider with ChangeNotifier {
 
     setEmail(email: memberInfo?['email']);
     setProfileName(profileName: memberInfo?['profile_name']);
-    setMemberRole(memberRole: memberInfo?['member_role']);
+    setRole(role: memberInfo?['role']);
     setProfilePhotoUrl(profilePhotoURL: memberInfo?['profile_photo_url']);
     setFollowingSports(followingSports: followingSports);
     setProfileIntroduction(
@@ -54,16 +54,16 @@ class MemberProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setMemberRole({required String memberRole}) {
-    MemberRole _memberRole;
-    if (memberRole == "ADMIN") {
-      _memberRole = MemberRole.ADMIN;
-    } else if (memberRole == "GENERAL") {
-      _memberRole = MemberRole.GENERAL;
+  void setRole({required String role}) {
+    Role _role;
+    if (role == "ADMIN") {
+      _role = Role.ADMIN;
+    } else if (role == "GENERAL") {
+      _role = Role.GENERAL;
     } else {
-      _memberRole = MemberRole.COACH;
+      _role = Role.COACH;
     }
-    this.memberRole = _memberRole;
+    this.role = _role;
     notifyListeners();
   }
 

@@ -10,7 +10,7 @@ import 'package:sweaterz_flutter/view/screens/components/dialog.dart';
 import 'package:sweaterz_flutter/view/screens/components/rounded_outlined_button.dart';
 import 'package:sweaterz_flutter/view/screens/post_sports_add_screen.dart';
 import 'package:sweaterz_flutter/view/screens/post_tags_add_screen.dart';
-import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
+import 'package:sweaterz_flutter/view/screens/provider/user_provider.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
 
 class TextTypeUpload extends StatefulWidget {
@@ -124,13 +124,13 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
                       addedTagsList: addedTagsList,
                       uploadType: 'text',
                       profileName:
-                          Provider.of<MemberProvider>(context, listen: false)
+                          Provider.of<UserProvider>(context, listen: false)
                               .profileName!,
                       profilePhotoUrl:
-                          Provider.of<MemberProvider>(context, listen: false)
+                          Provider.of<UserProvider>(context, listen: false)
                               .profilePhotoURL!,
                       memberEmail:
-                          Provider.of<MemberProvider>(context, listen: false)
+                          Provider.of<UserProvider>(context, listen: false)
                               .email!,
                     );
                     UploadPostService().uploadTextTypePost(newPost);

@@ -47,7 +47,11 @@ class RegistrationCompleteScreen extends StatelessWidget {
                   textContent: 'Next',
                   isButtonEnabled: true,
                   onPressed: () async {
-                    Get.offAll(() => FollowSportsScreen());
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FollowSportsScreen()),
+                        (route) => false);
                   },
                 ),
                 Container(

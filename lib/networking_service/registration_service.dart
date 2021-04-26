@@ -17,10 +17,10 @@ class RegistrationService {
 
     bool isRegistered = await query.get().then((result) {
       if (result.docs.isNotEmpty) {
-        log('This member is registered');
+        log('[registration_service] isRegistered() - is registered.');
         return true;
       } else {
-        log('This member is not registered, go to register screens');
+        log('[registration_service] isRegistered() - is not registered.');
         return false;
       }
     });
@@ -41,7 +41,7 @@ class RegistrationService {
   void setInitialMemberInfo() async {
     try {
       _firestore.collection('member').doc('${_currentUser.email}').set({
-        'member_role': MemberRole.GENERAL.toString().split('.').last,
+        'member_role': Role.GENERAL.toString().split('.').last,
         'profile_photo_url':
             "https://firebasestorage.googleapis.com/v0/b/sweaterz-flutter.appspot.com/o/sweaterz_official%2Fdefault_profile_photo%403x.png?alt=media&token=b67c2269-76f2-4025-b23e-ab275bfca1da",
         'profile_introduction': ""

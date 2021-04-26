@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/constants/text_styles.dart';
 import 'package:sweaterz_flutter/view/screens/components/sign_out_button.dart';
-import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
+import 'package:sweaterz_flutter/view/screens/provider/user_provider.dart';
 import 'package:sweaterz_flutter/view/screens/widget/sports_button_list_widget.dart';
 import 'package:sweaterz_flutter/networking_service/member_service.dart';
 import 'package:http/http.dart' as http;
@@ -63,16 +63,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: LayoutBuilder(
           builder: (context, constraints) {
             var mediaQuery = MediaQuery.of(context);
-            double topSafeAreaLength = mediaQuery.padding.top;
-            double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
+            //double topSafeAreaLength = mediaQuery.padding.top;
+            //double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
             final memberProvider =
-                Provider.of<MemberProvider>(context, listen: true);
+                Provider.of<UserProvider>(context, listen: true);
             String profileScreenFollowingSportsList = memberProvider
                 .followingSports
                 .toString()
                 .replaceAll('[', '')
                 .replaceAll(']', '');
-            String profileScreenProfileName = memberProvider.profileName!;
+            String? profileScreenProfileName = memberProvider.profileName;
             String profileScreenFollowerCount = "12";
             String profileScreenFollowingCount = "128";
             String profileScreenIntroduction =
@@ -168,7 +168,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Padding(
                             padding: EdgeInsets.only(top: 5.0),
                             child: Text(
-                              profileScreenProfileName,
+                              profileScreenProfileName != null
+                                  ? profileScreenProfileName
+                                  : '',
                               style: kProfileScreenProfileNameTextStyle,
                             ),
                           ), //프로필 이름
@@ -247,18 +249,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
 
   @override
-  Widget build(BuildContext context) {
-    final memberProvider = Provider.of<MemberProvider>(context, listen: true);
-    // String profileScreenFollowingSportsList = memberProvider.followingSports
-    //     .toString()
-    //     .replaceAll('[', '')
-    //     .replaceAll(']', '');
-    // String profileScreenProfileName = memberProvider.profileName!;
-    // String profileScreenFollowerCount = "12";
-    // String profileScreenFollowingCount = "128";
-    // String profileScreenIntroduction =
-    //     "KAIST 17 Basketball Team. Now planning to win the KAIST & POSTECH War.\n- KAIST Basketball team Ace🌟\n- Training Jiu-Jitsu(White Belt)";
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    //final memberProvider = Provider.of<MemberProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: kBackgroundWhiteColor,
       body: DefaultTabController(

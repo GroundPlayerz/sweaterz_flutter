@@ -6,17 +6,17 @@ import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/networking_service/login_service.dart';
 import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
-import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
+import 'package:sweaterz_flutter/view/screens/provider/user_provider.dart';
 import 'package:sweaterz_flutter/view/screens/registration/set_profile_name_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/login_screen.dart';
 
-class SplashScreen extends StatefulWidget {
+class OldSplashScreen extends StatefulWidget {
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _OldSplashScreenState createState() => _OldSplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with ChangeNotifier {
+class _OldSplashScreenState extends State<OldSplashScreen> with ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> with ChangeNotifier {
     //print(await LoginAPI().isLoggedIn());
     if (await LoginService().isLoggedIn()) {
       if (await RegistrationService().isRegistered()) {
-        await Provider.of<MemberProvider>(context, listen: false)
+        await Provider.of<UserProvider>(context, listen: false)
             .setLoggedInMemberProvider();
         // Provider.of<FollowingFeedProvider>(context, listen: false)
         //     .fetchNewPostWidget(context);
@@ -45,6 +45,7 @@ class _SplashScreenState extends State<SplashScreen> with ChangeNotifier {
         Get.offAll(() => SetProfileNameScreen());
       }
     } else {
+      print('go to LoginScreen');
       Get.offAll(() => LoginScreen());
     }
   }

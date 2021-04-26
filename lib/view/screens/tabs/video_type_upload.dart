@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/networking_service/upload_post_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/constants/text_styles.dart';
-import 'package:sweaterz_flutter/view/screens/provider/member_provider.dart';
+import 'package:sweaterz_flutter/view/screens/provider/user_provider.dart';
 import 'package:sweaterz_flutter/view/model/post.dart';
 import 'package:sweaterz_flutter/view/screens/post_sports_add_screen.dart';
 import 'package:sweaterz_flutter/view/screens/post_tags_add_screen.dart';
@@ -397,13 +397,13 @@ class _VideoTypeUploadState extends State<VideoTypeUpload> {
                       uploadType: 'video',
                       videoFileList: videoFileList,
                       profileName:
-                          Provider.of<MemberProvider>(context, listen: false)
+                          Provider.of<UserProvider>(context, listen: false)
                               .profileName!,
                       profilePhotoUrl:
-                          Provider.of<MemberProvider>(context, listen: false)
+                          Provider.of<UserProvider>(context, listen: false)
                               .profilePhotoURL!,
                       memberEmail:
-                          Provider.of<MemberProvider>(context, listen: false)
+                          Provider.of<UserProvider>(context, listen: false)
                               .email!,
                     );
                     UploadPostService().uploadVideoTypePost(newPost);

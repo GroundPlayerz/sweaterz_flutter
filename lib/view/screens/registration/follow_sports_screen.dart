@@ -44,8 +44,10 @@ class _FollowSportsScreenState extends State<FollowSportsScreen> {
                   textContent: 'Done',
                   isButtonEnabled: true,
                   onPressed: () async {
-                    //TODO: DB에 팔로잉 스포츠 추가하기.
-                    Get.offAll(() => HomeRoot());
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeRoot()),
+                        (route) => false);
                   },
                 ),
                 SizedBox(height: 10 * convertHeightRatio),
@@ -55,7 +57,10 @@ class _FollowSportsScreenState extends State<FollowSportsScreen> {
                     textContent: 'Skip and set later',
                     isButtonEnabled: true,
                     onPressed: () async {
-                      Get.offAll(() => HomeRoot());
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeRoot()),
+                          (route) => false);
                     },
                   ),
                 )

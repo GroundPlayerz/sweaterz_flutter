@@ -1,12 +1,19 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:sweaterz_flutter/bloc/cubit/auth_cubit.dart';
+import 'package:sweaterz_flutter/bloc/state/auth_state.dart';
 import 'package:sweaterz_flutter/networking_service/login_service.dart';
 import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/screens/registration/set_profile_name_screen.dart';
 import 'package:sweaterz_flutter/view/screens/splash_screen.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
+import 'package:sweaterz_flutter/view/screens/provider/user_provider.dart';
+import 'package:sweaterz_flutter/view/screens/tabs/starting_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -48,58 +55,73 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 154 * convertHeightRatio,
           ),
-          _signInButton(),
+          _signInButton(context),
         ]),
       ),
     );
   }
 }
 
-Widget _signInButton() {
-  return OutlinedButton(
-    style: OutlinedButton.styleFrom(
-      primary: Colors.grey,
-      backgroundColor: Color(0xffF8F8FA),
-      side: BorderSide(color: Colors.grey[300]!, width: 1),
-      shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.all(Radius.circular(kIphoneXHeight)), //곡률 최대치로
-      ),
-    ),
-    onPressed: () async {
-      log('herefirst\n');
-      await LoginService().logIn();
-      log('here\n');
-      if (await LoginService().getCurrentUser() != null) {
-        if (await RegistrationService().isRegistered()) {
-          Get.offAll(() => SplashScreen());
-          //Member 정보 세팅하기
-        } else {
-          Get.offAll(() => SetProfileNameScreen());
-        }
-      } else {
-        log('Not Logged In');
+Widget _signInButton(BuildContext context) {
+  return BlocListener<AuthCubit, AuthState>(
+    listener: (context, state) {
+      if (state is GoogleSignedIn) {
+        BlocProvider.of<AuthCubit>(context).signInFlask();
+      } else if (state is FlaskSignedIn) {
+        print('[starting_screen] decideStartingPage() - go to HomeRoot()');
+        print('accessToke: ${state.accessToken}');
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeRoot()),
+            (route) => false);
+      } else if (state is FlaskSignInFailed) {
+        print(
+            '[starting_screen] decideStartingPage() - go to SetProfileNameScreen()');
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => SetProfileNameScreen()),
+            (route) => false);
+      } else if (state is SignedOut) {
+        print('[starting_screen] decideStartingPage() - go to LoginScreen()');
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => false);
       }
     },
-    // borderSide: BorderSide(color: Color(0xffD2D2D2), width: 1.0),
-
-    child: Container(
-      // height: 50.0,
-      // width: 200,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 17, 12, 17),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image(image: AssetImage('images/google_logo@3x.png'), height: 20.0),
-            SizedBox(width: 20),
-            Padding(
-              padding: const EdgeInsets.only(left: 0),
-              child: Text('Sign in with Google',
-                  style: kBodyTextStyle1M.copyWith(fontSize: 16.0)),
-            )
-          ],
+    child: OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        primary: Colors.grey,
+        backgroundColor: Color(0xffF8F8FA),
+        side: BorderSide(color: Colors.grey[300]!, width: 1),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(kIphoneXHeight)),
+        ),
+      ),
+      onPressed: () async {
+        log('[login_screen] _signInButton() - onPressed activated.');
+        BlocProvider.of<AuthCubit>(context).signInGoogle();
+        log('[login_screen] _signInButton() - signIn() has done.');
+      },
+      child: Container(
+        // height: 50.0,
+        // width: 200,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(12, 17, 12, 17),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image(
+                  image: AssetImage('images/google_logo@3x.png'), height: 20.0),
+              SizedBox(width: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 0),
+                child: Text('Sign in with Google',
+                    style: kBodyTextStyle1M.copyWith(fontSize: 16.0)),
+              )
+            ],
+          ),
         ),
       ),
     ),
