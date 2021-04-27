@@ -1,13 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/bloc/cubit/auth_cubit.dart';
 import 'package:sweaterz_flutter/bloc/state/auth_state.dart';
-import 'package:sweaterz_flutter/networking_service/login_service.dart';
-import 'package:sweaterz_flutter/networking_service/registration_service.dart';
-import 'package:sweaterz_flutter/view/screens/provider/user_provider.dart';
+import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/screens/registration/set_profile_name_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/login_screen.dart';
@@ -63,7 +58,32 @@ class _StartingScreenState extends State<StartingScreen> {
       },
       child: Builder(builder: (context) {
         BlocProvider.of<AuthCubit>(context).checkIsGoogleSignedIn();
-        return Center(child: const CircularProgressIndicator());
+        var mediaQuery = MediaQuery.of(context);
+        double convertHeightRatio = mediaQuery.size.height / kIphoneXHeight;
+
+        return Scaffold(
+          body: Center(
+            child: Column(children: [
+              SizedBox(
+                height: 329 * convertHeightRatio,
+              ),
+              Container(
+                height: 34.0,
+                //padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Image(image: AssetImage('images/logo_big@3x.png')),
+              ),
+              SizedBox(
+                height: 375.8 * convertHeightRatio,
+              ),
+              Container(
+                height: 20.0,
+                child: Image(
+                  image: AssetImage('images/gpz_logo@3x.png'),
+                ),
+              ),
+            ]),
+          ),
+        );
       }),
     );
   }

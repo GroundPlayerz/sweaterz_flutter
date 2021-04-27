@@ -2,19 +2,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/bloc/cubit/auth_cubit.dart';
+import 'package:sweaterz_flutter/bloc/cubit/profile_screen_cubit.dart';
+import 'package:sweaterz_flutter/bloc/cubit/sports_following_cubit.dart';
 import 'package:sweaterz_flutter/repository/auth_repository.dart';
+import 'package:sweaterz_flutter/repository/sports_repository.dart';
+import 'package:sweaterz_flutter/repository/user_repository.dart';
 import 'package:sweaterz_flutter/view/screens/provider/home_feed_provider.dart';
-import 'package:sweaterz_flutter/view/screens/provider/user_provider.dart';
-import 'package:sweaterz_flutter/view/screens/registration/follow_sports_screen.dart';
 import 'package:sweaterz_flutter/view/screens/provider/question_feed_provider.dart';
-import 'package:sweaterz_flutter/view/screens/splash_screen.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/login_screen.dart';
-import 'package:sweaterz_flutter/view/screens/registration/registration_complete_screen.dart';
-import 'package:sweaterz_flutter/view/screens/registration/set_profile_name_screen.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
 import 'package:flutter/services.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/starting_screen.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -36,14 +32,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AuthCubit(repository: AuthRepository()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthCubit>(
+            create: (_) => AuthCubit(repository: AuthRepository())),
+        BlocProvider<SportsFollowingCubit>(
+            create: (_) => SportsFollowingCubit(
+                sportsRepository: SportsRepository(),
+                userRepository: UserRepository())),
+        BlocProvider<ProfileScreenCubit>(
+            create: (_) => ProfileScreenCubit(repository: UserRepository())),
+      ],
       child: MultiProvider(
         providers: [
           //ChangeNotifierProvider(create: (_) => ScreenSize()),
-          ChangeNotifierProvider(
-            create: (_) => UserProvider(),
-          ),
           ChangeNotifierProvider(
             create: (_) => HomeFeedProvider(),
           ),

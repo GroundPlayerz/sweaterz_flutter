@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/networking_service/upload_post_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/constants/text_styles.dart';
@@ -10,7 +9,6 @@ import 'package:sweaterz_flutter/view/screens/components/dialog.dart';
 import 'package:sweaterz_flutter/view/screens/components/rounded_outlined_button.dart';
 import 'package:sweaterz_flutter/view/screens/post_sports_add_screen.dart';
 import 'package:sweaterz_flutter/view/screens/post_tags_add_screen.dart';
-import 'package:sweaterz_flutter/view/screens/provider/user_provider.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
 
 class TextTypeUpload extends StatefulWidget {
@@ -123,15 +121,9 @@ class _TextTypeUploadState extends State<TextTypeUpload> {
                       addedSports: addedSports!,
                       addedTagsList: addedTagsList,
                       uploadType: 'text',
-                      profileName:
-                          Provider.of<UserProvider>(context, listen: false)
-                              .profileName!,
-                      profilePhotoUrl:
-                          Provider.of<UserProvider>(context, listen: false)
-                              .profilePhotoURL!,
-                      memberEmail:
-                          Provider.of<UserProvider>(context, listen: false)
-                              .email!,
+                      profileName: '임시',
+                      profilePhotoUrl: '임시완',
+                      memberEmail: '임서완',
                     );
                     UploadPostService().uploadTextTypePost(newPost);
                     Future.delayed(Duration(seconds: 3));

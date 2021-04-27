@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:sweaterz_flutter/bloc/cubit/auth_cubit.dart';
 import 'package:sweaterz_flutter/bloc/state/auth_state.dart';
-import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/screens/registration/registration_complete_screen.dart';
 import '../components/rounded_color_button.dart';

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sweaterz_flutter/networking_service/login_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/constants/text_styles.dart';
 
@@ -34,7 +33,7 @@ Widget postProfileListTile(
   return ListTile(
     onTap: () async {
       //  Todo 해당 멤버의 프로필로 이동
-      User? currentUser = await LoginService().getCurrentUser();
+      User? currentUser = await FirebaseAuth.instance.currentUser;
       if (email == currentUser?.email) {
         // Todo 내 프로필로 이동
       } else {

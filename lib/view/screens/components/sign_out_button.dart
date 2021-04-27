@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:sweaterz_flutter/bloc/cubit/auth_cubit.dart';
 import 'package:sweaterz_flutter/bloc/state/auth_state.dart';
-import 'package:sweaterz_flutter/networking_service/login_service.dart';
-import 'package:sweaterz_flutter/view/screens/splash_screen.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/home_root.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/login_screen.dart';
-import 'package:sweaterz_flutter/view/screens/provider/user_provider.dart';
-import 'package:sweaterz_flutter/view/screens/tabs/starting_screen.dart';
-
-import '../../../main.dart';
 
 Widget signOutButton(BuildContext context) {
   return BlocListener<AuthCubit, AuthState>(

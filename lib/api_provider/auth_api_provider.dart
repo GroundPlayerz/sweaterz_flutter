@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sweaterz_flutter/config.dart';
-import 'package:sweaterz_flutter/networking_service/login_service.dart';
 import 'package:sweaterz_flutter/utils/dio_logging_interceptor.dart';
 
 class AuthApiProvider {
@@ -46,10 +45,6 @@ class AuthApiProvider {
   }
 
   Future<void> signOut() async {
-    // _dio.options.headers['requirestoken'] = true;
-    // var response = await _dio.delete(
-    //   '/auth/signout',
-    // ); // Headers에 accessToken 추가해서 보내
     await _signOutGoogle();
     await _auth.signOut();
   }

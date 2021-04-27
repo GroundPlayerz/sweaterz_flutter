@@ -1,21 +1,22 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:sweaterz_flutter/model/sports/sports.dart';
 import 'package:sweaterz_flutter/model/user/user.dart';
 
 @immutable
-abstract class UserState extends Equatable {}
+abstract class SportsState extends Equatable {}
 
-class Empty extends UserState {
+class Empty extends SportsState {
   @override
   List<Object> get props => [];
 }
 
-class Loading extends UserState {
+class Loading extends SportsState {
   @override
   List<Object> get props => [];
 }
 
-class Error extends UserState {
+class Error extends SportsState {
   final String message;
 
   Error({
@@ -26,13 +27,13 @@ class Error extends UserState {
   List<Object> get props => [this.message];
 }
 
-class Loaded extends UserState {
-  final List<User> todos;
+class Loaded extends SportsState {
+  final List<Sports> sportsList;
 
   Loaded({
-    required this.todos,
+    required this.sportsList,
   });
 
   @override
-  List<Object> get props => [this.todos];
+  List<Object> get props => [this.sportsList];
 }

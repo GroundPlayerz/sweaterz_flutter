@@ -1,13 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sweaterz_flutter/networking_service/login_service.dart';
-import 'package:sweaterz_flutter/networking_service/registration_service.dart';
 import 'package:sweaterz_flutter/view/constants/constants.dart';
 import 'package:sweaterz_flutter/view/constants/text_styles.dart';
-import 'package:sweaterz_flutter/view/screens/provider/user_provider.dart';
-import 'package:sweaterz_flutter/view/screens/registration/set_profile_name_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/notification_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/profile_screen.dart';
 import 'package:sweaterz_flutter/view/screens/tabs/question_feed_screen.dart';
