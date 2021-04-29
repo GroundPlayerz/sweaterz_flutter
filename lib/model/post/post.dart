@@ -15,8 +15,11 @@ class Post with _$Post {
     required String uploadType, //text, image, video
     required String postPrivacy, //all, follower, none
     required String createdTime,
-    List<PostFile>? postFileList,
+    required int likeCount,
+    required int viewCount,
+    required int feedbackCount,
     required bool isLikeButtonPressed,
+    List<PostFile>? postFileList,
     String? updatedTime, //[nullable]
   }) = _Post;
 

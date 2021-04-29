@@ -29,8 +29,11 @@ class _$PostTearOff {
       required String uploadType,
       required String postPrivacy,
       required String createdTime,
-      List<PostFile>? postFileList,
+      required int likeCount,
+      required int viewCount,
+      required int feedbackCount,
       required bool isLikeButtonPressed,
+      List<PostFile>? postFileList,
       String? updatedTime}) {
     return _Post(
       id: id,
@@ -41,8 +44,11 @@ class _$PostTearOff {
       uploadType: uploadType,
       postPrivacy: postPrivacy,
       createdTime: createdTime,
-      postFileList: postFileList,
+      likeCount: likeCount,
+      viewCount: viewCount,
+      feedbackCount: feedbackCount,
       isLikeButtonPressed: isLikeButtonPressed,
+      postFileList: postFileList,
       updatedTime: updatedTime,
     );
   }
@@ -67,8 +73,11 @@ mixin _$Post {
   String get postPrivacy =>
       throw _privateConstructorUsedError; //all, follower, none
   String get createdTime => throw _privateConstructorUsedError;
-  List<PostFile>? get postFileList => throw _privateConstructorUsedError;
+  int get likeCount => throw _privateConstructorUsedError;
+  int get viewCount => throw _privateConstructorUsedError;
+  int get feedbackCount => throw _privateConstructorUsedError;
   bool get isLikeButtonPressed => throw _privateConstructorUsedError;
+  List<PostFile>? get postFileList => throw _privateConstructorUsedError;
   String? get updatedTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -89,8 +98,11 @@ abstract class $PostCopyWith<$Res> {
       String uploadType,
       String postPrivacy,
       String createdTime,
-      List<PostFile>? postFileList,
+      int likeCount,
+      int viewCount,
+      int feedbackCount,
       bool isLikeButtonPressed,
+      List<PostFile>? postFileList,
       String? updatedTime});
 }
 
@@ -112,8 +124,11 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
     Object? uploadType = freezed,
     Object? postPrivacy = freezed,
     Object? createdTime = freezed,
-    Object? postFileList = freezed,
+    Object? likeCount = freezed,
+    Object? viewCount = freezed,
+    Object? feedbackCount = freezed,
     Object? isLikeButtonPressed = freezed,
+    Object? postFileList = freezed,
     Object? updatedTime = freezed,
   }) {
     return _then(_value.copyWith(
@@ -149,14 +164,26 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
-      postFileList: postFileList == freezed
-          ? _value.postFileList
-          : postFileList // ignore: cast_nullable_to_non_nullable
-              as List<PostFile>?,
+      likeCount: likeCount == freezed
+          ? _value.likeCount
+          : likeCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      viewCount: viewCount == freezed
+          ? _value.viewCount
+          : viewCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      feedbackCount: feedbackCount == freezed
+          ? _value.feedbackCount
+          : feedbackCount // ignore: cast_nullable_to_non_nullable
+              as int,
       isLikeButtonPressed: isLikeButtonPressed == freezed
           ? _value.isLikeButtonPressed
           : isLikeButtonPressed // ignore: cast_nullable_to_non_nullable
               as bool,
+      postFileList: postFileList == freezed
+          ? _value.postFileList
+          : postFileList // ignore: cast_nullable_to_non_nullable
+              as List<PostFile>?,
       updatedTime: updatedTime == freezed
           ? _value.updatedTime
           : updatedTime // ignore: cast_nullable_to_non_nullable
@@ -179,8 +206,11 @@ abstract class _$PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       String uploadType,
       String postPrivacy,
       String createdTime,
-      List<PostFile>? postFileList,
+      int likeCount,
+      int viewCount,
+      int feedbackCount,
       bool isLikeButtonPressed,
+      List<PostFile>? postFileList,
       String? updatedTime});
 }
 
@@ -203,8 +233,11 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
     Object? uploadType = freezed,
     Object? postPrivacy = freezed,
     Object? createdTime = freezed,
-    Object? postFileList = freezed,
+    Object? likeCount = freezed,
+    Object? viewCount = freezed,
+    Object? feedbackCount = freezed,
     Object? isLikeButtonPressed = freezed,
+    Object? postFileList = freezed,
     Object? updatedTime = freezed,
   }) {
     return _then(_Post(
@@ -240,14 +273,26 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
-      postFileList: postFileList == freezed
-          ? _value.postFileList
-          : postFileList // ignore: cast_nullable_to_non_nullable
-              as List<PostFile>?,
+      likeCount: likeCount == freezed
+          ? _value.likeCount
+          : likeCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      viewCount: viewCount == freezed
+          ? _value.viewCount
+          : viewCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      feedbackCount: feedbackCount == freezed
+          ? _value.feedbackCount
+          : feedbackCount // ignore: cast_nullable_to_non_nullable
+              as int,
       isLikeButtonPressed: isLikeButtonPressed == freezed
           ? _value.isLikeButtonPressed
           : isLikeButtonPressed // ignore: cast_nullable_to_non_nullable
               as bool,
+      postFileList: postFileList == freezed
+          ? _value.postFileList
+          : postFileList // ignore: cast_nullable_to_non_nullable
+              as List<PostFile>?,
       updatedTime: updatedTime == freezed
           ? _value.updatedTime
           : updatedTime // ignore: cast_nullable_to_non_nullable
@@ -269,8 +314,11 @@ class _$_Post implements _Post {
       required this.uploadType,
       required this.postPrivacy,
       required this.createdTime,
-      this.postFileList,
+      required this.likeCount,
+      required this.viewCount,
+      required this.feedbackCount,
       required this.isLikeButtonPressed,
+      this.postFileList,
       this.updatedTime});
 
   factory _$_Post.fromJson(Map<String, dynamic> json) =>
@@ -293,15 +341,21 @@ class _$_Post implements _Post {
   @override //all, follower, none
   final String createdTime;
   @override
-  final List<PostFile>? postFileList;
+  final int likeCount;
+  @override
+  final int viewCount;
+  @override
+  final int feedbackCount;
   @override
   final bool isLikeButtonPressed;
+  @override
+  final List<PostFile>? postFileList;
   @override
   final String? updatedTime;
 
   @override
   String toString() {
-    return 'Post(id: $id, userId: $userId, sportsId: $sportsId, content: $content, isQuestion: $isQuestion, uploadType: $uploadType, postPrivacy: $postPrivacy, createdTime: $createdTime, postFileList: $postFileList, isLikeButtonPressed: $isLikeButtonPressed, updatedTime: $updatedTime)';
+    return 'Post(id: $id, userId: $userId, sportsId: $sportsId, content: $content, isQuestion: $isQuestion, uploadType: $uploadType, postPrivacy: $postPrivacy, createdTime: $createdTime, likeCount: $likeCount, viewCount: $viewCount, feedbackCount: $feedbackCount, isLikeButtonPressed: $isLikeButtonPressed, postFileList: $postFileList, updatedTime: $updatedTime)';
   }
 
   @override
@@ -330,12 +384,21 @@ class _$_Post implements _Post {
             (identical(other.createdTime, createdTime) ||
                 const DeepCollectionEquality()
                     .equals(other.createdTime, createdTime)) &&
-            (identical(other.postFileList, postFileList) ||
+            (identical(other.likeCount, likeCount) ||
                 const DeepCollectionEquality()
-                    .equals(other.postFileList, postFileList)) &&
+                    .equals(other.likeCount, likeCount)) &&
+            (identical(other.viewCount, viewCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.viewCount, viewCount)) &&
+            (identical(other.feedbackCount, feedbackCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.feedbackCount, feedbackCount)) &&
             (identical(other.isLikeButtonPressed, isLikeButtonPressed) ||
                 const DeepCollectionEquality()
                     .equals(other.isLikeButtonPressed, isLikeButtonPressed)) &&
+            (identical(other.postFileList, postFileList) ||
+                const DeepCollectionEquality()
+                    .equals(other.postFileList, postFileList)) &&
             (identical(other.updatedTime, updatedTime) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedTime, updatedTime)));
@@ -352,8 +415,11 @@ class _$_Post implements _Post {
       const DeepCollectionEquality().hash(uploadType) ^
       const DeepCollectionEquality().hash(postPrivacy) ^
       const DeepCollectionEquality().hash(createdTime) ^
-      const DeepCollectionEquality().hash(postFileList) ^
+      const DeepCollectionEquality().hash(likeCount) ^
+      const DeepCollectionEquality().hash(viewCount) ^
+      const DeepCollectionEquality().hash(feedbackCount) ^
       const DeepCollectionEquality().hash(isLikeButtonPressed) ^
+      const DeepCollectionEquality().hash(postFileList) ^
       const DeepCollectionEquality().hash(updatedTime);
 
   @JsonKey(ignore: true)
@@ -377,8 +443,11 @@ abstract class _Post implements Post {
       required String uploadType,
       required String postPrivacy,
       required String createdTime,
-      List<PostFile>? postFileList,
+      required int likeCount,
+      required int viewCount,
+      required int feedbackCount,
       required bool isLikeButtonPressed,
+      List<PostFile>? postFileList,
       String? updatedTime}) = _$_Post;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
@@ -400,9 +469,15 @@ abstract class _Post implements Post {
   @override //all, follower, none
   String get createdTime => throw _privateConstructorUsedError;
   @override
-  List<PostFile>? get postFileList => throw _privateConstructorUsedError;
+  int get likeCount => throw _privateConstructorUsedError;
+  @override
+  int get viewCount => throw _privateConstructorUsedError;
+  @override
+  int get feedbackCount => throw _privateConstructorUsedError;
   @override
   bool get isLikeButtonPressed => throw _privateConstructorUsedError;
+  @override
+  List<PostFile>? get postFileList => throw _privateConstructorUsedError;
   @override
   String? get updatedTime => throw _privateConstructorUsedError;
   @override

@@ -16,10 +16,13 @@ _$_Post _$_$_PostFromJson(Map<String, dynamic> json) {
     uploadType: json['upload_type'] as String,
     postPrivacy: json['post_privacy'] as String,
     createdTime: json['created_time'] as String,
+    likeCount: json['like_count'] as int,
+    viewCount: json['view_count'] as int,
+    feedbackCount: json['feedback_count'] as int,
+    isLikeButtonPressed: json['is_like_button_pressed'] as bool,
     postFileList: (json['post_file_list'] as List<dynamic>?)
         ?.map((e) => PostFile.fromJson(e as Map<String, dynamic>))
         .toList(),
-    isLikeButtonPressed: json['is_like_button_pressed'] as bool,
     updatedTime: json['updated_time'] as String?,
   );
 }
@@ -33,8 +36,11 @@ Map<String, dynamic> _$_$_PostToJson(_$_Post instance) => <String, dynamic>{
       'upload_type': instance.uploadType,
       'post_privacy': instance.postPrivacy,
       'created_time': instance.createdTime,
-      'post_file_list': instance.postFileList,
+      'like_count': instance.likeCount,
+      'view_count': instance.viewCount,
+      'feedback_count': instance.feedbackCount,
       'is_like_button_pressed': instance.isLikeButtonPressed,
+      'post_file_list': instance.postFileList,
       'updated_time': instance.updatedTime,
     };
 
