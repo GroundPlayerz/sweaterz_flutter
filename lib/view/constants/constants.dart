@@ -16,13 +16,12 @@ const kIconGreyColor2_656565 = Color(0xff656565);
 const kLightGreyColor1_EBEBEB = Color(0xFFEBEBEB);
 const kLightGreyColor2_EDEDED = Color(0xffEDEDED);
 
-const kBackgroundGreyColorOld = Color(0xffF4F5F9);
-const kBackgroundGreyColor = Color(0xffFAFAFA);
+const kBackgroundGreyColor = Color.fromRGBO(241, 241, 245, 1.0);
 const kBackgroundWhiteColor = Colors.white;
 
 const kTextFieldRappingBoxColor = Color(0xffF1F1F5);
 
-//const k
+const kGreenColor = Color.fromRGBO(0, 167, 101, 1.0);
 
 const TextStyle kBigTitleTextStyle = TextStyle(
   fontFamily: 'Roboto',

@@ -49,9 +49,11 @@ class AuthCubit extends Cubit<AuthState> {
   signInFlask() async {
     try {
       final resp = await this.repository.flaskSignIn();
-      final accessToken = Token.fromJson(resp.data);
+
+      final user = User.fromJson(resp.data['user']);
+      final accessToken = Token.fromJson(resp.data['access_token']);
       secureStorage.write(key: 'access_token', value: accessToken.accessToken);
-      emit(FlaskSignedIn(accessToken: accessToken));
+      emit(FlaskSignedIn(accessToken: accessToken, user: user));
     } catch (e) {
       if (e is DioError && e.response!.statusCode == 404) {
         emit(FlaskSignInFailed());

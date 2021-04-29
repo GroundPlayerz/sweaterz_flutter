@@ -54,26 +54,13 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
   }
 
   AppBar _homeFeedScreenAppBar(BuildContext context) => AppBar(
-        backgroundColor: kBackgroundGreyColor,
+        backgroundColor: kBackgroundWhiteColor,
         elevation: 0,
-        iconTheme: IconThemeData(color: kIconGreyColor2_656565),
+        iconTheme: IconThemeData(color: kIconGreyColor1_B2B2B2),
         leading: IconButton(
           icon: Icon(CupertinoIcons.search),
           onPressed: () {},
         ),
-        // leadingWidth: 200,
-        // leading: SizedBox(
-        //   width: 200,
-        //   child: Padding(
-        //     padding: EdgeInsets.only(left: 10.0),
-        //     child: Image(
-        //       image: AssetImage('images/logo_small@3x.png'),
-        //       fit: BoxFit.fitWidth,
-        //     ),
-        //   ),
-        // ),
-        //로고
-
         actions: [
           IconButton(
             icon: Icon(Icons.add_box_outlined),
@@ -120,8 +107,6 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
             onPressed: () {},
           ),
         ],
-        //actionsIconTheme: IconThemeData(color: kIconGreyColor2_656565),
-        //shadowColor: Colors.white.withOpacity(0.0),
       );
 
   @override
@@ -153,9 +138,6 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Text(
-            //     '${Provider.of<MemberProvider>(context).email} has logged in'),
-            // Text(Provider.of<MemberProvider>(context).profileName),
             Expanded(
               child: homeFeedProvider.postWidgetList.length == 0
                   //ToDO 피드가 없어도 새로고침 될 수 있게 스크롤 가능하게 해야함.

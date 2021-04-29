@@ -31,9 +31,11 @@ class GoogleSignedIn extends AuthState {
 
 class FlaskSignedIn extends AuthState {
   final Token accessToken;
+  final User user;
 
   FlaskSignedIn({
     required this.accessToken,
+    required this.user,
   });
 
   @override

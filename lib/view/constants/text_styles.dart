@@ -35,15 +35,15 @@ const TextStyle kSportsTagTextStyle = TextStyle(
   fontFamily: 'Open_Sans',
   fontWeight: FontWeight.w700,
   fontStyle: FontStyle.italic, //bold italic
-  fontSize: 15.5,
-  letterSpacing: -0.5,
+  fontSize: 14.0,
+  letterSpacing: -0.56,
 );
 
 const TextStyle kTagTextStyle = TextStyle(
   fontFamily: 'Open_Sans',
   fontWeight: FontWeight.w300, //light
-  fontSize: 15.5,
-  letterSpacing: -0.5,
+  fontSize: 14.0,
+  letterSpacing: -0.65,
 );
 
 const TextStyle kPostProfileNameTextStyle = TextStyle(
