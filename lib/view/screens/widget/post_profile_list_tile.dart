@@ -30,7 +30,27 @@ Widget postProfileListTile(
   final String stringDay = createdDateTime.day.toString();
   final String stringYear = createdDateTime.year.toString();
 
-  return ListTile(
+  Widget _circleAvatar = Container(
+    decoration: BoxDecoration(
+      color: Colors.white.withOpacity(0.0),
+      shape: BoxShape.circle,
+      boxShadow: [
+        BoxShadow(
+          blurRadius: 6,
+          color: Colors.black.withOpacity(0.08),
+          offset: Offset(0, 3),
+        )
+      ],
+    ),
+    child: CircleAvatar(
+      radius: 25,
+      backgroundImage: CachedNetworkImageProvider(
+        profilePhotoURL,
+      ),
+    ),
+  );
+
+  return GestureDetector(
     onTap: () async {
       //  Todo 해당 멤버의 프로필로 이동
       User? currentUser = await FirebaseAuth.instance.currentUser;
@@ -40,44 +60,40 @@ Widget postProfileListTile(
         // Todo 다른사람 프로필로 이동
       }
     },
-    leading: Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.0),
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 6,
-            color: Colors.black.withOpacity(0.16),
-            offset: Offset(0, 3),
-          )
-        ],
-      ),
-      child: CircleAvatar(
-        radius: 30,
-        backgroundImage: CachedNetworkImageProvider(
-          profilePhotoURL,
+    child: Row(
+      children: [
+        _circleAvatar,
+        SizedBox(width: 16.0),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              profileName,
+              style: kPostProfileNameTextStyle.copyWith(color: Colors.black),
+            ),
+            SizedBox(height: 3.0),
+            Row(children: [
+              Text(
+                stringMonth + ' ' + stringDay + ', ' + stringYear + '    ',
+                style: kPostViewAndDateTextStyle.copyWith(
+                    color: kGreyColor2_999999),
+              ),
+              Icon(
+                Icons.remove_red_eye_outlined,
+                size: 14.0,
+                color: kGreyColor2_999999,
+              ),
+              SizedBox(width: 3.0),
+              Text(
+                ' $viewCount',
+                style: kPostViewAndDateTextStyle.copyWith(
+                    color: kGreyColor2_999999),
+              ),
+            ]),
+          ],
         ),
-      ),
+      ],
     ),
-    title: Text(
-      profileName,
-      style: kPostProfileNameTextStyle.copyWith(color: Colors.black),
-    ),
-    subtitle: Row(children: [
-      Icon(
-        Icons.remove_red_eye_outlined,
-        size: 14.0,
-        color: kGreyColor1_767676,
-      ),
-      SizedBox(width: 3.0),
-      Text(
-        ' $viewCount  /  ',
-        style: kPostViewAndDateTextStyle.copyWith(color: kGreyColor1_767676),
-      ),
-      Text(
-        stringMonth + ' ' + stringDay + ', ' + stringYear,
-        style: kPostViewAndDateTextStyle.copyWith(color: kGreyColor1_767676),
-      ),
-    ]),
   );
 }

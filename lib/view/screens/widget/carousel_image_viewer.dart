@@ -16,7 +16,8 @@ class CarouselImageViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
         options: CarouselOptions(
-          height: 300.0,
+          aspectRatio: 1,
+          //height: 300.0,
           enableInfiniteScroll: false,
         ),
         itemCount: _postData['file_list'].length,

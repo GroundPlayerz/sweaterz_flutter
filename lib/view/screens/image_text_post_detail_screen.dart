@@ -16,6 +16,7 @@ import 'package:sweaterz_flutter/view/screens/provider/question_feed_provider.da
 import 'package:sweaterz_flutter/view/screens/video_player.dart';
 import 'package:sweaterz_flutter/view/screens/widget/carousel_image_viewer.dart';
 import 'package:sweaterz_flutter/view/screens/widget/post_profile_list_tile.dart';
+import 'package:sweaterz_flutter/view/screens/widget/sports_tag_and_tag_scroll_view.dart';
 
 class ImageTextPostDetailScreen extends StatefulWidget {
   final int postDataIndex;
@@ -166,52 +167,10 @@ class _ImageTextPostDetailScreenState extends State<ImageTextPostDetailScreen> {
       ),
     ];
 
-    Widget _sportsTagClickButton = GestureDetector(
-      onTap: () {
-        //Todo 해당 스포츠 게시물을 모아놓은 피드로 이동
-        onTapOutsideOfTextField();
-      },
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
-        child: Text(
-          _postData['post_sports_tag'],
-          style: kSportsTagTextStyle.copyWith(color: kTextColorBlack),
-        ),
-      ),
-    );
-    Widget _tagClickButton = Expanded(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        dragStartBehavior: DragStartBehavior.start,
-        child: Row(
-          children: [
-            for (Map tag in _postData['post_tag_list'])
-              GestureDetector(
-                onTap: () {
-                  //Todo 해당 스포츠 게시물을 모아놓은 피드로 이동
-                  onTapOutsideOfTextField();
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 3.0, vertical: 0.0),
-                  child: Text(
-                    '#${tag['name']}',
-                    style: kTagTextStyle.copyWith(color: kTextColorBlack),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
     AppBar _postDetailScreenAppBar = AppBar(
       elevation: 0.0,
       backgroundColor: kBackgroundWhiteColor,
-      title: Row(
-        children: [
-          _sportsTagClickButton,
-          _tagClickButton,
-        ],
-      ),
+      title: sportTagAndTagScrollView(_postData),
       iconTheme: IconThemeData(
         color: kIconGreyColor1_B2B2B2, //change your color here
       ),
@@ -274,6 +233,40 @@ class _ImageTextPostDetailScreenState extends State<ImageTextPostDetailScreen> {
       ],
     );
 
+    Widget _likebuttonWidget = Padding(
+      padding: EdgeInsets.only(left: 22, bottom: 22),
+      child: Row(
+        children: [
+          // IconButton(
+          //   icon: true //_postData['is_like_button_pressed']
+          //       ? Icon(
+          //           CupertinoIcons.suit_heart_fill,
+          //           color: kSweaterzColor,
+          //         )
+          //       : Icon(
+          //           CupertinoIcons.suit_heart,
+          //           color: kSweaterzColor,
+          //         ),
+          //   onPressed: () {
+          //     // Todo 나중에 구현하기
+          //     // _postDataProvider.toggleLikeButton(widget.postDataIndex);
+          //     // if (_postData['is_like_button_pressed']) {
+          //     //   _postDataProvider
+          //     //       .increaseLikeCountCache(widget.postDataIndex);
+          //     //   PostDetailService().pressPostLikeButton(_postData);
+          //     // } else {
+          //     //   _postDataProvider
+          //     //       .decreaseLikeCountCache(widget.postDataIndex);
+          //     //   PostDetailService().cancelPostLikeButton(_postData);
+          //     // }
+          //   },
+          // ),
+          //SizedBox(width: 10.0),
+          Text(_postData['like_count'].toString()),
+        ],
+      ),
+    );
+
     Widget _postDetailScreenPost = GestureDetector(
         onTap: () {
           onTapOutsideOfTextField();
@@ -282,31 +275,39 @@ class _ImageTextPostDetailScreenState extends State<ImageTextPostDetailScreen> {
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.0),
             shape: BoxShape.rectangle,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                color:
-                    Colors.black.withOpacity(0.08), //아래로 그림자 갈 수 있게 수정해야 할 듯...
-                offset: Offset(0, 3),
-              )
-            ],
+            // boxShadow: [
+            //   BoxShadow(
+            //     blurRadius: 6,
+            //     color:
+            //         Colors.black.withOpacity(0.08), //아래로 그림자 갈 수 있게 수정해야 할 듯...
+            //     offset: Offset(0, 3),
+            //   )
+            // ],
           ),
           child: Container(
             color: kBackgroundWhiteColor,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                postProfileListTile(
-                    email: _postData['creator_email'],
-                    profileName: _postData['creator_profile_name'],
-                    profilePhotoURL: _postData['creator_profile_photo_url'],
-                    createdTime: _postData['created_time'],
-                    viewCount: _postData['view_count']),
                 Padding(
-                  padding: EdgeInsets.all(22.0),
-                  child: Text(
-                    _postData['content'],
-                    style: kPostBodyTextStyle,
+                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 12),
+                      postProfileListTile(
+                          email: _postData['creator_email'],
+                          profileName: _postData['creator_profile_name'],
+                          profilePhotoURL:
+                              _postData['creator_profile_photo_url'],
+                          createdTime: _postData['created_time'],
+                          viewCount: _postData['view_count']),
+                      SizedBox(height: 22),
+                      Text(
+                        _postData['content'],
+                        style: kPostBodyTextStyle,
+                      ),
+                      SizedBox(height: 22),
+                    ],
                   ),
                 ),
                 _postData['upload_type'] == 'images'
@@ -317,39 +318,7 @@ class _ImageTextPostDetailScreenState extends State<ImageTextPostDetailScreen> {
                         ],
                       )
                     : Container(),
-                Padding(
-                  padding: EdgeInsets.only(left: 22, bottom: 22),
-                  child: Row(
-                    children: [
-                      // IconButton(
-                      //   icon: true //_postData['is_like_button_pressed']
-                      //       ? Icon(
-                      //           CupertinoIcons.suit_heart_fill,
-                      //           color: kSweaterzColor,
-                      //         )
-                      //       : Icon(
-                      //           CupertinoIcons.suit_heart,
-                      //           color: kSweaterzColor,
-                      //         ),
-                      //   onPressed: () {
-                      //     // Todo 나중에 구현하기
-                      //     // _postDataProvider.toggleLikeButton(widget.postDataIndex);
-                      //     // if (_postData['is_like_button_pressed']) {
-                      //     //   _postDataProvider
-                      //     //       .increaseLikeCountCache(widget.postDataIndex);
-                      //     //   PostDetailService().pressPostLikeButton(_postData);
-                      //     // } else {
-                      //     //   _postDataProvider
-                      //     //       .decreaseLikeCountCache(widget.postDataIndex);
-                      //     //   PostDetailService().cancelPostLikeButton(_postData);
-                      //     // }
-                      //   },
-                      // ),
-                      //SizedBox(width: 10.0),
-                      Text(_postData['like_count'].toString()),
-                    ],
-                  ),
-                ),
+                _likebuttonWidget,
               ],
             ),
           ),

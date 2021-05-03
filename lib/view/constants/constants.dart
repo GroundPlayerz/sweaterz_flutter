@@ -21,7 +21,8 @@ const kBackgroundWhiteColor = Colors.white;
 
 const kTextFieldRappingBoxColor = Color(0xffF1F1F5);
 
-const kGreenColor = Color.fromRGBO(0, 167, 101, 1.0);
+const kGreenColorfromRGBO = Color.fromRGBO(0, 167, 101, 1.0);
+const kGreenColorFrom0xFF = Color(0xff00a765);
 
 const TextStyle kBigTitleTextStyle = TextStyle(
   fontFamily: 'Roboto',
