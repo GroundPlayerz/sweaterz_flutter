@@ -25,7 +25,7 @@ class _$GraphTearOff {
       required User user,
       required String title,
       required String description,
-      required List<Map<String, dynamic>> data,
+      required List<GraphData> data,
       required String createdTime,
       required int order,
       String? updatedTime}) {
@@ -55,7 +55,7 @@ mixin _$Graph {
   User get user => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  List<Map<String, dynamic>> get data => throw _privateConstructorUsedError;
+  List<GraphData> get data => throw _privateConstructorUsedError;
   String get createdTime => throw _privateConstructorUsedError;
   int get order => throw _privateConstructorUsedError;
   String? get updatedTime => throw _privateConstructorUsedError;
@@ -74,7 +74,7 @@ abstract class $GraphCopyWith<$Res> {
       User user,
       String title,
       String description,
-      List<Map<String, dynamic>> data,
+      List<GraphData> data,
       String createdTime,
       int order,
       String? updatedTime});
@@ -121,7 +121,7 @@ class _$GraphCopyWithImpl<$Res> implements $GraphCopyWith<$Res> {
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
+              as List<GraphData>,
       createdTime: createdTime == freezed
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
@@ -155,7 +155,7 @@ abstract class _$GraphCopyWith<$Res> implements $GraphCopyWith<$Res> {
       User user,
       String title,
       String description,
-      List<Map<String, dynamic>> data,
+      List<GraphData> data,
       String createdTime,
       int order,
       String? updatedTime});
@@ -204,7 +204,7 @@ class __$GraphCopyWithImpl<$Res> extends _$GraphCopyWithImpl<$Res>
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
+              as List<GraphData>,
       createdTime: createdTime == freezed
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
@@ -247,7 +247,7 @@ class _$_Graph implements _Graph {
   @override
   final String description;
   @override
-  final List<Map<String, dynamic>> data;
+  final List<GraphData> data;
   @override
   final String createdTime;
   @override
@@ -314,7 +314,7 @@ abstract class _Graph implements Graph {
       required User user,
       required String title,
       required String description,
-      required List<Map<String, dynamic>> data,
+      required List<GraphData> data,
       required String createdTime,
       required int order,
       String? updatedTime}) = _$_Graph;
@@ -330,7 +330,7 @@ abstract class _Graph implements Graph {
   @override
   String get description => throw _privateConstructorUsedError;
   @override
-  List<Map<String, dynamic>> get data => throw _privateConstructorUsedError;
+  List<GraphData> get data => throw _privateConstructorUsedError;
   @override
   String get createdTime => throw _privateConstructorUsedError;
   @override
@@ -340,4 +340,196 @@ abstract class _Graph implements Graph {
   @override
   @JsonKey(ignore: true)
   _$GraphCopyWith<_Graph> get copyWith => throw _privateConstructorUsedError;
+}
+
+GraphData _$GraphDataFromJson(Map<String, dynamic> json) {
+  return _GraphData.fromJson(json);
+}
+
+/// @nodoc
+class _$GraphDataTearOff {
+  const _$GraphDataTearOff();
+
+  _GraphData call(
+      {required String date,
+      required double value,
+      required String description}) {
+    return _GraphData(
+      date: date,
+      value: value,
+      description: description,
+    );
+  }
+
+  GraphData fromJson(Map<String, Object> json) {
+    return GraphData.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $GraphData = _$GraphDataTearOff();
+
+/// @nodoc
+mixin _$GraphData {
+  String get date => throw _privateConstructorUsedError;
+  double get value => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GraphDataCopyWith<GraphData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GraphDataCopyWith<$Res> {
+  factory $GraphDataCopyWith(GraphData value, $Res Function(GraphData) then) =
+      _$GraphDataCopyWithImpl<$Res>;
+  $Res call({String date, double value, String description});
+}
+
+/// @nodoc
+class _$GraphDataCopyWithImpl<$Res> implements $GraphDataCopyWith<$Res> {
+  _$GraphDataCopyWithImpl(this._value, this._then);
+
+  final GraphData _value;
+  // ignore: unused_field
+  final $Res Function(GraphData) _then;
+
+  @override
+  $Res call({
+    Object? date = freezed,
+    Object? value = freezed,
+    Object? description = freezed,
+  }) {
+    return _then(_value.copyWith(
+      date: date == freezed
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String,
+      value: value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as double,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$GraphDataCopyWith<$Res> implements $GraphDataCopyWith<$Res> {
+  factory _$GraphDataCopyWith(
+          _GraphData value, $Res Function(_GraphData) then) =
+      __$GraphDataCopyWithImpl<$Res>;
+  @override
+  $Res call({String date, double value, String description});
+}
+
+/// @nodoc
+class __$GraphDataCopyWithImpl<$Res> extends _$GraphDataCopyWithImpl<$Res>
+    implements _$GraphDataCopyWith<$Res> {
+  __$GraphDataCopyWithImpl(_GraphData _value, $Res Function(_GraphData) _then)
+      : super(_value, (v) => _then(v as _GraphData));
+
+  @override
+  _GraphData get _value => super._value as _GraphData;
+
+  @override
+  $Res call({
+    Object? date = freezed,
+    Object? value = freezed,
+    Object? description = freezed,
+  }) {
+    return _then(_GraphData(
+      date: date == freezed
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String,
+      value: value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as double,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class _$_GraphData implements _GraphData {
+  _$_GraphData(
+      {required this.date, required this.value, required this.description});
+
+  factory _$_GraphData.fromJson(Map<String, dynamic> json) =>
+      _$_$_GraphDataFromJson(json);
+
+  @override
+  final String date;
+  @override
+  final double value;
+  @override
+  final String description;
+
+  @override
+  String toString() {
+    return 'GraphData(date: $date, value: $value, description: $description)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _GraphData &&
+            (identical(other.date, date) ||
+                const DeepCollectionEquality().equals(other.date, date)) &&
+            (identical(other.value, value) ||
+                const DeepCollectionEquality().equals(other.value, value)) &&
+            (identical(other.description, description) ||
+                const DeepCollectionEquality()
+                    .equals(other.description, description)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(date) ^
+      const DeepCollectionEquality().hash(value) ^
+      const DeepCollectionEquality().hash(description);
+
+  @JsonKey(ignore: true)
+  @override
+  _$GraphDataCopyWith<_GraphData> get copyWith =>
+      __$GraphDataCopyWithImpl<_GraphData>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_GraphDataToJson(this);
+  }
+}
+
+abstract class _GraphData implements GraphData {
+  factory _GraphData(
+      {required String date,
+      required double value,
+      required String description}) = _$_GraphData;
+
+  factory _GraphData.fromJson(Map<String, dynamic> json) =
+      _$_GraphData.fromJson;
+
+  @override
+  String get date => throw _privateConstructorUsedError;
+  @override
+  double get value => throw _privateConstructorUsedError;
+  @override
+  String get description => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$GraphDataCopyWith<_GraphData> get copyWith =>
+      throw _privateConstructorUsedError;
 }

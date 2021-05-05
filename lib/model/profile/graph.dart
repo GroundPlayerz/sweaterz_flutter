@@ -12,11 +12,24 @@ class Graph with _$Graph {
     required User user,
     required String title,
     required String description,
-    required List<Map<String, dynamic>> data,
+    required List<GraphData> data,
     required String createdTime,
     required int order,
     String? updatedTime,
   }) = _Graph;
 
   factory Graph.fromJson(Map<String, dynamic> json) => _$GraphFromJson(json);
+}
+
+@freezed
+class GraphData with _$GraphData {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  factory GraphData({
+    required String date,
+    required double value,
+    required String description,
+  }) = _GraphData;
+
+  factory GraphData.fromJson(Map<String, dynamic> json) =>
+      _$GraphDataFromJson(json);
 }

@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sweaterz_flutter/model/sports/sports.dart';
+import 'package:sweaterz_flutter/model/tag/tag.dart';
 import 'package:sweaterz_flutter/model/user/user.dart';
 
 part 'routine.freezed.dart';
@@ -15,6 +17,8 @@ class Routine with _$Routine {
     required String description,
     required bool isSelected,
     required int savedCount,
+    required List<Tag> tags,
+    required Sports sport,
     required String mon,
     required String tue,
     required String wed,

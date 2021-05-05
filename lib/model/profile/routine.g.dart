@@ -15,6 +15,10 @@ _$_Routine _$_$_RoutineFromJson(Map<String, dynamic> json) {
     description: json['description'] as String,
     isSelected: json['is_selected'] as bool,
     savedCount: json['saved_count'] as int,
+    tags: (json['tags'] as List<dynamic>)
+        .map((e) => Tag.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    sport: Sports.fromJson(json['sport'] as Map<String, dynamic>),
     mon: json['mon'] as String,
     tue: json['tue'] as String,
     wed: json['wed'] as String,
@@ -36,6 +40,8 @@ Map<String, dynamic> _$_$_RoutineToJson(_$_Routine instance) =>
       'description': instance.description,
       'is_selected': instance.isSelected,
       'saved_count': instance.savedCount,
+      'tags': instance.tags,
+      'sport': instance.sport,
       'mon': instance.mon,
       'tue': instance.tue,
       'wed': instance.wed,

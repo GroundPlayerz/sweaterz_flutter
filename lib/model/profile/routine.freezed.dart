@@ -28,6 +28,8 @@ class _$RoutineTearOff {
       required String description,
       required bool isSelected,
       required int savedCount,
+      required List<Tag> tags,
+      required Sports sport,
       required String mon,
       required String tue,
       required String wed,
@@ -45,6 +47,8 @@ class _$RoutineTearOff {
       description: description,
       isSelected: isSelected,
       savedCount: savedCount,
+      tags: tags,
+      sport: sport,
       mon: mon,
       tue: tue,
       wed: wed,
@@ -74,6 +78,8 @@ mixin _$Routine {
   String get description => throw _privateConstructorUsedError;
   bool get isSelected => throw _privateConstructorUsedError;
   int get savedCount => throw _privateConstructorUsedError;
+  List<Tag> get tags => throw _privateConstructorUsedError;
+  Sports get sport => throw _privateConstructorUsedError;
   String get mon => throw _privateConstructorUsedError;
   String get tue => throw _privateConstructorUsedError;
   String get wed => throw _privateConstructorUsedError;
@@ -101,6 +107,8 @@ abstract class $RoutineCopyWith<$Res> {
       String description,
       bool isSelected,
       int savedCount,
+      List<Tag> tags,
+      Sports sport,
       String mon,
       String tue,
       String wed,
@@ -113,6 +121,7 @@ abstract class $RoutineCopyWith<$Res> {
 
   $UserCopyWith<$Res> get user;
   $UserCopyWith<$Res> get originUser;
+  $SportsCopyWith<$Res> get sport;
 }
 
 /// @nodoc
@@ -132,6 +141,8 @@ class _$RoutineCopyWithImpl<$Res> implements $RoutineCopyWith<$Res> {
     Object? description = freezed,
     Object? isSelected = freezed,
     Object? savedCount = freezed,
+    Object? tags = freezed,
+    Object? sport = freezed,
     Object? mon = freezed,
     Object? tue = freezed,
     Object? wed = freezed,
@@ -171,6 +182,14 @@ class _$RoutineCopyWithImpl<$Res> implements $RoutineCopyWith<$Res> {
           ? _value.savedCount
           : savedCount // ignore: cast_nullable_to_non_nullable
               as int,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<Tag>,
+      sport: sport == freezed
+          ? _value.sport
+          : sport // ignore: cast_nullable_to_non_nullable
+              as Sports,
       mon: mon == freezed
           ? _value.mon
           : mon // ignore: cast_nullable_to_non_nullable
@@ -223,6 +242,13 @@ class _$RoutineCopyWithImpl<$Res> implements $RoutineCopyWith<$Res> {
       return _then(_value.copyWith(originUser: value));
     });
   }
+
+  @override
+  $SportsCopyWith<$Res> get sport {
+    return $SportsCopyWith<$Res>(_value.sport, (value) {
+      return _then(_value.copyWith(sport: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -238,6 +264,8 @@ abstract class _$RoutineCopyWith<$Res> implements $RoutineCopyWith<$Res> {
       String description,
       bool isSelected,
       int savedCount,
+      List<Tag> tags,
+      Sports sport,
       String mon,
       String tue,
       String wed,
@@ -252,6 +280,8 @@ abstract class _$RoutineCopyWith<$Res> implements $RoutineCopyWith<$Res> {
   $UserCopyWith<$Res> get user;
   @override
   $UserCopyWith<$Res> get originUser;
+  @override
+  $SportsCopyWith<$Res> get sport;
 }
 
 /// @nodoc
@@ -272,6 +302,8 @@ class __$RoutineCopyWithImpl<$Res> extends _$RoutineCopyWithImpl<$Res>
     Object? description = freezed,
     Object? isSelected = freezed,
     Object? savedCount = freezed,
+    Object? tags = freezed,
+    Object? sport = freezed,
     Object? mon = freezed,
     Object? tue = freezed,
     Object? wed = freezed,
@@ -311,6 +343,14 @@ class __$RoutineCopyWithImpl<$Res> extends _$RoutineCopyWithImpl<$Res>
           ? _value.savedCount
           : savedCount // ignore: cast_nullable_to_non_nullable
               as int,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<Tag>,
+      sport: sport == freezed
+          ? _value.sport
+          : sport // ignore: cast_nullable_to_non_nullable
+              as Sports,
       mon: mon == freezed
           ? _value.mon
           : mon // ignore: cast_nullable_to_non_nullable
@@ -363,6 +403,8 @@ class _$_Routine implements _Routine {
       required this.description,
       required this.isSelected,
       required this.savedCount,
+      required this.tags,
+      required this.sport,
       required this.mon,
       required this.tue,
       required this.wed,
@@ -391,6 +433,10 @@ class _$_Routine implements _Routine {
   @override
   final int savedCount;
   @override
+  final List<Tag> tags;
+  @override
+  final Sports sport;
+  @override
   final String mon;
   @override
   final String tue;
@@ -411,7 +457,7 @@ class _$_Routine implements _Routine {
 
   @override
   String toString() {
-    return 'Routine(id: $id, user: $user, originUser: $originUser, title: $title, description: $description, isSelected: $isSelected, savedCount: $savedCount, mon: $mon, tue: $tue, wed: $wed, thu: $thu, fri: $fri, sat: $sat, sun: $sun, createdTime: $createdTime, updatedTime: $updatedTime)';
+    return 'Routine(id: $id, user: $user, originUser: $originUser, title: $title, description: $description, isSelected: $isSelected, savedCount: $savedCount, tags: $tags, sport: $sport, mon: $mon, tue: $tue, wed: $wed, thu: $thu, fri: $fri, sat: $sat, sun: $sun, createdTime: $createdTime, updatedTime: $updatedTime)';
   }
 
   @override
@@ -436,6 +482,10 @@ class _$_Routine implements _Routine {
             (identical(other.savedCount, savedCount) ||
                 const DeepCollectionEquality()
                     .equals(other.savedCount, savedCount)) &&
+            (identical(other.tags, tags) ||
+                const DeepCollectionEquality().equals(other.tags, tags)) &&
+            (identical(other.sport, sport) ||
+                const DeepCollectionEquality().equals(other.sport, sport)) &&
             (identical(other.mon, mon) ||
                 const DeepCollectionEquality().equals(other.mon, mon)) &&
             (identical(other.tue, tue) ||
@@ -468,6 +518,8 @@ class _$_Routine implements _Routine {
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(isSelected) ^
       const DeepCollectionEquality().hash(savedCount) ^
+      const DeepCollectionEquality().hash(tags) ^
+      const DeepCollectionEquality().hash(sport) ^
       const DeepCollectionEquality().hash(mon) ^
       const DeepCollectionEquality().hash(tue) ^
       const DeepCollectionEquality().hash(wed) ^
@@ -498,6 +550,8 @@ abstract class _Routine implements Routine {
       required String description,
       required bool isSelected,
       required int savedCount,
+      required List<Tag> tags,
+      required Sports sport,
       required String mon,
       required String tue,
       required String wed,
@@ -524,6 +578,10 @@ abstract class _Routine implements Routine {
   bool get isSelected => throw _privateConstructorUsedError;
   @override
   int get savedCount => throw _privateConstructorUsedError;
+  @override
+  List<Tag> get tags => throw _privateConstructorUsedError;
+  @override
+  Sports get sport => throw _privateConstructorUsedError;
   @override
   String get mon => throw _privateConstructorUsedError;
   @override
