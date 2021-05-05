@@ -9,13 +9,15 @@ part of 'post.dart';
 _$_Post _$_$_PostFromJson(Map<String, dynamic> json) {
   return _$_Post(
     id: json['id'] as int,
-    userId: json['user_id'] as int,
-    sportsId: json['sports_id'] as int,
+    user: User.fromJson(json['user'] as Map<String, dynamic>),
+    sport: Sports.fromJson(json['sport'] as Map<String, dynamic>),
     content: json['content'] as String,
     isQuestion: json['is_question'] as String,
     uploadType: json['upload_type'] as String,
-    postPrivacy: json['post_privacy'] as String,
     createdTime: json['created_time'] as String,
+    tags: (json['tags'] as List<dynamic>)
+        .map((e) => Tag.fromJson(e as Map<String, dynamic>))
+        .toList(),
     likeCount: json['like_count'] as int,
     viewCount: json['view_count'] as int,
     feedbackCount: json['feedback_count'] as int,
@@ -29,13 +31,13 @@ _$_Post _$_$_PostFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_PostToJson(_$_Post instance) => <String, dynamic>{
       'id': instance.id,
-      'user_id': instance.userId,
-      'sports_id': instance.sportsId,
+      'user': instance.user,
+      'sport': instance.sport,
       'content': instance.content,
       'is_question': instance.isQuestion,
       'upload_type': instance.uploadType,
-      'post_privacy': instance.postPrivacy,
       'created_time': instance.createdTime,
+      'tags': instance.tags,
       'like_count': instance.likeCount,
       'view_count': instance.viewCount,
       'feedback_count': instance.feedbackCount,

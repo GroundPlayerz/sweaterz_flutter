@@ -5,10 +5,11 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:convert';
+
 void main() {
-  List a = [1, 2, 3];
-  List b = a;
-  b[0] = 0;
-  print(a);
-  print(b);
+  final jsonString =
+      '{"name": "박기범", "age": 20,  "json": [{"name": "giboeom"}, {"name": "yunji"}]}';
+  final Map<String, dynamic> decodedJson = jsonDecode(jsonString);
+  print(decodedJson);
 }

@@ -28,8 +28,7 @@ class _$UserTearOff {
       required String role,
       required String profileIntroduction,
       required String createdTime,
-      String? updatedTime,
-      required String privacy}) {
+      String? updatedTime}) {
     return _User(
       id: id,
       email: email,
@@ -39,7 +38,6 @@ class _$UserTearOff {
       profileIntroduction: profileIntroduction,
       createdTime: createdTime,
       updatedTime: updatedTime,
-      privacy: privacy,
     );
   }
 
@@ -61,8 +59,7 @@ mixin _$User {
       throw _privateConstructorUsedError; //admin, general_free, general_paid, expert
   String get profileIntroduction => throw _privateConstructorUsedError;
   String get createdTime => throw _privateConstructorUsedError;
-  String? get updatedTime => throw _privateConstructorUsedError; //[nullable]
-  String get privacy => throw _privateConstructorUsedError;
+  String? get updatedTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -81,8 +78,7 @@ abstract class $UserCopyWith<$Res> {
       String role,
       String profileIntroduction,
       String createdTime,
-      String? updatedTime,
-      String privacy});
+      String? updatedTime});
 }
 
 /// @nodoc
@@ -103,7 +99,6 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? profileIntroduction = freezed,
     Object? createdTime = freezed,
     Object? updatedTime = freezed,
-    Object? privacy = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -138,10 +133,6 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.updatedTime
           : updatedTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      privacy: privacy == freezed
-          ? _value.privacy
-          : privacy // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -159,8 +150,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String role,
       String profileIntroduction,
       String createdTime,
-      String? updatedTime,
-      String privacy});
+      String? updatedTime});
 }
 
 /// @nodoc
@@ -182,7 +172,6 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? profileIntroduction = freezed,
     Object? createdTime = freezed,
     Object? updatedTime = freezed,
-    Object? privacy = freezed,
   }) {
     return _then(_User(
       id: id == freezed
@@ -217,10 +206,6 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.updatedTime
           : updatedTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      privacy: privacy == freezed
-          ? _value.privacy
-          : privacy // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -237,8 +222,7 @@ class _$_User implements _User {
       required this.role,
       required this.profileIntroduction,
       required this.createdTime,
-      this.updatedTime,
-      required this.privacy});
+      this.updatedTime});
 
   factory _$_User.fromJson(Map<String, dynamic> json) =>
       _$_$_UserFromJson(json);
@@ -259,12 +243,10 @@ class _$_User implements _User {
   final String createdTime;
   @override
   final String? updatedTime;
-  @override //[nullable]
-  final String privacy;
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, profileName: $profileName, profilePhotoUrl: $profilePhotoUrl, role: $role, profileIntroduction: $profileIntroduction, createdTime: $createdTime, updatedTime: $updatedTime, privacy: $privacy)';
+    return 'User(id: $id, email: $email, profileName: $profileName, profilePhotoUrl: $profilePhotoUrl, role: $role, profileIntroduction: $profileIntroduction, createdTime: $createdTime, updatedTime: $updatedTime)';
   }
 
   @override
@@ -291,9 +273,7 @@ class _$_User implements _User {
                     .equals(other.createdTime, createdTime)) &&
             (identical(other.updatedTime, updatedTime) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedTime, updatedTime)) &&
-            (identical(other.privacy, privacy) ||
-                const DeepCollectionEquality().equals(other.privacy, privacy)));
+                    .equals(other.updatedTime, updatedTime)));
   }
 
   @override
@@ -306,8 +286,7 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(role) ^
       const DeepCollectionEquality().hash(profileIntroduction) ^
       const DeepCollectionEquality().hash(createdTime) ^
-      const DeepCollectionEquality().hash(updatedTime) ^
-      const DeepCollectionEquality().hash(privacy);
+      const DeepCollectionEquality().hash(updatedTime);
 
   @JsonKey(ignore: true)
   @override
@@ -329,8 +308,7 @@ abstract class _User implements User {
       required String role,
       required String profileIntroduction,
       required String createdTime,
-      String? updatedTime,
-      required String privacy}) = _$_User;
+      String? updatedTime}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -350,8 +328,6 @@ abstract class _User implements User {
   String get createdTime => throw _privateConstructorUsedError;
   @override
   String? get updatedTime => throw _privateConstructorUsedError;
-  @override //[nullable]
-  String get privacy => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

@@ -22,13 +22,13 @@ class _$PostTearOff {
 
   _Post call(
       {required int id,
-      required int userId,
-      required int sportsId,
+      required User user,
+      required Sports sport,
       required String content,
       required String isQuestion,
       required String uploadType,
-      required String postPrivacy,
       required String createdTime,
+      required List<Tag> tags,
       required int likeCount,
       required int viewCount,
       required int feedbackCount,
@@ -37,13 +37,13 @@ class _$PostTearOff {
       String? updatedTime}) {
     return _Post(
       id: id,
-      userId: userId,
-      sportsId: sportsId,
+      user: user,
+      sport: sport,
       content: content,
       isQuestion: isQuestion,
       uploadType: uploadType,
-      postPrivacy: postPrivacy,
       createdTime: createdTime,
+      tags: tags,
       likeCount: likeCount,
       viewCount: viewCount,
       feedbackCount: feedbackCount,
@@ -64,15 +64,14 @@ const $Post = _$PostTearOff();
 /// @nodoc
 mixin _$Post {
   int get id => throw _privateConstructorUsedError;
-  int get userId => throw _privateConstructorUsedError;
-  int get sportsId => throw _privateConstructorUsedError;
+  User get user => throw _privateConstructorUsedError;
+  Sports get sport => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   String get isQuestion => throw _privateConstructorUsedError;
   String get uploadType =>
       throw _privateConstructorUsedError; //text, image, video
-  String get postPrivacy =>
-      throw _privateConstructorUsedError; //all, follower, none
   String get createdTime => throw _privateConstructorUsedError;
+  List<Tag> get tags => throw _privateConstructorUsedError;
   int get likeCount => throw _privateConstructorUsedError;
   int get viewCount => throw _privateConstructorUsedError;
   int get feedbackCount => throw _privateConstructorUsedError;
@@ -91,19 +90,22 @@ abstract class $PostCopyWith<$Res> {
       _$PostCopyWithImpl<$Res>;
   $Res call(
       {int id,
-      int userId,
-      int sportsId,
+      User user,
+      Sports sport,
       String content,
       String isQuestion,
       String uploadType,
-      String postPrivacy,
       String createdTime,
+      List<Tag> tags,
       int likeCount,
       int viewCount,
       int feedbackCount,
       bool isLikeButtonPressed,
       List<PostFile>? postFileList,
       String? updatedTime});
+
+  $UserCopyWith<$Res> get user;
+  $SportsCopyWith<$Res> get sport;
 }
 
 /// @nodoc
@@ -117,13 +119,13 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
-    Object? sportsId = freezed,
+    Object? user = freezed,
+    Object? sport = freezed,
     Object? content = freezed,
     Object? isQuestion = freezed,
     Object? uploadType = freezed,
-    Object? postPrivacy = freezed,
     Object? createdTime = freezed,
+    Object? tags = freezed,
     Object? likeCount = freezed,
     Object? viewCount = freezed,
     Object? feedbackCount = freezed,
@@ -136,14 +138,14 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as int,
-      sportsId: sportsId == freezed
-          ? _value.sportsId
-          : sportsId // ignore: cast_nullable_to_non_nullable
-              as int,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
+      sport: sport == freezed
+          ? _value.sport
+          : sport // ignore: cast_nullable_to_non_nullable
+              as Sports,
       content: content == freezed
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -156,14 +158,14 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
           ? _value.uploadType
           : uploadType // ignore: cast_nullable_to_non_nullable
               as String,
-      postPrivacy: postPrivacy == freezed
-          ? _value.postPrivacy
-          : postPrivacy // ignore: cast_nullable_to_non_nullable
-              as String,
       createdTime: createdTime == freezed
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<Tag>,
       likeCount: likeCount == freezed
           ? _value.likeCount
           : likeCount // ignore: cast_nullable_to_non_nullable
@@ -190,6 +192,20 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
               as String?,
     ));
   }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
+
+  @override
+  $SportsCopyWith<$Res> get sport {
+    return $SportsCopyWith<$Res>(_value.sport, (value) {
+      return _then(_value.copyWith(sport: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -199,19 +215,24 @@ abstract class _$PostCopyWith<$Res> implements $PostCopyWith<$Res> {
   @override
   $Res call(
       {int id,
-      int userId,
-      int sportsId,
+      User user,
+      Sports sport,
       String content,
       String isQuestion,
       String uploadType,
-      String postPrivacy,
       String createdTime,
+      List<Tag> tags,
       int likeCount,
       int viewCount,
       int feedbackCount,
       bool isLikeButtonPressed,
       List<PostFile>? postFileList,
       String? updatedTime});
+
+  @override
+  $UserCopyWith<$Res> get user;
+  @override
+  $SportsCopyWith<$Res> get sport;
 }
 
 /// @nodoc
@@ -226,13 +247,13 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
-    Object? sportsId = freezed,
+    Object? user = freezed,
+    Object? sport = freezed,
     Object? content = freezed,
     Object? isQuestion = freezed,
     Object? uploadType = freezed,
-    Object? postPrivacy = freezed,
     Object? createdTime = freezed,
+    Object? tags = freezed,
     Object? likeCount = freezed,
     Object? viewCount = freezed,
     Object? feedbackCount = freezed,
@@ -245,14 +266,14 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as int,
-      sportsId: sportsId == freezed
-          ? _value.sportsId
-          : sportsId // ignore: cast_nullable_to_non_nullable
-              as int,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
+      sport: sport == freezed
+          ? _value.sport
+          : sport // ignore: cast_nullable_to_non_nullable
+              as Sports,
       content: content == freezed
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -265,14 +286,14 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
           ? _value.uploadType
           : uploadType // ignore: cast_nullable_to_non_nullable
               as String,
-      postPrivacy: postPrivacy == freezed
-          ? _value.postPrivacy
-          : postPrivacy // ignore: cast_nullable_to_non_nullable
-              as String,
       createdTime: createdTime == freezed
           ? _value.createdTime
           : createdTime // ignore: cast_nullable_to_non_nullable
               as String,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<Tag>,
       likeCount: likeCount == freezed
           ? _value.likeCount
           : likeCount // ignore: cast_nullable_to_non_nullable
@@ -307,13 +328,13 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
 class _$_Post implements _Post {
   _$_Post(
       {required this.id,
-      required this.userId,
-      required this.sportsId,
+      required this.user,
+      required this.sport,
       required this.content,
       required this.isQuestion,
       required this.uploadType,
-      required this.postPrivacy,
       required this.createdTime,
+      required this.tags,
       required this.likeCount,
       required this.viewCount,
       required this.feedbackCount,
@@ -327,9 +348,9 @@ class _$_Post implements _Post {
   @override
   final int id;
   @override
-  final int userId;
+  final User user;
   @override
-  final int sportsId;
+  final Sports sport;
   @override
   final String content;
   @override
@@ -337,9 +358,9 @@ class _$_Post implements _Post {
   @override
   final String uploadType;
   @override //text, image, video
-  final String postPrivacy;
-  @override //all, follower, none
   final String createdTime;
+  @override
+  final List<Tag> tags;
   @override
   final int likeCount;
   @override
@@ -355,7 +376,7 @@ class _$_Post implements _Post {
 
   @override
   String toString() {
-    return 'Post(id: $id, userId: $userId, sportsId: $sportsId, content: $content, isQuestion: $isQuestion, uploadType: $uploadType, postPrivacy: $postPrivacy, createdTime: $createdTime, likeCount: $likeCount, viewCount: $viewCount, feedbackCount: $feedbackCount, isLikeButtonPressed: $isLikeButtonPressed, postFileList: $postFileList, updatedTime: $updatedTime)';
+    return 'Post(id: $id, user: $user, sport: $sport, content: $content, isQuestion: $isQuestion, uploadType: $uploadType, createdTime: $createdTime, tags: $tags, likeCount: $likeCount, viewCount: $viewCount, feedbackCount: $feedbackCount, isLikeButtonPressed: $isLikeButtonPressed, postFileList: $postFileList, updatedTime: $updatedTime)';
   }
 
   @override
@@ -364,11 +385,10 @@ class _$_Post implements _Post {
         (other is _Post &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.userId, userId) ||
-                const DeepCollectionEquality().equals(other.userId, userId)) &&
-            (identical(other.sportsId, sportsId) ||
-                const DeepCollectionEquality()
-                    .equals(other.sportsId, sportsId)) &&
+            (identical(other.user, user) ||
+                const DeepCollectionEquality().equals(other.user, user)) &&
+            (identical(other.sport, sport) ||
+                const DeepCollectionEquality().equals(other.sport, sport)) &&
             (identical(other.content, content) ||
                 const DeepCollectionEquality()
                     .equals(other.content, content)) &&
@@ -378,12 +398,11 @@ class _$_Post implements _Post {
             (identical(other.uploadType, uploadType) ||
                 const DeepCollectionEquality()
                     .equals(other.uploadType, uploadType)) &&
-            (identical(other.postPrivacy, postPrivacy) ||
-                const DeepCollectionEquality()
-                    .equals(other.postPrivacy, postPrivacy)) &&
             (identical(other.createdTime, createdTime) ||
                 const DeepCollectionEquality()
                     .equals(other.createdTime, createdTime)) &&
+            (identical(other.tags, tags) ||
+                const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.likeCount, likeCount) ||
                 const DeepCollectionEquality()
                     .equals(other.likeCount, likeCount)) &&
@@ -408,13 +427,13 @@ class _$_Post implements _Post {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(userId) ^
-      const DeepCollectionEquality().hash(sportsId) ^
+      const DeepCollectionEquality().hash(user) ^
+      const DeepCollectionEquality().hash(sport) ^
       const DeepCollectionEquality().hash(content) ^
       const DeepCollectionEquality().hash(isQuestion) ^
       const DeepCollectionEquality().hash(uploadType) ^
-      const DeepCollectionEquality().hash(postPrivacy) ^
       const DeepCollectionEquality().hash(createdTime) ^
+      const DeepCollectionEquality().hash(tags) ^
       const DeepCollectionEquality().hash(likeCount) ^
       const DeepCollectionEquality().hash(viewCount) ^
       const DeepCollectionEquality().hash(feedbackCount) ^
@@ -436,13 +455,13 @@ class _$_Post implements _Post {
 abstract class _Post implements Post {
   factory _Post(
       {required int id,
-      required int userId,
-      required int sportsId,
+      required User user,
+      required Sports sport,
       required String content,
       required String isQuestion,
       required String uploadType,
-      required String postPrivacy,
       required String createdTime,
+      required List<Tag> tags,
       required int likeCount,
       required int viewCount,
       required int feedbackCount,
@@ -455,9 +474,9 @@ abstract class _Post implements Post {
   @override
   int get id => throw _privateConstructorUsedError;
   @override
-  int get userId => throw _privateConstructorUsedError;
+  User get user => throw _privateConstructorUsedError;
   @override
-  int get sportsId => throw _privateConstructorUsedError;
+  Sports get sport => throw _privateConstructorUsedError;
   @override
   String get content => throw _privateConstructorUsedError;
   @override
@@ -465,9 +484,9 @@ abstract class _Post implements Post {
   @override
   String get uploadType => throw _privateConstructorUsedError;
   @override //text, image, video
-  String get postPrivacy => throw _privateConstructorUsedError;
-  @override //all, follower, none
   String get createdTime => throw _privateConstructorUsedError;
+  @override
+  List<Tag> get tags => throw _privateConstructorUsedError;
   @override
   int get likeCount => throw _privateConstructorUsedError;
   @override

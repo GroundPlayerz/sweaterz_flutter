@@ -16,7 +16,6 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
     profileIntroduction: json['profile_introduction'] as String,
     createdTime: json['created_time'] as String,
     updatedTime: json['updated_time'] as String?,
-    privacy: json['privacy'] as String,
   );
 }
 
@@ -29,5 +28,4 @@ Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'profile_introduction': instance.profileIntroduction,
       'created_time': instance.createdTime,
       'updated_time': instance.updatedTime,
-      'privacy': instance.privacy,
     };

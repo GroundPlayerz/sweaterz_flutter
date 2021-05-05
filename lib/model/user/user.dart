@@ -15,7 +15,6 @@ class User with _$User {
     required String profileIntroduction,
     required String createdTime,
     String? updatedTime, //[nullable]
-    required String privacy,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) =>
