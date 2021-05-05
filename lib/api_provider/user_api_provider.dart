@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:sweaterz_flutter/config.dart';
-import 'package:sweaterz_flutter/model/profile/dashboard_order.dart';
+import 'package:sweaterz_flutter/model/profile/dashboard.dart';
 import 'package:sweaterz_flutter/model/sports/sports.dart';
 import 'package:sweaterz_flutter/utils/dio_logging_interceptor.dart';
 
